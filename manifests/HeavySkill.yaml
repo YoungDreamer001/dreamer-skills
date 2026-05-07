@@ -1,0 +1,8 @@
+name: HeavySkill
+display_name: HeavySkill
+source:
+  type: local
+status:
+  stage: adapted
+entry:
+  file: SKILL.md

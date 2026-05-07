@@ -4,7 +4,7 @@ source:
   type: remote
   repo: https://github.com/lijigang/ljg-skills
   ref: master
-  commit: 628a41e20da52adb5582c3951b99e4bfefde7597
+  commit: d2d6a0313baaeee789d00aa5c3841d4622147f23
 status:
   stage: adapted
 entry:
