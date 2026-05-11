@@ -55,7 +55,8 @@ program
   .description("Enable a skill globally or for a specific project")
   .option("--global", "Enable globally (default)")
   .option("--project <path>", "Enable for a specific project")
-  .action((name: string, options: { global?: boolean; project?: string }) => {
+  .option("--ide <ides...>", "Target specific IDEs (e.g., opencode, claude-code, copilot, continue, cursor, universal). Defaults to all detected IDEs.")
+  .action((name: string, options: { global?: boolean; project?: string; ide?: string[] }) => {
     enable(getRootPath(), name, options);
   });
 

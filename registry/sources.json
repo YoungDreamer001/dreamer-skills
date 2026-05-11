@@ -79,5 +79,9 @@
     "ref": "main",
     "commit": "f458cee31a7577a47ba0c9a101976fa599385174",
     "local_path": "warehouse/remote/github.com_anthropics_skills@main"
+  },
+  "local-prompt-optimizer": {
+    "type": "local",
+    "local_path": "warehouse/local/prompt-optimizer"
   }
 }

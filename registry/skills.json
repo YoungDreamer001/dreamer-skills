@@ -3,6 +3,7 @@
     "manifest": "manifests/release-skills.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [
       "L1VzZXJzL2thbmVodWEvcHJvamVjdC9rYW5lX2luYm94"
     ],
@@ -14,6 +15,7 @@
     "manifest": "manifests/baoyu-article-illustrator.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [
       "L1VzZXJzL2thbmVodWEvcHJvamVjdC9rYW5lX2luYm94"
     ],
@@ -25,6 +27,7 @@
     "manifest": "manifests/baoyu-comic.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [
       "L1VzZXJzL2thbmVodWEvcHJvamVjdC9rYW5lX2luYm94"
     ],
@@ -36,6 +39,7 @@
     "manifest": "manifests/baoyu-compress-image.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [
       "L1VzZXJzL2thbmVodWEvcHJvamVjdC9rYW5lX2luYm94"
     ],
@@ -47,6 +51,7 @@
     "manifest": "manifests/baoyu-cover-image.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [
       "L1VzZXJzL2thbmVodWEvcHJvamVjdC9rYW5lX2luYm94"
     ],
@@ -58,6 +63,7 @@
     "manifest": "manifests/baoyu-danger-gemini-web.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [
       "L1VzZXJzL2thbmVodWEvcHJvamVjdC9rYW5lX2luYm94"
     ],
@@ -69,6 +75,7 @@
     "manifest": "manifests/baoyu-danger-x-to-markdown.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [
       "L1VzZXJzL2thbmVodWEvcHJvamVjdC9rYW5lX2luYm94"
     ],
@@ -80,6 +87,7 @@
     "manifest": "manifests/baoyu-diagram.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [
       "L1VzZXJzL2thbmVodWEvcHJvamVjdC9rYW5lX2luYm94"
     ],
@@ -91,6 +99,7 @@
     "manifest": "manifests/baoyu-format-markdown.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [
       "L1VzZXJzL2thbmVodWEvcHJvamVjdC9rYW5lX2luYm94"
     ],
@@ -102,6 +111,7 @@
     "manifest": "manifests/baoyu-image-cards.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [
       "L1VzZXJzL2thbmVodWEvcHJvamVjdC9rYW5lX2luYm94"
     ],
@@ -113,6 +123,7 @@
     "manifest": "manifests/baoyu-imagine.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [
       "L1VzZXJzL2thbmVodWEvcHJvamVjdC9rYW5lX2luYm94"
     ],
@@ -124,6 +135,7 @@
     "manifest": "manifests/baoyu-infographic.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [
       "L1VzZXJzL2thbmVodWEvcHJvamVjdC9rYW5lX2luYm94"
     ],
@@ -135,6 +147,7 @@
     "manifest": "manifests/baoyu-markdown-to-html.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [
       "L1VzZXJzL2thbmVodWEvcHJvamVjdC9rYW5lX2luYm94"
     ],
@@ -146,6 +159,7 @@
     "manifest": "manifests/baoyu-post-to-wechat.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [
       "L1VzZXJzL2thbmVodWEvcHJvamVjdC9rYW5lX2luYm94"
     ],
@@ -157,6 +171,7 @@
     "manifest": "manifests/baoyu-post-to-weibo.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [
       "L1VzZXJzL2thbmVodWEvcHJvamVjdC9rYW5lX2luYm94"
     ],
@@ -168,6 +183,7 @@
     "manifest": "manifests/baoyu-post-to-x.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [
       "L1VzZXJzL2thbmVodWEvcHJvamVjdC9rYW5lX2luYm94"
     ],
@@ -179,6 +195,7 @@
     "manifest": "manifests/baoyu-slide-deck.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [
       "L1VzZXJzL2thbmVodWEvcHJvamVjdC9rYW5lX2luYm94"
     ],
@@ -190,6 +207,7 @@
     "manifest": "manifests/baoyu-translate.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [
       "L1VzZXJzL2thbmVodWEvcHJvamVjdC9rYW5lX2luYm94"
     ],
@@ -201,6 +219,7 @@
     "manifest": "manifests/baoyu-url-to-markdown.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [
       "L1VzZXJzL2thbmVodWEvcHJvamVjdC9rYW5lX2luYm94"
     ],
@@ -212,6 +231,7 @@
     "manifest": "manifests/baoyu-youtube-transcript.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [
       "L1VzZXJzL2thbmVodWEvcHJvamVjdC9rYW5lX3ZhdWx0",
       "L1VzZXJzL2thbmVodWEvcHJvamVjdC9rYW5lX2luYm94"
@@ -224,6 +244,7 @@
     "manifest": "manifests/guizang-ppt-skill.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [
       "L1VzZXJzL2thbmVodWEvcHJvamVjdC9rYW5lX2luYm94"
     ],
@@ -235,6 +256,7 @@
     "manifest": "manifests/ljg-read.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-05-11T15:08:00.622Z",
     "source_id": "github.com_lijigang_ljg-skills@main",
@@ -244,6 +266,7 @@
     "manifest": "manifests/vercel-composition-patterns.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-05-07T03:28:00.465Z",
     "source_id": "github.com_vercel-labs_agent-skills@main",
@@ -253,6 +276,7 @@
     "manifest": "manifests/deploy-to-vercel.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-05-07T03:28:00.468Z",
     "source_id": "github.com_vercel-labs_agent-skills@main",
@@ -262,6 +286,7 @@
     "manifest": "manifests/vercel-react-best-practices.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-05-07T03:28:00.484Z",
     "source_id": "github.com_vercel-labs_agent-skills@main",
@@ -271,6 +296,7 @@
     "manifest": "manifests/vercel-react-native-skills.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-05-07T03:28:00.496Z",
     "source_id": "github.com_vercel-labs_agent-skills@main",
@@ -280,6 +306,7 @@
     "manifest": "manifests/vercel-react-view-transitions.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-05-07T03:28:00.503Z",
     "source_id": "github.com_vercel-labs_agent-skills@main",
@@ -289,6 +316,7 @@
     "manifest": "manifests/vercel-cli-with-tokens.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-05-07T03:28:00.506Z",
     "source_id": "github.com_vercel-labs_agent-skills@main",
@@ -298,6 +326,7 @@
     "manifest": "manifests/web-design-guidelines.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-05-07T03:28:00.508Z",
     "source_id": "github.com_vercel-labs_agent-skills@main",
@@ -307,6 +336,7 @@
     "manifest": "manifests/web-design.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [
       "L1VzZXJzL2thbmVodWEvcHJvamVjdC9rYW5lX2luYm94"
     ],
@@ -318,6 +348,7 @@
     "manifest": "manifests/ian-handdrawn-ppt.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-04-28T10:36:33.093Z",
     "source_id": "github.com_helloianneo_ian-handdrawn-ppt@main",
@@ -327,6 +358,7 @@
     "manifest": "manifests/design-an-interface.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-05-11T15:08:06.648Z",
     "source_id": "github.com_mattpocock_skills@main",
@@ -336,6 +368,7 @@
     "manifest": "manifests/qa.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-05-11T15:08:06.651Z",
     "source_id": "github.com_mattpocock_skills@main",
@@ -345,6 +378,7 @@
     "manifest": "manifests/ubiquitous-language.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-05-11T15:08:06.653Z",
     "source_id": "github.com_mattpocock_skills@main",
@@ -354,6 +388,7 @@
     "manifest": "manifests/diagnose.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-05-11T15:08:06.657Z",
     "source_id": "github.com_mattpocock_skills@main",
@@ -363,6 +398,7 @@
     "manifest": "manifests/grill-with-docs.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-05-11T15:08:06.660Z",
     "source_id": "github.com_mattpocock_skills@main",
@@ -372,6 +408,7 @@
     "manifest": "manifests/improve-codebase-architecture.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-05-11T15:08:06.663Z",
     "source_id": "github.com_mattpocock_skills@main",
@@ -381,6 +418,7 @@
     "manifest": "manifests/tdd.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-05-11T15:08:06.667Z",
     "source_id": "github.com_mattpocock_skills@main",
@@ -390,6 +428,7 @@
     "manifest": "manifests/to-issues.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-05-11T15:08:06.670Z",
     "source_id": "github.com_mattpocock_skills@main",
@@ -399,6 +438,7 @@
     "manifest": "manifests/to-prd.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-05-11T15:08:06.672Z",
     "source_id": "github.com_mattpocock_skills@main",
@@ -408,6 +448,7 @@
     "manifest": "manifests/zoom-out.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-05-11T15:08:06.675Z",
     "source_id": "github.com_mattpocock_skills@main",
@@ -417,6 +458,7 @@
     "manifest": "manifests/git-guardrails-claude-code.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-05-11T15:08:06.678Z",
     "source_id": "github.com_mattpocock_skills@main",
@@ -426,6 +468,7 @@
     "manifest": "manifests/migrate-to-shoehorn.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-05-11T15:08:06.681Z",
     "source_id": "github.com_mattpocock_skills@main",
@@ -435,6 +478,7 @@
     "manifest": "manifests/scaffold-exercises.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-05-11T15:08:06.683Z",
     "source_id": "github.com_mattpocock_skills@main",
@@ -444,6 +488,7 @@
     "manifest": "manifests/setup-pre-commit.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-05-11T15:08:06.686Z",
     "source_id": "github.com_mattpocock_skills@main",
@@ -453,6 +498,7 @@
     "manifest": "manifests/edit-article.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-05-11T15:08:06.692Z",
     "source_id": "github.com_mattpocock_skills@main",
@@ -462,6 +508,7 @@
     "manifest": "manifests/obsidian-vault.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-05-11T15:08:06.695Z",
     "source_id": "github.com_mattpocock_skills@main",
@@ -471,6 +518,7 @@
     "manifest": "manifests/caveman.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-05-11T15:08:06.707Z",
     "source_id": "github.com_mattpocock_skills@main",
@@ -480,6 +528,7 @@
     "manifest": "manifests/grill-me.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-05-11T15:08:06.709Z",
     "source_id": "github.com_mattpocock_skills@main",
@@ -489,6 +538,7 @@
     "manifest": "manifests/write-a-skill.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-05-11T15:08:06.712Z",
     "source_id": "github.com_mattpocock_skills@main",
@@ -498,6 +548,7 @@
     "manifest": "manifests/gpt-image-2.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-05-11T15:08:08.629Z",
     "source_id": "github.com_ConardLi_garden-skills@main",
@@ -507,6 +558,7 @@
     "manifest": "manifests/web-design-engineer.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-05-11T15:08:08.640Z",
     "source_id": "github.com_ConardLi_garden-skills@main",
@@ -516,6 +568,7 @@
     "manifest": "manifests/visual-style-ppt.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-05-03T07:52:44.799Z",
     "source_id": "github.com_irenerachel_visual-style-ppt-skill@main",
@@ -525,6 +578,7 @@
     "manifest": "manifests/api-and-interface-design.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-05-11T15:08:12.442Z",
     "source_id": "github.com_addyosmani_agent-skills@main",
@@ -534,6 +588,7 @@
     "manifest": "manifests/browser-testing-with-devtools.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-05-11T15:08:12.445Z",
     "source_id": "github.com_addyosmani_agent-skills@main",
@@ -543,6 +598,7 @@
     "manifest": "manifests/ci-cd-and-automation.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-05-11T15:08:12.448Z",
     "source_id": "github.com_addyosmani_agent-skills@main",
@@ -552,6 +608,7 @@
     "manifest": "manifests/code-review-and-quality.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-05-11T15:08:12.450Z",
     "source_id": "github.com_addyosmani_agent-skills@main",
@@ -561,6 +618,7 @@
     "manifest": "manifests/code-simplification.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-05-11T15:08:12.453Z",
     "source_id": "github.com_addyosmani_agent-skills@main",
@@ -570,6 +628,7 @@
     "manifest": "manifests/context-engineering.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-05-11T15:08:12.455Z",
     "source_id": "github.com_addyosmani_agent-skills@main",
@@ -579,6 +638,7 @@
     "manifest": "manifests/debugging-and-error-recovery.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-05-11T15:08:12.457Z",
     "source_id": "github.com_addyosmani_agent-skills@main",
@@ -588,6 +648,7 @@
     "manifest": "manifests/deprecation-and-migration.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-05-11T15:08:12.459Z",
     "source_id": "github.com_addyosmani_agent-skills@main",
@@ -597,6 +658,7 @@
     "manifest": "manifests/documentation-and-adrs.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-05-11T15:08:12.461Z",
     "source_id": "github.com_addyosmani_agent-skills@main",
@@ -606,6 +668,7 @@
     "manifest": "manifests/frontend-ui-engineering.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-05-11T15:08:12.464Z",
     "source_id": "github.com_addyosmani_agent-skills@main",
@@ -615,6 +678,7 @@
     "manifest": "manifests/git-workflow-and-versioning.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-05-11T15:08:12.467Z",
     "source_id": "github.com_addyosmani_agent-skills@main",
@@ -624,6 +688,7 @@
     "manifest": "manifests/idea-refine.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-05-11T15:08:12.471Z",
     "source_id": "github.com_addyosmani_agent-skills@main",
@@ -633,6 +698,7 @@
     "manifest": "manifests/incremental-implementation.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-05-11T15:08:12.473Z",
     "source_id": "github.com_addyosmani_agent-skills@main",
@@ -642,6 +708,7 @@
     "manifest": "manifests/performance-optimization.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-05-11T15:08:12.475Z",
     "source_id": "github.com_addyosmani_agent-skills@main",
@@ -651,6 +718,7 @@
     "manifest": "manifests/planning-and-task-breakdown.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-05-11T15:08:12.478Z",
     "source_id": "github.com_addyosmani_agent-skills@main",
@@ -660,6 +728,7 @@
     "manifest": "manifests/security-and-hardening.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-05-11T15:08:12.480Z",
     "source_id": "github.com_addyosmani_agent-skills@main",
@@ -669,6 +738,7 @@
     "manifest": "manifests/shipping-and-launch.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-05-11T15:08:12.483Z",
     "source_id": "github.com_addyosmani_agent-skills@main",
@@ -678,6 +748,7 @@
     "manifest": "manifests/source-driven-development.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-05-11T15:08:12.485Z",
     "source_id": "github.com_addyosmani_agent-skills@main",
@@ -687,6 +758,7 @@
     "manifest": "manifests/spec-driven-development.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-05-11T15:08:12.488Z",
     "source_id": "github.com_addyosmani_agent-skills@main",
@@ -696,6 +768,7 @@
     "manifest": "manifests/test-driven-development.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-05-11T15:08:12.491Z",
     "source_id": "github.com_addyosmani_agent-skills@main",
@@ -705,6 +778,7 @@
     "manifest": "manifests/using-agent-skills.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-05-11T15:08:12.494Z",
     "source_id": "github.com_addyosmani_agent-skills@main",
@@ -714,6 +788,7 @@
     "manifest": "manifests/HeavySkill.yaml",
     "installed": true,
     "enabled_global": true,
+    "enabled_global_ides": [],
     "enabled_projects": [],
     "updated_at": "2026-05-07T10:43:02.297Z",
     "source_id": "local-heavyskill-adapted"
@@ -722,11 +797,24 @@
     "manifest": "manifests/skill-creator.yaml",
     "installed": true,
     "enabled_global": false,
+    "enabled_global_ides": [],
     "enabled_projects": [
       "L1VzZXJzL2thbmVodWEvcHJvamVjdC9oay1za2lsbHM"
     ],
     "updated_at": "2026-05-11T13:38:48.713Z",
     "source_id": "github.com_anthropics_skills@main",
     "subpath": "skills/skill-creator"
+  },
+  "prompt-optimizer": {
+    "manifest": "manifests/prompt-optimizer.yaml",
+    "installed": true,
+    "enabled_global": true,
+    "enabled_global_ides": [
+      "opencode",
+      "universal"
+    ],
+    "enabled_projects": [],
+    "updated_at": "2026-05-11T15:37:54.496Z",
+    "source_id": "local-prompt-optimizer"
   }
 }

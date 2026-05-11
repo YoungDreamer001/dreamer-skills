@@ -4,6 +4,7 @@ export const RegistryEntrySchema = z.object({
   manifest: z.string(),
   installed: z.boolean(),
   enabled_global: z.boolean(),
+  enabled_global_ides: z.array(z.string()).default([]),
   enabled_projects: z.array(z.string()),
   updated_at: z.string(),
   source_id: z.string(),

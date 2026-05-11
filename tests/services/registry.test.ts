@@ -29,6 +29,7 @@ describe("registry service", () => {
           manifest: "test-manifest.json",
           installed: true,
           enabled_global: false,
+          enabled_global_ides: [],
           enabled_projects: ["proj-a"],
           updated_at: "2024-01-01T00:00:00Z",
           source_id: "test-source",
@@ -45,6 +46,7 @@ describe("registry service", () => {
           manifest: "test-manifest.json",
           installed: true,
           enabled_global: false,
+          enabled_global_ides: [],
           enabled_projects: ["proj-a"],
           updated_at: "2024-01-01T00:00:00Z",
           source_id: "test-source",
@@ -117,7 +119,7 @@ describe("registry service", () => {
 
   describe("atomic write", () => {
     it("should leave original file untouched if write fails", () => {
-      const initialData = { "skill-a": { manifest: "a.json", installed: true, enabled_global: true, enabled_projects: [], updated_at: "2024-01-01T00:00:00Z", source_id: "source-a" } };
+      const initialData = { "skill-a": { manifest: "a.json", installed: true, enabled_global: true, enabled_global_ides: [], enabled_projects: [], updated_at: "2024-01-01T00:00:00Z", source_id: "source-a" } };
       saveSkillsRegistry(tempDir, initialData);
 
       const originalWriteFileSync = fs.writeFileSync;
@@ -126,7 +128,7 @@ describe("registry service", () => {
       };
 
       try {
-        expect(() => saveSkillsRegistry(tempDir, { "skill-b": { manifest: "b.json", installed: false, enabled_global: false, enabled_projects: [], updated_at: "2024-02-01T00:00:00Z", source_id: "source-b" } })).toThrow();
+        expect(() => saveSkillsRegistry(tempDir, { "skill-b": { manifest: "b.json", installed: false, enabled_global: false, enabled_global_ides: [], enabled_projects: [], updated_at: "2024-02-01T00:00:00Z", source_id: "source-b" } })).toThrow();
         const loaded = loadSkillsRegistry(tempDir);
         expect(loaded).toEqual(initialData);
       } finally {
