@@ -3,21 +3,21 @@
     "type": "remote",
     "repo": "https://github.com/JimLiu/baoyu-skills",
     "ref": "main",
-    "commit": "4af0506fa32409efa70733ed91a32d4d81585244",
+    "commit": "adba24281bea8ed1935b5256e6de7019c7aecae1",
     "local_path": "warehouse/remote/github.com_JimLiu_baoyu-skills@main"
   },
   "github.com_op7418_guizang-ppt-skill@main": {
     "type": "remote",
     "repo": "https://github.com/op7418/guizang-ppt-skill",
     "ref": "main",
-    "commit": "72837a8513d1145d800095fc3909d6d3057994b8",
+    "commit": "f6676c3f315e4cbf8abb41daa26377688a716a5f",
     "local_path": "warehouse/remote/github.com_op7418_guizang-ppt-skill@main"
   },
   "github.com_lijigang_ljg-skills@main": {
     "type": "remote",
     "repo": "https://github.com/lijigang/ljg-skills",
     "ref": "master",
-    "commit": "d2d6a0313baaeee789d00aa5c3841d4622147f23",
+    "commit": "987dc1173f93737e28bdbba18a38b7a3de4cb019",
     "local_path": "warehouse/remote/github.com_lijigang_ljg-skills@main"
   },
   "github.com_vercel-labs_agent-skills@main": {
@@ -45,14 +45,14 @@
     "type": "remote",
     "repo": "https://github.com/mattpocock/skills",
     "ref": "main",
-    "commit": "70141119e9fe47430b62b93bcf166a73e6580048",
+    "commit": "9f2e0bd0ea776eb6372eb81fa8a4a47814a8404a",
     "local_path": "warehouse/remote/github.com_mattpocock_skills@main"
   },
   "github.com_ConardLi_garden-skills@main": {
     "type": "remote",
     "repo": "https://github.com/ConardLi/garden-skills.git",
     "ref": "main",
-    "commit": "900dbc01ae81abfc96aa6461c6233275889f8566",
+    "commit": "0dc969b1dff2f30c5e8f9e4ca410a4dcc8ba33b9",
     "local_path": "warehouse/remote/github.com_ConardLi_garden-skills@main"
   },
   "github.com_irenerachel_visual-style-ppt-skill@main": {
@@ -66,7 +66,7 @@
     "type": "remote",
     "repo": "https://github.com/addyosmani/agent-skills",
     "ref": "main",
-    "commit": "742dca58ae557bc67afec9ea8e6de59c085f0534",
+    "commit": "3ff4b518b3cd3077ca27cf883aa21d21faf53802",
     "local_path": "warehouse/remote/github.com_addyosmani_agent-skills@main"
   },
   "local-heavyskill-adapted": {
