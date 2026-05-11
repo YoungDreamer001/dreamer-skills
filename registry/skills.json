@@ -717,5 +717,16 @@
     "enabled_projects": [],
     "updated_at": "2026-05-07T10:43:02.297Z",
     "source_id": "local-heavyskill-adapted"
+  },
+  "skill-creator": {
+    "manifest": "manifests/skill-creator.yaml",
+    "installed": true,
+    "enabled_global": false,
+    "enabled_projects": [
+      "L1VzZXJzL2thbmVodWEvcHJvamVjdC9oay1za2lsbHM"
+    ],
+    "updated_at": "2026-05-11T13:38:48.713Z",
+    "source_id": "github.com_anthropics_skills@main",
+    "subpath": "skills/skill-creator"
   }
 }

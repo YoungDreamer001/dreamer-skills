@@ -72,5 +72,12 @@
   "local-heavyskill-adapted": {
     "type": "local",
     "local_path": "warehouse/local/heavyskill-adapted"
+  },
+  "github.com_anthropics_skills@main": {
+    "type": "remote",
+    "repo": "https://github.com/anthropics/skills.git",
+    "ref": "main",
+    "commit": "f458cee31a7577a47ba0c9a101976fa599385174",
+    "local_path": "warehouse/remote/github.com_anthropics_skills@main"
   }
 }

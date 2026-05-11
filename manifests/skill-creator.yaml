@@ -1,0 +1,11 @@
+name: skill-creator
+display_name: skill-creator
+source:
+  type: remote
+  repo: https://github.com/anthropics/skills.git
+  ref: main
+  commit: f458cee31a7577a47ba0c9a101976fa599385174
+status:
+  stage: adapted
+entry:
+  file: SKILL.md
