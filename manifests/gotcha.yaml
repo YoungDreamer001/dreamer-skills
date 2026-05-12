@@ -1,0 +1,8 @@
+name: gotcha
+display_name: gotcha
+source:
+  type: local
+status:
+  stage: adapted
+entry:
+  file: SKILL.md

@@ -856,5 +856,18 @@
     "enabled_projects": [],
     "updated_at": "2026-05-12T08:12:26.643Z",
     "source_id": "local-skill-installer"
+  },
+  "gotcha": {
+    "manifest": "manifests/gotcha.yaml",
+    "installed": true,
+    "enabled_global": true,
+    "enabled_global_ides": [
+      "opencode",
+      "claude-code",
+      "universal"
+    ],
+    "enabled_projects": [],
+    "updated_at": "2026-05-12T09:09:12.016Z",
+    "source_id": "local-gotcha"
   }
 }
