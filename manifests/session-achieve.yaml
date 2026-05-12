@@ -1,0 +1,8 @@
+name: session-achieve
+display_name: session-achieve
+source:
+  type: local
+status:
+  stage: adapted
+entry:
+  file: SKILL.md

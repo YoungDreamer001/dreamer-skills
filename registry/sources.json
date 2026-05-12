@@ -83,5 +83,21 @@
   "local-prompt-optimizer": {
     "type": "local",
     "local_path": "warehouse/local/prompt-optimizer"
+  },
+  "local-session-achieve": {
+    "type": "local",
+    "local_path": "warehouse/local/session-achieve"
+  },
+  "local-subtext-article": {
+    "type": "local",
+    "local_path": "warehouse/local/subtext-article"
+  },
+  "local-merge-drafts": {
+    "type": "local",
+    "local_path": "warehouse/local/merge-drafts"
+  },
+  "local-skill-installer": {
+    "type": "local",
+    "local_path": "warehouse/local/skill-installer"
   }
 }

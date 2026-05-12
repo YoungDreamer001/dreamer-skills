@@ -1,0 +1,8 @@
+name: subtext-article
+display_name: subtext-article
+source:
+  type: local
+status:
+  stage: adapted
+entry:
+  file: SKILL.md

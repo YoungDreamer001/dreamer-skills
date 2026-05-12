@@ -816,5 +816,45 @@
     "enabled_projects": [],
     "updated_at": "2026-05-11T15:37:54.496Z",
     "source_id": "local-prompt-optimizer"
+  },
+  "session-achieve": {
+    "manifest": "manifests/session-achieve.yaml",
+    "installed": true,
+    "enabled_global": true,
+    "enabled_global_ides": [
+      "opencode",
+      "claude-code",
+      "universal"
+    ],
+    "enabled_projects": [],
+    "updated_at": "2026-05-12T08:12:32.044Z",
+    "source_id": "local-session-achieve"
+  },
+  "subtext-article": {
+    "manifest": "manifests/subtext-article.yaml",
+    "installed": true,
+    "enabled_global": false,
+    "enabled_global_ides": [],
+    "enabled_projects": [],
+    "updated_at": "2026-05-12T08:12:26.641Z",
+    "source_id": "local-subtext-article"
+  },
+  "merge-drafts": {
+    "manifest": "manifests/merge-drafts.yaml",
+    "installed": true,
+    "enabled_global": false,
+    "enabled_global_ides": [],
+    "enabled_projects": [],
+    "updated_at": "2026-05-12T08:12:26.642Z",
+    "source_id": "local-merge-drafts"
+  },
+  "skill-installer": {
+    "manifest": "manifests/skill-installer.yaml",
+    "installed": true,
+    "enabled_global": false,
+    "enabled_global_ides": [],
+    "enabled_projects": [],
+    "updated_at": "2026-05-12T08:12:26.643Z",
+    "source_id": "local-skill-installer"
   }
 }
