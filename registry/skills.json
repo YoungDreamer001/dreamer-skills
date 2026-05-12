@@ -813,8 +813,10 @@
       "opencode",
       "universal"
     ],
-    "enabled_projects": [],
-    "updated_at": "2026-05-11T15:37:54.496Z",
+    "enabled_projects": [
+      "L1VzZXJzL2thbmVodWEvcHJvamVjdC9rYW5lX2luYm94"
+    ],
+    "updated_at": "2026-05-12T14:44:44.302Z",
     "source_id": "local-prompt-optimizer"
   },
   "session-achieve": {
@@ -873,5 +875,16 @@
     "enabled_projects": [],
     "updated_at": "2026-05-12T10:26:26.630Z",
     "source_id": "local-blog-checker"
+  },
+  "merge-drafts": {
+    "manifest": "manifests/merge-drafts.yaml",
+    "installed": true,
+    "enabled_global": false,
+    "enabled_global_ides": [],
+    "enabled_projects": [
+      "L1VzZXJzL2thbmVodWEvcHJvamVjdC9rYW5lX2luYm94"
+    ],
+    "updated_at": "2026-05-12T14:47:34.162Z",
+    "source_id": "local-merge-drafts"
   }
 }
