@@ -96,10 +96,6 @@
     "type": "local",
     "local_path": "warehouse/local/skill-installer"
   },
-  "local-gotcha": {
-    "type": "local",
-    "local_path": "warehouse/local/gotcha"
-  },
   "local-blog-checker": {
     "type": "local",
     "local_path": "warehouse/local/blog-checker"
