@@ -1,6 +1,6 @@
 ---
 name: subtext-article
-description: Convert Chinese video subtitles, transcript dumps, Bilibili AIsubtitle JSON, YouTube transcripts, SRT/VTT files, or spoken draft text into a faithful long-form Chinese article. Use when the user asks to turn subtitles, subtext, transcript, video captions, B站字幕, YouTube字幕, 口语稿, 播客转写, or 视频文稿 into a publishable article with Title, Overview, and Markdown sections while preserving the original claims, order, data, examples, and key quotes.
+description: Convert Chinese video subtitles, ASR outputs, transcript dumps, Bilibili AIsubtitle JSON, YouTube transcripts, SRT/VTT/ASS/SSA/LRC files, Whisper-style JSON, podcast transcripts, spoken drafts, or copied caption text into a faithful long-form Chinese article. Use when the user asks to turn subtitles, subtext, transcript, video captions, B站字幕, YouTube字幕, ASR转写, 口语稿, 播客转写, or 视频文稿 into a publishable article with Title, Overview, and Markdown sections while preserving the original claims, order, data, examples, and key quotes.
 ---
 
 # Subtext Article
@@ -17,12 +17,11 @@ Rebuild article structure. Turn the transcript into a coherent article with an o
 
 ## Workflow
 
-1. Identify the input type:
-   - Bilibili AIsubtitle JSON: read `body[].content` in `sid` order.
-   - YouTube transcript dump: strip timestamps and transcript boilerplate.
-   - SRT/VTT: strip cue numbers, timestamps, and metadata.
-   - Plain text transcript: keep only spoken content and meaningful title/context.
-2. Normalize the transcript before writing. For file inputs, prefer `scripts/normalize_subtitle.py` to extract continuous text into a temporary working file.
+1. Identify the source family, not just the exact platform:
+   - structured JSON: Bilibili AIsubtitle, Whisper/Faster-Whisper/WhisperX, ASR vendor exports, caption arrays, `segments`, `utterances`, `captions`, `subtitles`, `events`, `items`, `words`, or nested objects containing text fields;
+   - subtitle files: SRT, WebVTT/VTT, ASS/SSA, LRC, YouTube timedtext XML/TTML, or copied transcript dumps with timestamps;
+   - plain transcript text: raw ASR paragraphs, copied captions, podcast transcripts, interview notes, or spoken drafts.
+2. Normalize the transcript before writing. For file inputs, prefer `scripts/normalize_subtitle.py` to extract continuous spoken text into a temporary working file. If the script misses a new schema, inspect the file shape and extract the spoken text manually rather than forcing it into a known example.
 3. Read the full normalized transcript before drafting. For long transcripts, process in chunks and build an internal evidence map of:
    - main thesis and conclusion;
    - topic sequence;
@@ -67,8 +66,8 @@ If the transcript is incomplete, corrupted, or too ambiguous to preserve meaning
 
 ## Bundled Resources
 
-- `scripts/normalize_subtitle.py`: extract spoken text from JSON, SRT/VTT, YouTube transcript dumps, or plain subtitle files.
+- `scripts/normalize_subtitle.py`: extract spoken text from common JSON, XML, SRT, VTT, ASS/SSA, LRC, YouTube transcript dumps, ASR outputs, or plain subtitle files.
 - `case/case1.json` and `case/case2.json`: Bilibili-style JSON examples.
 - `case/case3.md`: YouTube transcript example.
 
-Read the case files only when calibrating behavior, debugging an input format, or comparing expected source shapes. Do not load all cases for routine use.
+The case files are calibration examples, not coverage limits. Read them only when debugging an input format or comparing expected source shapes. Do not load all cases for routine use.

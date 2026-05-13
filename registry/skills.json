@@ -835,10 +835,14 @@
   "subtext-article": {
     "manifest": "manifests/subtext-article.yaml",
     "installed": true,
-    "enabled_global": false,
-    "enabled_global_ides": [],
+    "enabled_global": true,
+    "enabled_global_ides": [
+      "opencode",
+      "claude-code",
+      "universal"
+    ],
     "enabled_projects": [],
-    "updated_at": "2026-05-12T08:12:26.641Z",
+    "updated_at": "2026-05-13T14:58:02.717Z",
     "source_id": "local-subtext-article"
   },
   "skill-installer": {
