@@ -3,7 +3,7 @@
     "type": "remote",
     "repo": "https://github.com/JimLiu/baoyu-skills",
     "ref": "main",
-    "commit": "dea9322d0db848b46af0e5a43df303537904a679",
+    "commit": "20ebf6126c85f2971ba9e9ee8ffe09fc803b5963",
     "local_path": "warehouse/remote/github.com_JimLiu_baoyu-skills@main"
   },
   "github.com_op7418_guizang-ppt-skill@main": {
@@ -17,7 +17,7 @@
     "type": "remote",
     "repo": "https://github.com/lijigang/ljg-skills",
     "ref": "master",
-    "commit": "987dc1173f93737e28bdbba18a38b7a3de4cb019",
+    "commit": "f08797a637cb983424d0d2fc19f5ff4ef327c89c",
     "local_path": "warehouse/remote/github.com_lijigang_ljg-skills@main"
   },
   "github.com_vercel-labs_agent-skills@main": {
@@ -66,7 +66,7 @@
     "type": "remote",
     "repo": "https://github.com/addyosmani/agent-skills",
     "ref": "main",
-    "commit": "3ff4b518b3cd3077ca27cf883aa21d21faf53802",
+    "commit": "5b4c6dade5e6b5a48067d08861a11732d8e3a2bf",
     "local_path": "warehouse/remote/github.com_addyosmani_agent-skills@main"
   },
   "local-heavyskill-adapted": {

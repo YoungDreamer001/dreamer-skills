@@ -2,9 +2,6 @@ name: web-design-engineer
 display_name: web-design-engineer
 source:
   type: remote
-  repo: https://github.com/ConardLi/garden-skills.git
-  ref: main
-  commit: 242324434eef1ab76850bc62358b57081f7d3749
 status:
   stage: adapted
 entry:

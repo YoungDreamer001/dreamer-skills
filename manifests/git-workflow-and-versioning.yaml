@@ -4,7 +4,7 @@ source:
   type: remote
   repo: https://github.com/addyosmani/agent-skills
   ref: main
-  commit: 3ff4b518b3cd3077ca27cf883aa21d21faf53802
+  commit: 5b4c6dade5e6b5a48067d08861a11732d8e3a2bf
 status:
   stage: adapted
 entry:
