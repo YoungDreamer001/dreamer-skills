@@ -155,8 +155,16 @@ After confirmation → proceed to State 3.
    - **Multi-answer/Creative**: Generate 3-5 candidates, assign probabilities (sum=1), sort descending. Provide sampling advice.
 
 **Output format**:
-1. Complete Prompt (wrapped in code block)
-2. Brief Design Rationale (3-5 lines)
+1. Save the complete prompt to a file:
+   - Markdown prompt → `.md`
+   - XML prompt → `.xml`
+   - If user specifies a path, write there.
+   - If no path is specified, write to the current working directory using a concise task slug, e.g. `competitor-analysis-prompt.xml` or `meeting-notes-todos-prompt.md`.
+   - If the target file exists, do not overwrite silently; choose a clear numbered filename or ask when overwrite matters.
+2. Final chat response:
+   - Provide the saved file path.
+   - Include a Brief Design Rationale (3-5 lines).
+   - Do not paste the full prompt again unless the user explicitly asks.
 
 Do not output: explanations, tutorials, disclaimers.
 
