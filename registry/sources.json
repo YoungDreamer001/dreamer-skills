@@ -107,5 +107,9 @@
   "local-article-analyzer": {
     "type": "local",
     "local_path": "warehouse/local/article-analyzer"
+  },
+  "local-concept-fable": {
+    "type": "local",
+    "local_path": "warehouse/local/concept-fable"
   }
 }

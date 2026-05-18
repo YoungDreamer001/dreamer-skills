@@ -1,0 +1,4 @@
+interface:
+  display_name: "Concept Fable"
+  short_description: "用三段式寓言萃取冷门高级概念并输出理论映射解析文章"
+  default_prompt: "Use $concept-fable to turn a field into a three-part explanatory fable with a concept reveal."
