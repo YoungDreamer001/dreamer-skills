@@ -4,7 +4,7 @@ source:
   type: remote
   repo: https://github.com/anthropics/skills.git
   ref: main
-  commit: f458cee31a7577a47ba0c9a101976fa599385174
+  commit: 6a5bb06904ab164a345e41c381fc9097954b83da
 status:
   stage: adapted
 entry:

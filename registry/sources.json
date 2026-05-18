@@ -3,21 +3,21 @@
     "type": "remote",
     "repo": "https://github.com/JimLiu/baoyu-skills",
     "ref": "main",
-    "commit": "20ebf6126c85f2971ba9e9ee8ffe09fc803b5963",
+    "commit": "5d2a39c636c1c374b2ae5f72648a0df4be1ad0f7",
     "local_path": "warehouse/remote/github.com_JimLiu_baoyu-skills@main"
   },
   "github.com_op7418_guizang-ppt-skill@main": {
     "type": "remote",
     "repo": "https://github.com/op7418/guizang-ppt-skill",
     "ref": "main",
-    "commit": "f07de0060921bdd55d4dfd9dad3f2481a42a5719",
+    "commit": "3d87acc6cc53d3c1573e33d5073c1ec5a5a99196",
     "local_path": "warehouse/remote/github.com_op7418_guizang-ppt-skill@main"
   },
   "github.com_lijigang_ljg-skills@main": {
     "type": "remote",
     "repo": "https://github.com/lijigang/ljg-skills",
     "ref": "master",
-    "commit": "f08797a637cb983424d0d2fc19f5ff4ef327c89c",
+    "commit": "6648153bef4d52f330fb88e80e87dae5f35bbc8f",
     "local_path": "warehouse/remote/github.com_lijigang_ljg-skills@main"
   },
   "github.com_vercel-labs_agent-skills@main": {
@@ -45,7 +45,7 @@
     "type": "remote",
     "repo": "https://github.com/mattpocock/skills",
     "ref": "main",
-    "commit": "e74f0061bb67222181640effa98c675bdb2fdaa7",
+    "commit": "67bce91c80cd1020a4f068ced32d0281656842ad",
     "local_path": "warehouse/remote/github.com_mattpocock_skills@main"
   },
   "github.com_ConardLi_garden-skills@main": {
@@ -66,7 +66,7 @@
     "type": "remote",
     "repo": "https://github.com/addyosmani/agent-skills",
     "ref": "main",
-    "commit": "5b4c6dade5e6b5a48067d08861a11732d8e3a2bf",
+    "commit": "f17c6e88c904dc747381c374312c2d58e10647ae",
     "local_path": "warehouse/remote/github.com_addyosmani_agent-skills@main"
   },
   "local-heavyskill-adapted": {
@@ -75,9 +75,9 @@
   },
   "github.com_anthropics_skills@main": {
     "type": "remote",
-    "repo": "https://github.com/anthropics/skills.git",
+    "repo": "https://github.com/anthropics/skills",
     "ref": "main",
-    "commit": "f458cee31a7577a47ba0c9a101976fa599385174",
+    "commit": "6a5bb06904ab164a345e41c381fc9097954b83da",
     "local_path": "warehouse/remote/github.com_anthropics_skills@main"
   },
   "local-prompt-optimizer": {

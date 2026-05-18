@@ -4,7 +4,7 @@ source:
   type: remote
   repo: https://github.com/JimLiu/baoyu-skills
   ref: main
-  commit: 20ebf6126c85f2971ba9e9ee8ffe09fc803b5963
+  commit: 5d2a39c636c1c374b2ae5f72648a0df4be1ad0f7
 status:
   stage: adapted
 entry:
