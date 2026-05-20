@@ -25,6 +25,15 @@ State 0 (Task Routing) → State 1 (Deep Alignment) → State 2 (Format Lock) �
 
 Advance sequentially. If requirements are clear, skip early states.
 
+Use the 4D diagnostic layer as an internal checklist:
+
+1. **Deconstruct**: extract core intent, key entities, context, output requirements, and hard constraints.
+2. **Diagnose**: identify clarity gaps, ambiguity, missing variables, structure needs, and complexity level.
+3. **Develop**: select the prompt strategy, role policy, examples, reasoning structure, and constraints.
+4. **Deliver**: compile the prompt into the selected template and follow the file-based output contract.
+
+Read `references/lyra-4d.md` only when you need the rationale or a fuller checklist for complex prompt optimization. Do not copy its chat-oriented welcome message or response format.
+
 ---
 
 ## State 0 — Task Routing
@@ -35,10 +44,11 @@ Advance sequentially. If requirements are clear, skip early states.
 1. If user provided detailed requirements → skip to State 3.
 2. If requirements are vague → ask exactly one question:
    > For this task, do you prefer:
-   > 1. Quick completion (< 5 minutes, good enough)
-   > 2. Deep optimization (2-hour quality, stable output)
-3. If "Quick" → skip to State 3, use lightweight compilation.
-4. If "Deep" → proceed to State 1.
+   > 1. Quick completion / BASIC (< 5 minutes, good enough)
+   > 2. Deep optimization / DETAIL (2-hour quality, stable output)
+3. If "Quick" or "BASIC" → skip to State 3, use lightweight compilation.
+4. If "Deep" or "DETAIL" → proceed to State 1.
+5. If the task is professional, multi-step, high-stakes, or has unclear success criteria → default to Deep/DETAIL unless the user asks for speed.
 
 ---
 
@@ -63,7 +73,23 @@ Identify type and auto-select strategy:
 | Long-form (>1000 words) | Outline first + Paragraph control |
 | Agent/System Prompt | Role + Rules + Boundaries |
 
-### 1.2 Perspective Suggestion
+### 1.2 4D Diagnostic Pass
+
+Run this pass before asking the user for more information.
+
+| Diagnostic Area | What to capture |
+|-----------------|-----------------|
+| Core Intent | What the user ultimately wants the model to accomplish |
+| Key Entities | People, products, files, audience, platform, domain, constraints |
+| Context Given | Source material, examples, background assumptions, target use |
+| Output Requirements | Format, length, structure, tone, file type, delivery mode |
+| Missing Information | Variables that would materially change the prompt |
+| Ambiguity Risks | Terms, goals, audience, evidence, or constraints that can be read multiple ways |
+| Complexity Level | BASIC if single-step and low-risk; DETAIL if multi-step, high-stakes, or unstable |
+
+If missing information blocks correctness, ask 1-2 targeted questions. If it only affects polish, apply a smart default and continue.
+
+### 1.3 Perspective Suggestion
 
 Infer 3 key perspectives. Present as multiple-choice:
 
@@ -73,7 +99,7 @@ Infer 3 key perspectives. Present as multiple-choice:
 > C. [Perspective 3, e.g., "User — experience fluency"]
 > Which to retain? (Multiple choice allowed)
 
-### 1.3 Key Variable Completion
+### 1.4 Key Variable Completion
 
 Fill variables in priority order. Stop when marginal benefit drops.
 
@@ -92,7 +118,7 @@ Priority:
 - User requests direct generation.
 - Marginal benefit of new info drops significantly.
 
-### 1.4 Paradigm Anchoring
+### 1.5 Paradigm Anchoring
 
 Generate 3 output paradigms with different strategy dimensions:
 
@@ -152,8 +178,17 @@ After confirmation → proceed to State 3.
 | Stylized Writing | Allow role-playing: "You are a professional [field] expert..." |
 | Fact/Math/Code | Disable role-playing; prioritize precision and verifiability. |
 | Long Tasks | Add stage breakdowns, sub-tasks, checkpoints, self-check. |
+| Educational | Use examples, definitions, misconception checks, and a clear progression. |
+| Technical | Use explicit inputs, constraints, edge cases, verification steps, and failure handling. |
+| Complex/Professional | Use task decomposition, structured reasoning plan, evidence discipline, and self-check gates. |
 
-4. Handle special scenarios:
+4. Select optimization techniques:
+   - **Foundation**: context layering, task decomposition, output contract, boundary constraints.
+   - **Examples**: add few-shot examples only when format imitation or judgment calibration matters.
+   - **Perspective**: add multi-perspective review when the output needs tradeoff judgment.
+   - **Role policy**: assign a role for domain/style tasks; avoid role-play for fact, math, code, legal, medical, or evidence-sensitive tasks.
+   - **Reasoning**: request a concise reasoning plan or decision framework, not private chain-of-thought.
+5. Handle special scenarios:
    - **Multi-answer/Creative**: Generate 3-5 candidates, assign probabilities (sum=1), sort descending. Provide sampling advice.
 
 **Output format**:
@@ -206,6 +241,7 @@ Before final output, verify:
 - [ ] Boundary constraints defined.
 - [ ] No conflicting instructions.
 - [ ] Output format is clear.
+- [ ] Complex XML prompts use a single root element and are well-formed.
 - [ ] No prompt-engineering show-off.
 - [ ] Not overly complex for the task.
 
