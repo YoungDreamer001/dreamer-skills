@@ -4,7 +4,7 @@ source:
   type: remote
   repo: https://github.com/op7418/guizang-ppt-skill
   ref: main
-  commit: 3d87acc6cc53d3c1573e33d5073c1ec5a5a99196
+  commit: 6bfa520b86ed5a3dffdac0a3323155e2b6f516b6
 status:
   stage: adapted
 entry:

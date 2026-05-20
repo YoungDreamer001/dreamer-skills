@@ -248,7 +248,7 @@
     "enabled_projects": [
       "L1VzZXJzL2thbmVodWEvcHJvamVjdC9rYW5lX2VjaG9lcw"
     ],
-    "updated_at": "2026-05-18T15:15:42.271Z",
+    "updated_at": "2026-05-20T07:12:05.795Z",
     "source_id": "github.com_op7418_guizang-ppt-skill@main",
     "subpath": ""
   },
@@ -268,7 +268,7 @@
     "enabled_global": false,
     "enabled_global_ides": [],
     "enabled_projects": [],
-    "updated_at": "2026-05-07T03:28:00.465Z",
+    "updated_at": "2026-05-20T07:12:09.755Z",
     "source_id": "github.com_vercel-labs_agent-skills@main",
     "subpath": "skills/composition-patterns"
   },
@@ -278,7 +278,7 @@
     "enabled_global": false,
     "enabled_global_ides": [],
     "enabled_projects": [],
-    "updated_at": "2026-05-07T03:28:00.468Z",
+    "updated_at": "2026-05-20T07:12:09.761Z",
     "source_id": "github.com_vercel-labs_agent-skills@main",
     "subpath": "skills/deploy-to-vercel"
   },
@@ -288,7 +288,7 @@
     "enabled_global": false,
     "enabled_global_ides": [],
     "enabled_projects": [],
-    "updated_at": "2026-05-07T03:28:00.484Z",
+    "updated_at": "2026-05-20T07:12:09.776Z",
     "source_id": "github.com_vercel-labs_agent-skills@main",
     "subpath": "skills/react-best-practices"
   },
@@ -298,7 +298,7 @@
     "enabled_global": false,
     "enabled_global_ides": [],
     "enabled_projects": [],
-    "updated_at": "2026-05-07T03:28:00.496Z",
+    "updated_at": "2026-05-20T07:12:09.793Z",
     "source_id": "github.com_vercel-labs_agent-skills@main",
     "subpath": "skills/react-native-skills"
   },
@@ -308,7 +308,7 @@
     "enabled_global": false,
     "enabled_global_ides": [],
     "enabled_projects": [],
-    "updated_at": "2026-05-07T03:28:00.503Z",
+    "updated_at": "2026-05-20T07:12:09.801Z",
     "source_id": "github.com_vercel-labs_agent-skills@main",
     "subpath": "skills/react-view-transitions"
   },
@@ -318,7 +318,7 @@
     "enabled_global": false,
     "enabled_global_ides": [],
     "enabled_projects": [],
-    "updated_at": "2026-05-07T03:28:00.506Z",
+    "updated_at": "2026-05-20T07:12:09.804Z",
     "source_id": "github.com_vercel-labs_agent-skills@main",
     "subpath": "skills/vercel-cli-with-tokens"
   },
@@ -328,7 +328,7 @@
     "enabled_global": false,
     "enabled_global_ides": [],
     "enabled_projects": [],
-    "updated_at": "2026-05-07T03:28:00.508Z",
+    "updated_at": "2026-05-20T07:12:09.807Z",
     "source_id": "github.com_vercel-labs_agent-skills@main",
     "subpath": "skills/web-design-guidelines"
   },
@@ -360,7 +360,7 @@
     "enabled_global": false,
     "enabled_global_ides": [],
     "enabled_projects": [],
-    "updated_at": "2026-05-18T15:15:47.259Z",
+    "updated_at": "2026-05-20T07:12:17.294Z",
     "source_id": "github.com_mattpocock_skills@main",
     "subpath": "skills/deprecated/design-an-interface"
   },
@@ -370,7 +370,7 @@
     "enabled_global": false,
     "enabled_global_ides": [],
     "enabled_projects": [],
-    "updated_at": "2026-05-18T15:15:47.261Z",
+    "updated_at": "2026-05-20T07:12:17.297Z",
     "source_id": "github.com_mattpocock_skills@main",
     "subpath": "skills/deprecated/qa"
   },
@@ -380,7 +380,7 @@
     "enabled_global": false,
     "enabled_global_ides": [],
     "enabled_projects": [],
-    "updated_at": "2026-05-18T15:15:47.264Z",
+    "updated_at": "2026-05-20T07:12:17.299Z",
     "source_id": "github.com_mattpocock_skills@main",
     "subpath": "skills/deprecated/ubiquitous-language"
   },
@@ -390,7 +390,7 @@
     "enabled_global": false,
     "enabled_global_ides": [],
     "enabled_projects": [],
-    "updated_at": "2026-05-18T15:15:47.266Z",
+    "updated_at": "2026-05-20T07:12:17.302Z",
     "source_id": "github.com_mattpocock_skills@main",
     "subpath": "skills/engineering/diagnose"
   },
@@ -400,7 +400,7 @@
     "enabled_global": false,
     "enabled_global_ides": [],
     "enabled_projects": [],
-    "updated_at": "2026-05-18T15:15:47.269Z",
+    "updated_at": "2026-05-20T07:12:17.305Z",
     "source_id": "github.com_mattpocock_skills@main",
     "subpath": "skills/engineering/grill-with-docs"
   },
@@ -410,7 +410,7 @@
     "enabled_global": false,
     "enabled_global_ides": [],
     "enabled_projects": [],
-    "updated_at": "2026-05-18T15:15:47.272Z",
+    "updated_at": "2026-05-20T07:12:17.309Z",
     "source_id": "github.com_mattpocock_skills@main",
     "subpath": "skills/engineering/improve-codebase-architecture"
   },
@@ -420,7 +420,7 @@
     "enabled_global": false,
     "enabled_global_ides": [],
     "enabled_projects": [],
-    "updated_at": "2026-05-18T15:15:47.275Z",
+    "updated_at": "2026-05-20T07:12:17.313Z",
     "source_id": "github.com_mattpocock_skills@main",
     "subpath": "skills/engineering/tdd"
   },
@@ -430,7 +430,7 @@
     "enabled_global": false,
     "enabled_global_ides": [],
     "enabled_projects": [],
-    "updated_at": "2026-05-18T15:15:47.278Z",
+    "updated_at": "2026-05-20T07:12:17.316Z",
     "source_id": "github.com_mattpocock_skills@main",
     "subpath": "skills/engineering/to-issues"
   },
@@ -440,7 +440,7 @@
     "enabled_global": false,
     "enabled_global_ides": [],
     "enabled_projects": [],
-    "updated_at": "2026-05-18T15:15:47.280Z",
+    "updated_at": "2026-05-20T07:12:17.318Z",
     "source_id": "github.com_mattpocock_skills@main",
     "subpath": "skills/engineering/to-prd"
   },
@@ -450,7 +450,7 @@
     "enabled_global": false,
     "enabled_global_ides": [],
     "enabled_projects": [],
-    "updated_at": "2026-05-18T15:15:47.282Z",
+    "updated_at": "2026-05-20T07:12:17.320Z",
     "source_id": "github.com_mattpocock_skills@main",
     "subpath": "skills/engineering/zoom-out"
   },
@@ -460,7 +460,7 @@
     "enabled_global": false,
     "enabled_global_ides": [],
     "enabled_projects": [],
-    "updated_at": "2026-05-18T15:15:47.284Z",
+    "updated_at": "2026-05-20T07:12:17.323Z",
     "source_id": "github.com_mattpocock_skills@main",
     "subpath": "skills/misc/git-guardrails-claude-code"
   },
@@ -470,7 +470,7 @@
     "enabled_global": false,
     "enabled_global_ides": [],
     "enabled_projects": [],
-    "updated_at": "2026-05-18T15:15:47.287Z",
+    "updated_at": "2026-05-20T07:12:17.325Z",
     "source_id": "github.com_mattpocock_skills@main",
     "subpath": "skills/misc/migrate-to-shoehorn"
   },
@@ -480,7 +480,7 @@
     "enabled_global": false,
     "enabled_global_ides": [],
     "enabled_projects": [],
-    "updated_at": "2026-05-18T15:15:47.289Z",
+    "updated_at": "2026-05-20T07:12:17.328Z",
     "source_id": "github.com_mattpocock_skills@main",
     "subpath": "skills/misc/scaffold-exercises"
   },
@@ -490,7 +490,7 @@
     "enabled_global": false,
     "enabled_global_ides": [],
     "enabled_projects": [],
-    "updated_at": "2026-05-18T15:15:47.291Z",
+    "updated_at": "2026-05-20T07:12:17.330Z",
     "source_id": "github.com_mattpocock_skills@main",
     "subpath": "skills/misc/setup-pre-commit"
   },
@@ -500,7 +500,7 @@
     "enabled_global": false,
     "enabled_global_ides": [],
     "enabled_projects": [],
-    "updated_at": "2026-05-18T15:15:47.293Z",
+    "updated_at": "2026-05-20T07:12:17.332Z",
     "source_id": "github.com_mattpocock_skills@main",
     "subpath": "skills/personal/edit-article"
   },
@@ -510,7 +510,7 @@
     "enabled_global": false,
     "enabled_global_ides": [],
     "enabled_projects": [],
-    "updated_at": "2026-05-18T15:15:47.295Z",
+    "updated_at": "2026-05-20T07:12:17.334Z",
     "source_id": "github.com_mattpocock_skills@main",
     "subpath": "skills/personal/obsidian-vault"
   },
@@ -520,7 +520,7 @@
     "enabled_global": false,
     "enabled_global_ides": [],
     "enabled_projects": [],
-    "updated_at": "2026-05-18T15:15:47.298Z",
+    "updated_at": "2026-05-20T07:12:17.337Z",
     "source_id": "github.com_mattpocock_skills@main",
     "subpath": "skills/productivity/caveman"
   },
@@ -530,7 +530,7 @@
     "enabled_global": false,
     "enabled_global_ides": [],
     "enabled_projects": [],
-    "updated_at": "2026-05-18T15:15:47.300Z",
+    "updated_at": "2026-05-20T07:12:17.339Z",
     "source_id": "github.com_mattpocock_skills@main",
     "subpath": "skills/productivity/grill-me"
   },
@@ -540,7 +540,7 @@
     "enabled_global": false,
     "enabled_global_ides": [],
     "enabled_projects": [],
-    "updated_at": "2026-05-18T15:15:47.303Z",
+    "updated_at": "2026-05-20T07:12:17.341Z",
     "source_id": "github.com_mattpocock_skills@main",
     "subpath": "skills/productivity/write-a-skill"
   },
@@ -801,7 +801,7 @@
     "enabled_projects": [
       "L1VzZXJzL2thbmVodWEvcHJvamVjdC9oay1za2lsbHM"
     ],
-    "updated_at": "2026-05-18T15:15:50.668Z",
+    "updated_at": "2026-05-20T07:12:39.446Z",
     "source_id": "github.com_anthropics_skills@main",
     "subpath": "skills/skill-creator"
   },
@@ -811,12 +811,13 @@
     "enabled_global": true,
     "enabled_global_ides": [
       "opencode",
+      "claude-code",
       "universal"
     ],
     "enabled_projects": [
       "L1VzZXJzL2thbmVodWEvcHJvamVjdC9rYW5lX2VjaG9lcw"
     ],
-    "updated_at": "2026-05-18T04:34:15.713Z",
+    "updated_at": "2026-05-20T07:18:21.391Z",
     "source_id": "local-prompt-optimizer"
   },
   "session-achieve": {
@@ -906,7 +907,7 @@
     "enabled_global": false,
     "enabled_global_ides": [],
     "enabled_projects": [],
-    "updated_at": "2026-05-18T14:53:06.123Z",
+    "updated_at": "2026-05-20T07:12:39.456Z",
     "source_id": "github.com_anthropics_skills@main",
     "subpath": "skills/pdf"
   },
@@ -916,7 +917,7 @@
     "enabled_global": false,
     "enabled_global_ides": [],
     "enabled_projects": [],
-    "updated_at": "2026-05-18T14:53:11.172Z",
+    "updated_at": "2026-05-20T07:12:39.461Z",
     "source_id": "github.com_anthropics_skills@main",
     "subpath": "skills/algorithmic-art"
   },
@@ -926,7 +927,7 @@
     "enabled_global": false,
     "enabled_global_ides": [],
     "enabled_projects": [],
-    "updated_at": "2026-05-18T14:53:11.995Z",
+    "updated_at": "2026-05-20T07:12:39.464Z",
     "source_id": "github.com_anthropics_skills@main",
     "subpath": "skills/brand-guidelines"
   },
@@ -936,7 +937,7 @@
     "enabled_global": false,
     "enabled_global_ides": [],
     "enabled_projects": [],
-    "updated_at": "2026-05-18T14:53:12.853Z",
+    "updated_at": "2026-05-20T07:12:39.493Z",
     "source_id": "github.com_anthropics_skills@main",
     "subpath": "skills/canvas-design"
   },
@@ -946,7 +947,7 @@
     "enabled_global": false,
     "enabled_global_ides": [],
     "enabled_projects": [],
-    "updated_at": "2026-05-18T14:53:13.695Z",
+    "updated_at": "2026-05-20T07:12:39.510Z",
     "source_id": "github.com_anthropics_skills@main",
     "subpath": "skills/claude-api"
   },
@@ -956,7 +957,7 @@
     "enabled_global": false,
     "enabled_global_ides": [],
     "enabled_projects": [],
-    "updated_at": "2026-05-18T14:53:14.531Z",
+    "updated_at": "2026-05-20T07:12:39.515Z",
     "source_id": "github.com_anthropics_skills@main",
     "subpath": "skills/doc-coauthoring"
   },
@@ -966,7 +967,7 @@
     "enabled_global": false,
     "enabled_global_ides": [],
     "enabled_projects": [],
-    "updated_at": "2026-05-18T14:53:15.382Z",
+    "updated_at": "2026-05-20T07:12:39.530Z",
     "source_id": "github.com_anthropics_skills@main",
     "subpath": "skills/docx"
   },
@@ -976,7 +977,7 @@
     "enabled_global": false,
     "enabled_global_ides": [],
     "enabled_projects": [],
-    "updated_at": "2026-05-18T14:53:16.250Z",
+    "updated_at": "2026-05-20T07:12:39.536Z",
     "source_id": "github.com_anthropics_skills@main",
     "subpath": "skills/frontend-design"
   },
@@ -986,7 +987,7 @@
     "enabled_global": false,
     "enabled_global_ides": [],
     "enabled_projects": [],
-    "updated_at": "2026-05-18T14:53:17.479Z",
+    "updated_at": "2026-05-20T07:12:39.539Z",
     "source_id": "github.com_anthropics_skills@main",
     "subpath": "skills/internal-comms"
   },
@@ -996,7 +997,7 @@
     "enabled_global": false,
     "enabled_global_ides": [],
     "enabled_projects": [],
-    "updated_at": "2026-05-18T14:53:18.715Z",
+    "updated_at": "2026-05-20T07:12:39.544Z",
     "source_id": "github.com_anthropics_skills@main",
     "subpath": "skills/mcp-builder"
   },
@@ -1006,7 +1007,7 @@
     "enabled_global": false,
     "enabled_global_ides": [],
     "enabled_projects": [],
-    "updated_at": "2026-05-18T14:53:19.576Z",
+    "updated_at": "2026-05-20T07:12:39.559Z",
     "source_id": "github.com_anthropics_skills@main",
     "subpath": "skills/pptx"
   },
@@ -1016,7 +1017,7 @@
     "enabled_global": false,
     "enabled_global_ides": [],
     "enabled_projects": [],
-    "updated_at": "2026-05-18T14:53:20.419Z",
+    "updated_at": "2026-05-20T07:12:39.566Z",
     "source_id": "github.com_anthropics_skills@main",
     "subpath": "skills/slack-gif-creator"
   },
@@ -1026,7 +1027,7 @@
     "enabled_global": false,
     "enabled_global_ides": [],
     "enabled_projects": [],
-    "updated_at": "2026-05-18T14:53:21.255Z",
+    "updated_at": "2026-05-20T07:12:39.571Z",
     "source_id": "github.com_anthropics_skills@main",
     "subpath": "skills/theme-factory"
   },
@@ -1036,7 +1037,7 @@
     "enabled_global": false,
     "enabled_global_ides": [],
     "enabled_projects": [],
-    "updated_at": "2026-05-18T14:53:22.066Z",
+    "updated_at": "2026-05-20T07:12:39.574Z",
     "source_id": "github.com_anthropics_skills@main",
     "subpath": "skills/web-artifacts-builder"
   },
@@ -1046,7 +1047,7 @@
     "enabled_global": false,
     "enabled_global_ides": [],
     "enabled_projects": [],
-    "updated_at": "2026-05-18T14:53:22.909Z",
+    "updated_at": "2026-05-20T07:12:39.577Z",
     "source_id": "github.com_anthropics_skills@main",
     "subpath": "skills/webapp-testing"
   },
@@ -1056,7 +1057,7 @@
     "enabled_global": false,
     "enabled_global_ides": [],
     "enabled_projects": [],
-    "updated_at": "2026-05-18T14:53:23.753Z",
+    "updated_at": "2026-05-20T07:12:39.589Z",
     "source_id": "github.com_anthropics_skills@main",
     "subpath": "skills/xlsx"
   },
