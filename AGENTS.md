@@ -2,6 +2,44 @@
 
 This repository is the default skill management home for this machine.
 
+## Project Coding Rules
+
+### Tech Stack
+
+- Runtime: [Node/Python/Rust/etc.]
+- Framework: [React/Next/Vite/etc.]
+- Package manager: [npm/pnpm/uv/cargo/etc.]
+
+### Commands
+
+- Install: `[command]`
+- Dev: `[command]`
+- Test: `[command]`
+- Typecheck: `[command]`
+- Lint: `[command]`
+- Build: `[command]`
+
+### Verification
+
+- After changing runtime behavior, run `[test command]`.
+- After changing types or public interfaces, run `[typecheck command]`.
+- After changing frontend UI, verify in browser at `[local URL]`.
+- If a check is skipped, report it explicitly.
+
+### Boundaries
+
+- Do not edit `[sensitive path]` unless explicitly asked.
+- Do not modify generated files by hand.
+- Do not change migrations, lockfiles, env files, or production config unless the task specifically requires it.
+- Preserve existing user changes.
+
+### Local Conventions
+
+- Follow existing module layout in `[src/... ]`.
+- Use existing helpers before adding new abstractions.
+- Match nearby test style.
+- Keep changes scoped to the request.
+
 ## Project role
 
 - Treat `/Users/kanehua/project/hk-skills` as the canonical HK-Skills workspace.
