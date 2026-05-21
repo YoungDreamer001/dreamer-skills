@@ -123,5 +123,19 @@
     "repo": "https://app-dl.ima.qq.com/skills/ima-skills-1.1.7.zip",
     "commit": "bd5878416aed4c358deb2b9bc34dfd7602a0da9d9602582227794791289f73b2",
     "local_path": "warehouse/remote/app-dl.ima.qq.com_skills_ima-skills-1.1.7.zip"
+  },
+  "github.com_Cocoon-AI_architecture-diagram-generator@main": {
+    "type": "remote",
+    "repo": "https://github.com/Cocoon-AI/architecture-diagram-generator",
+    "ref": "main",
+    "commit": "4b9087d55268c79a935105439dbcd37b630fc3f3",
+    "local_path": "warehouse/remote/github.com_Cocoon-AI_architecture-diagram-generator@main"
+  },
+  "github.com_lewislulu_html-ppt-skill@main": {
+    "type": "remote",
+    "repo": "https://github.com/lewislulu/html-ppt-skill",
+    "ref": "main",
+    "commit": "f3a8435d3901697d5ac5e64d356c933637e43107",
+    "local_path": "warehouse/remote/github.com_lewislulu_html-ppt-skill@main"
   }
 }

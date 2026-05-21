@@ -1086,5 +1086,29 @@
     "updated_at": "2026-05-19T11:53:36.162Z",
     "source_id": "app-dl.ima.qq.com_skills_ima-skills-1.1.7.zip",
     "subpath": ""
+  },
+  "architecture-diagram": {
+    "manifest": "manifests/architecture-diagram.yaml",
+    "installed": true,
+    "enabled_global": false,
+    "enabled_global_ides": [],
+    "enabled_projects": [
+      "L1VzZXJzL2thbmVodWEvcHJvamVjdC9rYW5lX2VjaG9lcw"
+    ],
+    "updated_at": "2026-05-21T08:44:05.807Z",
+    "source_id": "github.com_Cocoon-AI_architecture-diagram-generator@main",
+    "subpath": "architecture-diagram"
+  },
+  "html-ppt": {
+    "manifest": "manifests/html-ppt.yaml",
+    "installed": true,
+    "enabled_global": false,
+    "enabled_global_ides": [],
+    "enabled_projects": [
+      "L1VzZXJzL2thbmVodWEvcHJvamVjdC9rYW5lX2VjaG9lcw"
+    ],
+    "updated_at": "2026-05-21T08:51:50.187Z",
+    "source_id": "github.com_lewislulu_html-ppt-skill@main",
+    "subpath": ""
   }
 }
