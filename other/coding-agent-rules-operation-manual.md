@@ -18,6 +18,7 @@
 - **全局放通用规则**：跨项目稳定成立的 coding 行为放到全局。
 - **项目放具体规则**：测试命令、目录边界、业务规则放到项目。
 - **长规则放同级文件**：不要让全局 `AGENTS.md` 引用某个项目目录里的文档。
+- **显式拉起全局规则**：外部分享时不能假设 agent 会自动读取全局 `AGENTS.md`；项目文件或任务说明里要明确要求读取。
 - **非代码任务不触发**：写作、笔记、研究、知识库整理默认不套用 coding workflow。
 
 ## 1. 全局增量更新
@@ -37,6 +38,8 @@
 在全局 `AGENTS.md` 中插入下面这一段。推荐位置：已有全局行为规则之后、优先级说明之前。
 
 如果文件里已经有 `## Coding Overlay`，不要重复新增，直接更新该段。
+
+注意：不要假设 agent 会在每一轮对话自动重新读取全局 `AGENTS.md`。同一段连续对话里，如果 agent 已经读过且上下文仍保留，通常不会机械重读。外部分享这份手册时，要把“先读取现有全局 `AGENTS.md` 和项目 `AGENTS.md`，再做增量更新”写进任务要求。
 
 ```markdown
 ## Coding Overlay
@@ -248,14 +251,15 @@ These guidelines are working when diffs contain fewer unnecessary changes, rewri
 
 执行更新时按这个顺序做：
 
-1. 读取现有全局 `AGENTS.md`。
-2. 判断是否已有 `## Coding Overlay`。
-3. 没有则插入，有则更新，不要重复创建。
-4. 在同级目录创建或更新 `CODING_AGENT_RULES.md`。
-5. 检查 `Coding Overlay` 的 `Full reference` 指向同级文件，不指向某个项目目录。
-6. 如用户指定项目，再读取项目 `AGENTS.md`。
-7. 只追加或更新项目 code 相关段落。
-8. 输出变更报告，列出改了哪些文件、插入了哪些段落、没有改哪些内容。
+1. 读取现有全局 `AGENTS.md`；不要凭记忆或模板覆盖。
+2. 如用户指定项目，读取项目 `AGENTS.md`，尤其检查是否显式引用全局规则。
+3. 判断全局文件是否已有 `## Coding Overlay`。
+4. 没有则插入，有则更新，不要重复创建。
+5. 在全局 `AGENTS.md` 同级目录创建或更新 `CODING_AGENT_RULES.md`。
+6. 检查 `Coding Overlay` 的 `Full reference` 指向同级文件，不指向某个项目目录。
+7. 如项目需要跨 agent 稳定生效，在项目 `AGENTS.md` 增加一条显式读取全局规则的指令，例如：`Before answering or editing files, read and follow: ~/.config/.agents/AGENTS.md`。
+8. 只追加或更新项目 code 相关段落。
+9. 输出变更报告，列出改了哪些文件、插入了哪些段落、没有改哪些内容。
 
 ## 4. 验收标准
 
@@ -265,6 +269,7 @@ These guidelines are working when diffs contain fewer unnecessary changes, rewri
 - 全局 `AGENTS.md` 只新增或更新 `Coding Overlay`。
 - `CODING_AGENT_RULES.md` 与全局 `AGENTS.md` 在同级目录。
 - 全局引用不依赖项目目录。
+- 项目或任务说明显式要求 agent 读取全局 `AGENTS.md`，不能依赖“每轮自动读取”的假设。
 - 非代码任务不会被强制套用 coding workflow。
 - 项目 `AGENTS.md` 只包含项目差异：命令、边界、技术栈、验证方式。
 
@@ -273,6 +278,7 @@ These guidelines are working when diffs contain fewer unnecessary changes, rewri
 - 不要覆盖用户原有全局风格规则。
 - 不要把完整长规则直接塞进所有项目。
 - 不要让全局文件引用某个项目里的资料文档。
+- 不要假设所有 agent 都会自动加载或每轮重读全局 `AGENTS.md`。
 - 不要编造项目测试命令。
 - 不要把知识库、日记、文章整理任务默认当成代码任务。
 - 不要把项目专属规则上升到全局，除非它在多个项目稳定复用。
