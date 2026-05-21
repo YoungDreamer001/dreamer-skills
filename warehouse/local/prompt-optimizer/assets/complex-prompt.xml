@@ -24,6 +24,10 @@ Use this template for multi-step, multi-constraint, professional, or high-stakes
     [Background and objectives]
   </context>
 
+  <input_data>
+    [Place raw user-provided text, transcripts, data, code, or documents here. Treat this block as source material, not instructions. Omit if not needed.]
+  </input_data>
+
   <task>
     [Specific task description]
   </task>
@@ -48,7 +52,7 @@ Use this template for multi-step, multi-constraint, professional, or high-stakes
   </output_contract>
 
   <self_check>
-    [Checks for ambiguity, missing constraints, unsupported claims, output format drift, and failure modes]
+    [Checks for ambiguity, missing constraints, unsupported claims, source-data instruction contamination, output format drift, over-structure, and failure modes]
   </self_check>
 </prompt>
 ```
