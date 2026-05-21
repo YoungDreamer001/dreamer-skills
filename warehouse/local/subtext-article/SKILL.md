@@ -5,7 +5,7 @@ description: Convert Chinese video subtitles, ASR outputs, transcript dumps, Bil
 
 # Subtext Article
 
-Convert video subtitles into a complete Chinese article with high fidelity, strong readability, and no invented content.
+Convert video subtitles into a complete Chinese article with high fidelity, strong readability, traceable intermediate artifacts, and no invented content.
 
 ## Core Contract
 
@@ -15,28 +15,47 @@ Rewrite for written Chinese. Remove filler words, repeated fragments, broken ora
 
 Rebuild article structure. Turn the transcript into a coherent article with an opening, detailed body sections, and a closing. Use thematic grouping and transitions, but keep the original argument chain traceable.
 
+Leave a trail at every successful step. For file inputs, every successful output must be written into one package folder named from the input file stem plus `_article`, for example `中国稀土.md` -> `中国稀土_article/`. Do not scatter intermediate files in the working directory.
+
 ## Workflow
 
 1. Identify the source family, not just the exact platform:
    - structured JSON: Bilibili AIsubtitle, Whisper/Faster-Whisper/WhisperX, ASR vendor exports, caption arrays, `segments`, `utterances`, `captions`, `subtitles`, `events`, `items`, `words`, or nested objects containing text fields;
    - subtitle files: SRT, WebVTT/VTT, ASS/SSA, LRC, YouTube timedtext XML/TTML, or copied transcript dumps with timestamps;
    - plain transcript text: raw ASR paragraphs, copied captions, podcast transcripts, interview notes, or spoken drafts.
-2. Normalize the transcript before writing. For file inputs, prefer `scripts/normalize_subtitle.py` to extract continuous spoken text into a temporary working file. If the script misses a new schema, inspect the file shape and extract the spoken text manually rather than forcing it into a known example.
-3. Read the full normalized transcript before drafting. For long transcripts, process in chunks and build an internal evidence map of:
+2. For file inputs, initialize the article package first. Prefer `scripts/prepare_article_package.py <input-file>` to create `{input-stem}_article/`, copy the original source, generate `01-normalized.txt`, and write `manifest.json`.
+3. Normalize the transcript before writing. Use `01-normalized.txt` as the default working text. If `scripts/normalize_subtitle.py` misses a new schema, inspect the file shape, extract the spoken text manually, and still save the successful normalized result as `01-normalized.txt` inside the package.
+4. Read the full normalized transcript before drafting. For long transcripts, process in chunks and write `02-evidence-map.md` in the package with:
    - main thesis and conclusion;
    - topic sequence;
    - key numbers, dates, names, quoted phrases, causal links, and examples;
    - sections that are promotions, chat acknowledgements, or live-stream housekeeping.
-4. Draft the article from the evidence map, not from memory. Preserve all important details while compressing oral repetition.
-5. Self-check against the transcript before final output:
+5. Draft the article from the evidence map, not from memory. Preserve all important details while compressing oral repetition. Save the first complete draft as `03-draft.md`.
+6. Self-check against the transcript before final output and save the check as `04-self-check.md`:
    - no fabricated facts;
    - no important claim, data point, example, or turn in logic removed;
    - no remaining timestamp noise or obvious oral filler;
    - article length is about 70%-90% of the useful transcript length unless the user asks otherwise.
+7. Save the final article as `article.md` in the package. Final chat response should report the package path and key artifacts, not paste the full article unless the user asks for inline output.
 
-## Output Format
+## Package Output
 
-Default to Markdown:
+Default package layout for `/path/to/source.md`:
+
+```text
+/path/to/source_article/
+├── 00-source.md
+├── 01-normalized.txt
+├── 02-evidence-map.md
+├── 03-draft.md
+├── 04-self-check.md
+├── article.md
+└── manifest.json
+```
+
+All successfully produced files belong in this folder. If a later step fails, keep the earlier successful files and update `manifest.json` or state the failed step in the final response.
+
+The final article is Markdown:
 
 ```markdown
 Title: [accurate, attractive title]
@@ -67,6 +86,7 @@ If the transcript is incomplete, corrupted, or too ambiguous to preserve meaning
 ## Bundled Resources
 
 - `scripts/normalize_subtitle.py`: extract spoken text from common JSON, XML, SRT, VTT, ASS/SSA, LRC, YouTube transcript dumps, ASR outputs, or plain subtitle files.
+- `scripts/prepare_article_package.py`: create the `{input-stem}_article/` package, copy the source, generate `01-normalized.txt`, and write `manifest.json`.
 - `case/case1.json` and `case/case2.json`: Bilibili-style JSON examples.
 - `case/case3.md`: YouTube transcript example.
 
