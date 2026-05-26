@@ -89,9 +89,10 @@
     "enabled_global": false,
     "enabled_global_ides": [],
     "enabled_projects": [
-      "L1VzZXJzL2thbmVodWEvcHJvamVjdC9rYW5lX2VjaG9lcw"
+      "L1VzZXJzL2thbmVodWEvcHJvamVjdC9rYW5lX2VjaG9lcw",
+      "L1VzZXJzL2thbmVodWEvcHJvamVjdC9teS1yZXBvcnRz"
     ],
-    "updated_at": "2026-05-18T15:15:39.962Z",
+    "updated_at": "2026-05-23T10:32:03.741Z",
     "source_id": "github.com_JimLiu_baoyu-skills@main",
     "subpath": "skills/baoyu-diagram"
   },
@@ -338,9 +339,10 @@
     "enabled_global": false,
     "enabled_global_ides": [],
     "enabled_projects": [
-      "L1VzZXJzL2thbmVodWEvcHJvamVjdC9rYW5lX2VjaG9lcw"
+      "L1VzZXJzL2thbmVodWEvcHJvamVjdC9rYW5lX2VjaG9lcw",
+      "L1VzZXJzL2thbmVodWEvcHJvamVjdC9teS1yZXBvcnRz"
     ],
-    "updated_at": "2026-05-18T04:34:15.909Z",
+    "updated_at": "2026-05-23T10:32:02.400Z",
     "source_id": "github.com_KAOPU-XiaoPu_web-design@main",
     "subpath": ""
   },
@@ -815,9 +817,10 @@
       "universal"
     ],
     "enabled_projects": [
-      "L1VzZXJzL2thbmVodWEvcHJvamVjdC9rYW5lX2VjaG9lcw"
+      "L1VzZXJzL2thbmVodWEvcHJvamVjdC9rYW5lX2VjaG9lcw",
+      "L1VzZXJzL2thbmVodWEvcHJvamVjdC9teS1yZXBvcnRz"
     ],
-    "updated_at": "2026-05-20T07:18:21.391Z",
+    "updated_at": "2026-05-23T10:32:00.780Z",
     "source_id": "local-prompt-optimizer"
   },
   "session-achieve": {
@@ -883,9 +886,10 @@
     "enabled_global": false,
     "enabled_global_ides": [],
     "enabled_projects": [
-      "L1VzZXJzL2thbmVodWEvcHJvamVjdC9rYW5lX2VjaG9lcw"
+      "L1VzZXJzL2thbmVodWEvcHJvamVjdC9rYW5lX2VjaG9lcw",
+      "L1VzZXJzL2thbmVodWEvcHJvamVjdC9teS1yZXBvcnRz"
     ],
-    "updated_at": "2026-05-18T04:34:14.179Z",
+    "updated_at": "2026-05-23T10:31:59.353Z",
     "source_id": "local-article-analyzer"
   },
   "concept-fable": {
