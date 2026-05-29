@@ -4,15 +4,15 @@
 
 `purpose`: Move beyond direct analysis to construct a higher-level model. Identify thesis, antithesis, common goal, missing variable, synthesis, blind spot, test scenario, and action algorithm.
 
-`trigger`: Run as the third standard step in the default article package and the fourth standard step in the default paper package. Also run when the user explicitly asks for "提维", "升维", "认知升级", "底层模型", "新框架", "重构模型", "更高维度怎么看", or equivalent model reconstruction.
+`trigger`: Run only when the user explicitly asks for "提维", "升维", "认知升级", "底层模型", "新框架", "重构模型", "更高维度怎么看", or equivalent model reconstruction. Do not run as part of the default article or paper package.
 
 `inputs`: Preferred input is `deep_analysis` output. Also accept a user-provided claim, view, argument, article, or conversation excerpt if it can support thesis/antithesis reconstruction.
 
 `outputs`: `upgrade_model` written to the assigned module file, after a source-faithful analysis file when the route requires one.
 
-`evidence_policy`: Treat the synthesis model as `创造性延展` by default. Preserve traceability back to source claims. Separate the author's view from the analyst's upgraded model. Mark unsupported background as `信息不足`.
+`evidence_policy`: Treat the synthesis model as `创造性延展` by default. Preserve traceability back to source claims. Separate the author's view from the analyst's upgraded model. Mark unsupported background as `信息不足`. Any factual claim not present in the source or prior verified analysis must be labeled `外部待验证` and must not appear under `原文明确`.
 
-`skip_conditions`: Skip only when the user explicitly says not to do cognitive upgrade, asks for a narrow evidence-only output, or the source is too thin to support a meaningful thesis/antithesis pair. When the source is thin, still create the `cognitive_upgrade` file and mark the upgrade as blocked by `信息不足` unless the user explicitly asked to skip the module.
+`skip_conditions`: Skip when the user does not explicitly ask for cognitive upgrade/model reconstruction, asks for a narrow evidence-only output, or the source is too thin to support a meaningful thesis/antithesis pair. When the user explicitly asks for upgrade but the source is thin, create the `cognitive_upgrade` file and mark the upgrade as blocked by `信息不足`.
 
 `reference_prompt`: `references/cognitive_upgrade.md`
 
@@ -28,6 +28,13 @@ If no prior `deep_analysis` exists, first do a compact internal extraction:
 - boundary of what the source can support.
 
 Do not merge source-faithful analysis and creative synthesis into one undifferentiated report. When the source is an article, paper, or long argument, write a prior `deep_analysis` file unless the user supplied an already analyzed claim. The upgrade file must clearly separate source claims from creative synthesis.
+
+Run a strict upgrade firewall:
+
+- The `作者原始观点` section may contain only `原文明确`, `合理推断`, and `信息不足`. Do not put external facts there.
+- New models, analogies, investment-style labels, decision algorithms, scenarios, and blind-spot diagnoses are `创造性延展`.
+- External facts used to motivate the new model must be listed as `外部待验证`; they cannot be used as proof that the source is correct.
+- Do not import domain knowledge into the final integrated conclusion unless the user requested external research and it was verified in the current task.
 
 When this module is selected for output, write a standalone `upgrade_model` document in the output folder and end it with `本模块小结`. Place it after source-faithful analysis files and before `99-summary.md`.
 
@@ -65,6 +72,7 @@ When this module is selected for output, write a standalone `upgrade_model` docu
 ### 5. 被忽略变量
 
 指出旧框架忽略的关键变量，并解释它为什么能改变问题结构。
+标注这个变量来自 `原文明确`、`合理推断` 还是 `创造性延展`。默认是 `创造性延展`。
 
 ### 6. 综合模型
 
@@ -77,6 +85,7 @@ When this module is selected for output, write a standalone `upgrade_model` docu
 ### 8. 测试场景
 
 给出一个可以验证新模型是否有效的场景、观察指标或反例条件。
+测试场景可以是假设，但必须标明是假设；不得写成已经发生的事实。
 
 ### 9. 行动算法
 

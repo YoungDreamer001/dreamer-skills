@@ -11,16 +11,24 @@ Default to Chinese unless the user requests another language.
 
 ## Core Contract
 
-Route before analyzing, then create a complete analysis package. This skill is a folder-output workflow, not an in-chat single report. The user's default habit is a staged chain: `deep_analysis -> thought_refine -> cognitive_upgrade`; papers add `paper_scan` before `deep_analysis`.
+Route before analyzing, then create a complete analysis package. This skill is a folder-output workflow, not an in-chat single report. The default package is source-faithful: articles run `deep_analysis -> thought_refine`; papers run `paper_scan -> deep_analysis -> thought_refine`. Add `cognitive_upgrade` only when the user explicitly asks for 提维/升维/认知升级/底层模型/新框架/model reconstruction or clearly asks for a higher-level model beyond the source.
 
 Preserve evidence boundaries:
 
 - `原文明确`: directly stated by the source.
 - `合理推断`: inferred from the source's argument, examples, structure, or omissions.
 - `创造性延展`: a new framing, analogy, model, or synthesis created by the analyst.
+- `外部待验证`: a factual claim not present in the source and not verified in the current task. Avoid using it unless it is necessary to name a verification direction.
 - `信息不足`: cannot be answered from the provided source.
 
-Do not invent author background, publication context, SOTA status, data source, external controversy, or intended audience. If external facts are needed, mark `信息不足` and state what evidence would be needed.
+Do not invent author background, publication context, SOTA status, market data, policy background, resource dependency, data source, external controversy, or intended audience. If an external fact is needed and the user did not ask for external research, mark it `外部待验证` or `信息不足` and state what evidence would be needed.
+
+Evidence firewall:
+
+- Every `原文明确` claim must be directly traceable to the source text. If a number, entity, date, comparison, or causal claim does not appear in the source, it cannot be `原文明确`.
+- Do not turn memory, industry common sense, or plausible background into source evidence.
+- Do not strengthen source language. A forecast, possibility, plan, intention, or scenario in the source must remain a forecast, possibility, plan, intention, or scenario in the analysis.
+- Keep creative models out of evidence summaries. `创造性延展` may be useful, but it is not evidence for what the source says.
 
 Do not modify files in `references/`. Load only the reference prompt required by the selected module.
 
@@ -30,40 +38,40 @@ Before output, do a short internal routing pass:
 
 1. Classify source type.
 2. Infer user goal.
-3. Build the default full package route unless the user explicitly asks to skip or narrow modules.
+3. Build the default source-faithful package route unless the user explicitly asks to add or remove modules.
 4. Load only the matching reference prompt files.
 5. If the task is complex research, multi-source synthesis, due diligence, literature review, opportunity discovery, or explicit rigorous critique, also load `references/research_operators.md` and select the smallest useful operator set.
 6. Create an output folder and write the selected module documents plus a synthesis document.
 
-If the source type is ambiguous, default to `article` and run the article full package: `deep_analysis -> thought_refine -> cognitive_upgrade`.
+If the source type is ambiguous, default to `article` and run the article source-faithful package: `deep_analysis -> thought_refine`.
 
 ### Source Types
 
 | Source family | Signals | Default module |
 | --- | --- | --- |
-| `paper` | paper, 论文, arXiv, DOI, abstract, method, experiments, SOTA, contribution, benchmark | `paper_scan -> deep_analysis -> thought_refine -> cognitive_upgrade` |
-| `article` | article, essay, blog, report, commentary, long-form argument | `deep_analysis -> thought_refine -> cognitive_upgrade` |
-| `technical_article` | technical blog, engineering article, architecture explanation, method comparison | `deep_analysis -> thought_refine -> cognitive_upgrade` |
-| `business_commentary` | market, company, strategy, industry, product, operation, investment commentary | `deep_analysis -> thought_refine -> cognitive_upgrade` |
-| `raw_thought` | rough notes, verbose draft, conversation excerpt, loose argument | `deep_analysis -> thought_refine -> cognitive_upgrade` |
+| `paper` | paper, 论文, arXiv, DOI, abstract, method, experiments, SOTA, contribution, benchmark | `paper_scan -> deep_analysis -> thought_refine` |
+| `article` | article, essay, blog, report, commentary, long-form argument | `deep_analysis -> thought_refine` |
+| `technical_article` | technical blog, engineering article, architecture explanation, method comparison | `deep_analysis -> thought_refine` |
+| `business_commentary` | market, company, strategy, industry, product, operation, investment commentary | `deep_analysis -> thought_refine` |
+| `raw_thought` | rough notes, verbose draft, conversation excerpt, loose argument | `deep_analysis -> thought_refine` |
 
 ### Goal Routing
 
 | User intent | Signals | Module chain |
 | --- | --- | --- |
-| default article package | 深度分析, 分析这篇文章, 拆解观点, 看看这篇, 思想精炼, 提维, 认知升级 | `deep_analysis -> thought_refine -> cognitive_upgrade` |
-| default paper package | 论文速读, 快速读懂论文, paper scan, arXiv, 分析这篇论文, 论文解构, 方法论文分析 | `paper_scan -> deep_analysis -> thought_refine -> cognitive_upgrade` |
+| default article package | 深度分析, 分析这篇文章, 拆解观点, 看看这篇, 思想精炼 | `deep_analysis -> thought_refine` |
+| default paper package | 论文速读, 快速读懂论文, paper scan, arXiv, 分析这篇论文, 论文解构, 方法论文分析 | `paper_scan -> deep_analysis -> thought_refine` |
 | explicit narrow paper quick read | 只做论文速读, 只要 paper scan, 不要后续分析 | `paper_scan` |
 | explicit narrow deep analysis | 只做深度分析, 不要精炼, 不要提维 | `deep_analysis` |
 | explicit narrow thought refinement | 只做思想精炼, 只要高密度表达, 不要提维 | `deep_analysis -> thought_refine` |
-| explicit narrow cognitive upgrade | 只做提维, 已有分析结论 | `cognitive_upgrade` or `deep_analysis -> cognitive_upgrade` depending on source completeness |
+| explicit cognitive upgrade | 提维, 升维, 认知升级, 底层模型, 新框架, 重构模型, 更高维度怎么看 | `deep_analysis -> cognitive_upgrade` or full package + `cognitive_upgrade` depending on user goal |
 | research operator package | 文献综述, 尽调, 多来源对比, 证据地图, 隐含假设, 矛盾点, 研究空白, 实施蓝图, 严苛评审 | default module chain + selected operators from `references/research_operators.md` |
 
 When multiple goals are present, preserve this order:
 
 `paper_scan -> deep_analysis -> thought_refine -> cognitive_upgrade`
 
-Default to the full package route. Only remove a module when the user explicitly says "只做", "不要", "跳过", or gives an already completed upstream document.
+Default to the source-faithful package route. Add `cognitive_upgrade` only on explicit upgrade/modeling intent. Only remove a source-faithful module when the user explicitly says "只做", "不要", "跳过", or gives an already completed upstream document.
 
 Research operators are analysis lenses, not a separate workflow. Do not run all operators by default. Use them to strengthen the selected module files and summarize the selected operator set in `99-summary.md`.
 
@@ -105,10 +113,10 @@ Every module follows this shape: `purpose`, `trigger`, `inputs`, `outputs`, `evi
 ### `cognitive_upgrade`
 
 - `purpose`: Move beyond direct analysis to construct a higher-level model. Identify thesis, antithesis, common goal, missing variable, synthesis, blind spot, test scenario, and action algorithm.
-- `trigger`: Run only when the user explicitly asks for "提维", "升维", "认知升级", "底层模型", "新框架", "重构模型", "更高维度怎么看", or equivalent wording.
+- `trigger`: Run only when the user explicitly asks for "提维", "升维", "认知升级", "底层模型", "新框架", "重构模型", "更高维度怎么看", or equivalent wording. Do not run by default for ordinary analysis.
 - `inputs`: Output from `deep_analysis`, or a user-provided claim, view, or argument that can support thesis/antithesis reconstruction.
 - `outputs`: Thesis, antithesis, common goal, missing variable, synthesis model, ego trap or cognitive blind spot, test scenario, and action algorithm.
-- `evidence_policy`: Treat synthesis as `创造性延展` by default. Preserve traceability back to source claims. Separate the author's view from the analyst's upgraded model.
+- `evidence_policy`: Treat synthesis as `创造性延展` by default. Preserve traceability back to source claims. Separate the author's view from the analyst's upgraded model. Any factual material not present in the source must be marked `外部待验证` and excluded from `原文明确` summaries.
 - `skip_conditions`: Skip unless the user requests cognitive upgrade or model reconstruction. Skip when the source is too thin to support a meaningful thesis/antithesis pair. Skip when the user asks for faithful summary, academic review, or evidence-only analysis.
 - `reference_prompt`: `references/cognitive_upgrade.md`
 
@@ -116,8 +124,9 @@ Every module follows this shape: `purpose`, `trigger`, `inputs`, `outputs`, `evi
 
 | Mode | When used | Output shape |
 | --- | --- | --- |
-| `article_package` | default for articles, essays, blogs, reports, raw thoughts | `01-deep_analysis.md`, `02-thought_refine.md`, `03-cognitive_upgrade.md`, `99-summary.md` |
-| `paper_package` | default for papers and academic methods | `01-paper_scan.md`, `02-deep_analysis.md`, `03-thought_refine.md`, `04-cognitive_upgrade.md`, `99-summary.md` |
+| `article_package` | default for articles, essays, blogs, reports, raw thoughts | `01-deep_analysis.md`, `02-thought_refine.md`, `99-summary.md` |
+| `paper_package` | default for papers and academic methods | `01-paper_scan.md`, `02-deep_analysis.md`, `03-thought_refine.md`, `99-summary.md` |
+| `upgrade_package` | when the user explicitly asks for cognitive upgrade/model reconstruction | source-faithful files first, then `0N-cognitive_upgrade.md`, then `99-summary.md` |
 | `narrow_package` | user explicitly skips modules | selected module files plus `99-summary.md` |
 
 Default output should be compact but not shallow. Prefer concrete claims, evidence, and boundaries over generic explanation.
@@ -134,7 +143,7 @@ Choose the output folder in this order:
 
 Keep all outputs inside the current project or the user-specified path. Do not write analysis outputs to `/private/tmp` or other system temp folders.
 
-Inside the folder, write one Markdown file per selected module, plus one synthesis file:
+Inside the folder, write one Markdown file per selected module, plus one synthesis file. Example with all modules selected:
 
 ```text
 article-analyzer-<short-slug>/
@@ -145,24 +154,22 @@ article-analyzer-<short-slug>/
   99-summary.md
 ```
 
-For normal article inputs, create at least four files:
+For normal article inputs, create at least three files:
 
 ```text
 article-analyzer-<short-slug>/
   01-deep_analysis.md
   02-thought_refine.md
-  03-cognitive_upgrade.md
   99-summary.md
 ```
 
-For normal paper inputs, create at least five files:
+For normal paper inputs, create at least four files:
 
 ```text
 article-analyzer-<short-slug>/
   01-paper_scan.md
   02-deep_analysis.md
   03-thought_refine.md
-  04-cognitive_upgrade.md
   99-summary.md
 ```
 
@@ -174,19 +181,22 @@ Write `99-summary.md` last. It must include:
 - selected route;
 - generated file index;
 - final integrated conclusion;
-- evidence boundaries and unresolved `信息不足`;
+- evidence boundaries, `外部待验证`, and unresolved `信息不足`;
 - recommended next read or next analysis step when useful.
 
-For the default package, `deep_analysis` always gets its own file. Lightweight internal `deep_analysis` is allowed only when the user explicitly asks for a narrow direct refinement task. For `cognitive_upgrade`, create a source-faithful analysis file before the upgrade file unless the user provides an already analyzed claim and explicitly asks to skip upstream analysis.
+For the default package, `deep_analysis` always gets its own file. Lightweight internal `deep_analysis` is allowed only when the user explicitly asks for a narrow direct refinement task. For `cognitive_upgrade`, create a source-faithful analysis file before the upgrade file unless the user provides an already analyzed claim and explicitly asks to skip upstream analysis. In `99-summary.md`, do not present `创造性延展` or `外部待验证` as the source's conclusion.
 
 Final chat response should be short: provide the output folder path and list generated files. Do not paste the full report contents into chat unless the user asks.
 
 ## Failure Guards
 
 - Do not collapse the default workflow into a single Markdown report.
-- Do not output fewer than four files for normal article inputs.
-- Do not output fewer than five files for normal paper inputs.
+- Do not output fewer than three files for normal article inputs.
+- Do not output fewer than four files for normal paper inputs.
 - Do not treat `cognitive_upgrade` as faithful source analysis.
+- Do not run `cognitive_upgrade` unless the user explicitly asks for upgrade/model reconstruction.
+- Do not label external facts, model memory, or common industry background as `原文明确`.
+- Do not promote forecasts, assumptions, or scenarios into established facts.
 - Do not replace evidence with attitude.
 - Do not answer with a long question list when the source is sufficient for analysis.
 - Do not let `thought_refine` change the author's core claim.

@@ -10,7 +10,7 @@
 
 `outputs`: `refined_thesis` written to the assigned module file, normally `01-thought_refine.md` for direct refinement or later-numbered in combined mode.
 
-`evidence_policy`: Preserve the author's actual claim. Mark sharpened interpretations as `合理推断` when they go beyond explicit wording. Do not add new examples, claims, statistics, context, or outside knowledge.
+`evidence_policy`: Preserve the author's actual claim. Mark sharpened interpretations as `合理推断` when they go beyond explicit wording. Do not add new examples, claims, statistics, context, or outside knowledge. If a tempting factual enhancement is not in the source, omit it or mark it `外部待验证` in the evidence boundary.
 
 `skip_conditions`: Skip only when the user explicitly asks for full deep analysis only, asks to preserve original order, or says not to refine. Default package runs this module.
 
@@ -19,6 +19,8 @@
 ## Execution Rules
 
 This module is for structure and density, not for new thinking. The output must make the original idea clearer without changing what the author means.
+
+Before writing, do a containment check: every concrete number, example, named entity, timeline, and causal claim in the refined output must come from the source or prior `deep_analysis`. If it does not, remove it. Do not make the author's forecasts sound more certain than the original wording.
 
 If no prior `deep_analysis` exists, do only a lightweight internal extraction before writing:
 
@@ -60,6 +62,7 @@ When this module is selected for output, write a standalone `refined_thesis` doc
 
 - `原文明确`: 哪些核心意思来自原文。
 - `合理推断`: 哪些锐化表达是基于原文的压缩推断。
+- `外部待验证`: 如因用户目标必须提到外部事实，列出但不纳入精炼主张。
 - `信息不足`: 哪些内容不能补。
 
 ### 本模块小结
