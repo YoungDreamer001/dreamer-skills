@@ -1,8 +1,0 @@
-name: skill-installer
-display_name: skill-installer
-source:
-  type: local
-status:
-  stage: adapted
-entry:
-  file: SKILL.md

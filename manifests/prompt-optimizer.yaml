@@ -1,8 +1,0 @@
-name: prompt-optimizer
-display_name: prompt-optimizer
-source:
-  type: local
-status:
-  stage: adapted
-entry:
-  file: SKILL.md

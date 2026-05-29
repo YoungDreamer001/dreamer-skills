@@ -1,8 +1,0 @@
-name: merge-drafts
-display_name: merge-drafts
-source:
-  type: local
-status:
-  stage: adapted
-entry:
-  file: SKILL.md

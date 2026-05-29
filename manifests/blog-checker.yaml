@@ -1,8 +1,0 @@
-name: blog-checker
-display_name: blog-checker
-source:
-  type: local
-status:
-  stage: adapted
-entry:
-  file: SKILL.md
