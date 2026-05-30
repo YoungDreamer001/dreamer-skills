@@ -80,3 +80,6 @@ CODING_STANDARD.md
 SETUP_JAVASCRIPT_ONLY.md
 
 manifests/
+
+# HK-Skills registry (local-only, not shared)
+registry/
