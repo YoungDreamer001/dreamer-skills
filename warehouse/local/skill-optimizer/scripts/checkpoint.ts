@@ -1,5 +1,5 @@
 #!/usr/bin/env bun
-import { cpSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
 
 type CheckpointRecord = {
@@ -78,6 +78,23 @@ function listFiles(root: string): string[] {
     .sort();
 }
 
+function changedFiles(workspace: string): string[] {
+  const original = join(workspace, "source", "original");
+  const working = join(workspace, "source", "working");
+  const originalFiles = new Set(listFiles(original));
+  const workingFiles = new Set(listFiles(working));
+  const all = [...new Set([...originalFiles, ...workingFiles])].sort();
+  return all.filter((file) => {
+    const originalPath = join(original, file);
+    const workingPath = join(working, file);
+    if (!existsSync(originalPath) || !existsSync(workingPath)) return true;
+    const originalStat = statSync(originalPath);
+    const workingStat = statSync(workingPath);
+    if (originalStat.size !== workingStat.size) return true;
+    return readFileSync(originalPath, "utf-8") !== readFileSync(workingPath, "utf-8");
+  });
+}
+
 function latestCheckpoint(workspace: string): string {
   const logPath = join(workspace, "logs", "checkpoints.jsonl");
   if (!existsSync(logPath)) return "";
@@ -113,7 +130,7 @@ function main() {
     iteration: options.iteration,
     timestamp: new Date().toISOString(),
     mutation_layer: options.mutationLayer,
-    changed_files: listFiles(working),
+    changed_files: changedFiles(workspace),
     parent_checkpoint: latestCheckpoint(workspace),
     target_metric: options.targetMetric || "",
     expected_improvement: options.expectedImprovement || "",
