@@ -233,6 +233,9 @@ function scoreIntent(body: string, description: string, files: string[], fmName:
   if (includesAny(description, ["use when", "trigger", "do not use", "when the user", "用于", "不用于"])) {
     add("routing", 2, "description contains trigger or exclusion language");
   }
+  if (includesAny(text, ["route", "routing", "classify", "classifier", "queue", "select one", "one of", "分类", "路由"])) {
+    add("routing", 3, "routing or classification language present");
+  }
   if (includesAny(text, ["workflow", "phase", "step", "state", "route", "output contract", "流程", "阶段", "状态机"])) {
     add("workflow", 3, "body uses workflow or state language");
   }
@@ -280,19 +283,28 @@ function scoreIntent(body: string, description: string, files: string[], fmName:
   }
 
   const ranked = (Object.entries(scores) as Array<[Intent, number]>).sort((a, b) => b[1] - a[1]);
-  const primary = ranked[0]?.[0] ?? "workflow";
+  let primary = ranked[0]?.[0] ?? "workflow";
+  if (scores["meta-optimizer"] > 0 && (fmName.includes("optimizer") || includesAny(text, ["skill optimizer", "self-training", "mutation layer"]))) {
+    primary = "meta-optimizer";
+  } else if (scores.routing >= scores.workflow && !hasScripts(files) && !files.some((file) => file.startsWith("references/"))) {
+    primary = "routing";
+  }
   const topScore = ranked[0]?.[1] ?? 0;
   const secondary = ranked
     .slice(1)
-    .filter(([, score]) => score > 0 && score >= Math.max(2, topScore - 2))
+    .filter(([intent, score]) => intent !== primary && score > 0 && score >= Math.max(2, topScore - 2))
     .map(([intent]) => intent);
 
   return {
     primary,
     secondary,
     confidence: Math.min(0.95, Math.max(0.35, topScore / 8)),
-    evidence: evidence.slice(0, 8),
+    evidence: evidence.slice(0, 12),
   };
+}
+
+function hasScripts(files: string[]): boolean {
+  return files.some((file) => file.startsWith("scripts/"));
 }
 
 function inferPurpose(description: string, body: string): { stated: string; inferred: string } {
@@ -327,6 +339,30 @@ function audit(targetPath: string): AuditReport {
   const hasScripts = files.some((file) => file.startsWith("scripts/"));
   const hasReferences = files.some((file) => file.startsWith("references/"));
   const hasAssets = files.some((file) => file.startsWith("assets/"));
+  const hasEvalRunner = files.some((file) => file === "scripts/run-evals.ts");
+  const evalSuitePath = join(root, "evals", "evals.json");
+  const evalSuiteText = existsSync(evalSuitePath) ? readFileSync(evalSuitePath, "utf-8") : "";
+  const hasTraceCapture =
+    hasEvalRunner || files.some((file) => file.toLowerCase().includes("trace") || file.toLowerCase().includes("run-evals"));
+  const hasLogging =
+    files.some((file) => file === "references/logging-and-gate.md") ||
+    files.some((file) => file.toLowerCase().includes("log") || file.toLowerCase().includes("gate"));
+  const hasRegressionGuard =
+    files.some((file) => file === "evals/regression.json") ||
+    (hasEvals && files.some((file) => file.toLowerCase().includes("regression"))) ||
+    evalSuiteText.includes('"split": "regression"');
+  const hasBaselineSupport = hasEvalRunner && files.some((file) => file === "scripts/workspace-init.ts");
+  const hasBehaviorFixtures = files.some((file) => file === "scripts/check-fixtures.ts") && evalSuiteText.includes("fixture-intent-diagnosis");
+  const behaviorJudgmentPath = join(root, "evals", "behavior-judgments.json");
+  const behaviorJudgmentText = existsSync(behaviorJudgmentPath) ? readFileSync(behaviorJudgmentPath, "utf-8") : "";
+  const hasJudgmentBridge =
+    evalSuiteText.includes("external-judgment-contract") &&
+    files.some((file) => file === "references/eval-schema.md") &&
+    behaviorJudgmentText.includes('"method": "llm_judge"') &&
+    behaviorJudgmentText.includes('"method": "human_preference"');
+  const hasMetricDeltaGate = evalSuiteText.includes("gate-baseline-delta") && files.some((file) => file === "scripts/gate.ts");
+  const hasIterateSuccessRegression = evalSuiteText.includes("iterate-success-path") && files.some((file) => file === "scripts/iterate.ts");
+  const hasMutationProposal = evalSuiteText.includes("mutation-proposal-from-trace") && files.some((file) => file === "scripts/propose-mutation.ts");
   const compactConversationalSkill =
     skillMdLines > 0 &&
     skillMdLines <= 40 &&
@@ -501,13 +537,18 @@ function audit(targetPath: string): AuditReport {
   const evalPlan = buildEvalPlan(fmName || dirName, description, intent.primary);
   const mutationStrategy = chooseMutation(findings, intent.primary);
   const missingSelfTraining = [
-    ["baseline", false],
+    ["baseline", hasBaselineSupport],
     ["dev eval", hasEvals],
-    ["regression guard", hasEvals && files.some((file) => file.toLowerCase().includes("regression"))],
-    ["trace capture", hasScripts && files.some((file) => file.toLowerCase().includes("trace"))],
+    ["regression guard", hasRegressionGuard],
+    ["trace capture", hasScripts && hasTraceCapture],
     ["rollback/checkpoint", hasScripts && files.some((file) => file.toLowerCase().includes("checkpoint"))],
     ["gate criteria", true],
-    ["human-auditable logs", hasScripts && files.some((file) => file.toLowerCase().includes("log"))],
+    ["human-auditable logs", hasScripts && hasLogging],
+    ["behavior fixture eval", hasBehaviorFixtures],
+    ["external judgment bridge", hasJudgmentBridge],
+    ["baseline metric delta gate", hasMetricDeltaGate],
+    ["iterate success regression", hasIterateSuccessRegression],
+    ["trace-backed mutation proposal", hasMutationProposal],
   ]
     .filter(([, ok]) => !ok)
     .map(([name]) => String(name));

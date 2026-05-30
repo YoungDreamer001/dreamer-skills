@@ -91,7 +91,13 @@ To run schema checks, deterministic assertions, and trace/log scaffolding:
 bun scripts/run-evals.ts <target-skill-dir>/evals/evals.json --iteration=baseline
 ```
 
-`llm_judge`, `human_preference`, `path_hit`, `fact_coverage`, `json_path`, and `script_check` assertions may be marked `pending`. Pending cases require human, trace, or external runner judgment; do not count them as passed gates.
+`path_hit`, `fact_coverage`, and `script_check` are deterministic. `llm_judge`, `human_preference`, and `json_path` assertions are marked `pending` unless an external evaluator supplies a judgment file:
+
+```bash
+bun scripts/run-evals.ts <target-skill-dir>/evals/evals.json --judgments-file=judgments.json --iteration=behavior-review
+```
+
+Pending cases require human, trace, or external runner judgment; do not count them as passed gates.
 
 To initialize a protected self-training workspace:
 
@@ -114,6 +120,36 @@ bun scripts/gate.ts <optimizer-workspace> --iteration=iteration-001
 ```
 
 `gate.ts` writes `logs/gates.jsonl` and `logs/last-gate.json`. A gate with pending critical assertions returns `needs-human-review` unless explicitly run with `--allow-pending`.
+
+If the gate returns `discard`, restore the checkpointed working copy:
+
+```bash
+bun scripts/restore.ts <optimizer-workspace> --iteration=iteration-001 --require-discard
+```
+
+`restore.ts` backs up the current `source/working`, restores `checkpoints/<iteration>/working`, and logs the rollback in `logs/restores.jsonl` and `logs/experiments.jsonl`.
+
+For a single post-mutation verification cycle, use:
+
+```bash
+bun scripts/iterate.ts <optimizer-workspace> --iteration=iteration-001 --suite=<optimizer-workspace>/evals/dev.json --mutation-layer=SKILL.md
+```
+
+`iterate.ts` runs checkpoint, evals against `source/working`, gate, and automatic restore on `discard`. It does not invent or apply mutations; edit `source/working` first, then run it.
+
+On discard, `iterate.ts` restores from the latest restorable checkpoint that existed before verification. `workspace-init` creates the initial `baseline` checkpoint, so a failed edit does not become its own rollback target.
+
+If a pre-mutation checkpoint already exists, restore from it on discard:
+
+```bash
+bun scripts/iterate.ts <optimizer-workspace> --iteration=iteration-002 --restore-from=iteration-001 --suite=<optimizer-workspace>/evals/dev.json --mutation-layer=SKILL.md
+```
+
+To generate a trace-backed mutation proposal without editing files:
+
+```bash
+bun scripts/propose-mutation.ts <optimizer-workspace> --iteration=iteration-001
+```
 
 Separate findings into:
 
@@ -213,3 +249,5 @@ When finishing an iterative optimization run, use `assets/final-report-template.
 - `scripts/workspace-init.ts` — initialize protected optimization workspace, eval splits, baseline traces, and evolve plan.
 - `scripts/checkpoint.ts` — snapshot `source/working` before verification.
 - `scripts/gate.ts` — apply AND gate to traces and write gate decisions.
+- `scripts/restore.ts` — restore `source/working` from checkpoint after discard.
+- `scripts/iterate.ts` — run one post-mutation checkpoint/eval/gate/restore cycle.

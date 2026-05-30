@@ -1,6 +1,6 @@
 #!/usr/bin/env bun
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { basename, dirname, join, resolve } from "node:path";
+import { existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
+import { basename, dirname, join, relative, resolve } from "node:path";
 
 type AssertionMethod =
   | "contains"
@@ -45,6 +45,12 @@ type AssertionResult = {
   evidence: string;
 };
 
+type ExternalJudgment = {
+  status?: "pass" | "fail" | "pending" | "error";
+  passed?: boolean;
+  evidence?: string;
+};
+
 type CaseTrace = {
   case_id: string;
   prompt: string;
@@ -71,12 +77,16 @@ function parseArgs() {
     suitePath: "",
     outputDir: "",
     responseFile: "",
+    judgmentsFile: "",
+    targetSkillDir: "",
     iteration: "baseline",
   };
 
   for (const arg of args) {
     if (arg.startsWith("--output-dir=")) options.outputDir = arg.slice("--output-dir=".length);
     else if (arg.startsWith("--response-file=")) options.responseFile = arg.slice("--response-file=".length);
+    else if (arg.startsWith("--judgments-file=")) options.judgmentsFile = arg.slice("--judgments-file=".length);
+    else if (arg.startsWith("--target-skill-dir=")) options.targetSkillDir = arg.slice("--target-skill-dir=".length);
     else if (arg.startsWith("--iteration=")) options.iteration = arg.slice("--iteration=".length);
     else if (!options.suitePath) options.suitePath = arg;
     else fail(`Unexpected argument: ${arg}`);
@@ -101,6 +111,62 @@ function loadSuite(path: string): EvalSuite {
   const suite = JSON.parse(readFileSync(path, "utf-8")) as EvalSuite;
   validateSuite(suite);
   return suite;
+}
+
+function inferTargetSkillDir(suitePath: string): string {
+  const parent = dirname(suitePath);
+  if (basename(parent) === "evals") return dirname(parent);
+  return "";
+}
+
+function readSkillCorpus(root: string): { text: string; loadedFiles: string[] } {
+  if (!root || !existsSync(root)) return { text: "", loadedFiles: [] };
+  const files: string[] = [];
+  const parts: string[] = [];
+  const skipDirs = new Set([".git", "node_modules", "evals", "runs", "logs", "checkpoints", "restore-backups"]);
+  const skipFiles = new Set([".DS_Store"]);
+
+  function walk(dir: string) {
+    for (const entry of readdirSync(dir)) {
+      if (skipDirs.has(entry) || skipFiles.has(entry)) continue;
+      const path = join(dir, entry);
+      const stat = statSync(path);
+      if (stat.isDirectory()) {
+        walk(path);
+        continue;
+      }
+      if (!stat.isFile()) continue;
+      if (!/\.(md|json|ts|js|yml|yaml|txt)$/.test(entry)) continue;
+      const rel = relative(root, path);
+      files.push(rel);
+      parts.push(`\n--- ${rel} ---\n${readFileSync(path, "utf-8")}`);
+    }
+  }
+
+  walk(root);
+  return { text: parts.join("\n"), loadedFiles: files.sort() };
+}
+
+function loadJudgments(path: string): Map<string, ExternalJudgment> {
+  const judgments = new Map<string, ExternalJudgment>();
+  if (!path) return judgments;
+  const resolved = resolve(path);
+  if (!existsSync(resolved)) fail(`Judgments file not found: ${resolved}`);
+  const raw = JSON.parse(readFileSync(resolved, "utf-8")) as unknown;
+  const entries = Array.isArray(raw)
+    ? raw
+    : raw && typeof raw === "object" && Array.isArray((raw as { judgments?: unknown[] }).judgments)
+      ? (raw as { judgments: unknown[] }).judgments
+      : [];
+  for (const entry of entries) {
+    if (!entry || typeof entry !== "object") continue;
+    const item = entry as { case_id?: string; caseId?: string; assertion?: string; assertion_name?: string; name?: string } & ExternalJudgment;
+    const caseId = item.case_id || item.caseId || "";
+    const assertionName = item.assertion || item.assertion_name || item.name || "";
+    if (!caseId || !assertionName) continue;
+    judgments.set(`${caseId}:${assertionName}`, item);
+  }
+  return judgments;
 }
 
 function validateSuite(suite: EvalSuite) {
@@ -133,8 +199,25 @@ function validateSuite(suite: EvalSuite) {
   if (errors.length > 0) fail(`Invalid eval suite:\n- ${errors.join("\n- ")}`);
 }
 
-function evaluateAssertion(assertion: EvalAssertion, response: string): AssertionResult {
+function evaluateAssertion(
+  item: EvalCase,
+  assertion: EvalAssertion,
+  response: string,
+  targetSkillDir: string,
+  judgments: Map<string, ExternalJudgment>
+): AssertionResult {
   try {
+    const judgment = judgments.get(`${item.id}:${assertion.name}`);
+    if (judgment) {
+      const status = judgment.status || (judgment.passed === true ? "pass" : judgment.passed === false ? "fail" : "pending");
+      return {
+        name: assertion.name,
+        method: assertion.method,
+        status,
+        evidence: judgment.evidence || `External judgment supplied status=${status}.`,
+      };
+    }
+
     if (assertion.method === "contains") {
       const passed = response.includes(assertion.expect);
       return {
@@ -167,7 +250,7 @@ function evaluateAssertion(assertion: EvalAssertion, response: string): Assertio
     }
 
     if (assertion.method === "file_exists") {
-      const path = resolve(assertion.expect);
+      const path = resolve(targetSkillDir || ".", assertion.expect);
       const passed = existsSync(path);
       return {
         name: assertion.name,
@@ -177,11 +260,50 @@ function evaluateAssertion(assertion: EvalAssertion, response: string): Assertio
       };
     }
 
+    if (assertion.method === "path_hit") {
+      const expectedPath = assertion.expect;
+      const path = resolve(targetSkillDir || ".", expectedPath);
+      const passed = existsSync(path) && response.includes(expectedPath);
+      return {
+        name: assertion.name,
+        method: assertion.method,
+        status: passed ? "pass" : "fail",
+        evidence: passed
+          ? `Corpus includes expected path and file exists: ${expectedPath}`
+          : `Expected path missing from corpus or filesystem: ${expectedPath}`,
+      };
+    }
+
+    if (assertion.method === "fact_coverage") {
+      const terms = assertion.expect
+        .split("|")
+        .map((item) => item.trim())
+        .filter(Boolean);
+      const missing = terms.filter((term) => !response.includes(term));
+      return {
+        name: assertion.name,
+        method: assertion.method,
+        status: missing.length === 0 ? "pass" : "fail",
+        evidence: missing.length === 0 ? `All ${terms.length} expected terms found.` : `Missing terms: ${missing.join(", ")}`,
+      };
+    }
+
+    if (assertion.method === "script_check") {
+      const scriptPath = resolve(targetSkillDir || ".", assertion.expect);
+      const passed = existsSync(scriptPath) && readFileSync(scriptPath, "utf-8").includes("#!/usr/bin/env bun");
+      return {
+        name: assertion.name,
+        method: assertion.method,
+        status: passed ? "pass" : "fail",
+        evidence: passed ? `Script exists with Bun shebang: ${assertion.expect}` : `Script check failed: ${assertion.expect}`,
+      };
+    }
+
     return {
       name: assertion.name,
       method: assertion.method,
       status: "pending",
-      evidence: `${assertion.method} requires external execution, trace inspection, LLM judgment, or human review.`,
+      evidence: `${assertion.method} requires --judgments-file evidence from an external evaluator or human reviewer.`,
     };
   } catch (err) {
     return {
@@ -200,7 +322,7 @@ function caseStatus(results: AssertionResult[]): "pass" | "fail" | "pending" | "
   return "pass";
 }
 
-function writeTrace(outputDir: string, iteration: string, item: EvalCase, results: AssertionResult[], seconds: number) {
+function writeTrace(outputDir: string, iteration: string, item: EvalCase, results: AssertionResult[], seconds: number, loadedFiles: string[]) {
   const caseDir = join(outputDir, `eval-${item.id}`);
   mkdirSync(caseDir, { recursive: true });
   const status = caseStatus(results);
@@ -209,7 +331,7 @@ function writeTrace(outputDir: string, iteration: string, item: EvalCase, result
     prompt: item.prompt,
     expected: item.expected_signal,
     skill_version: iteration,
-    loaded_files: [],
+    loaded_files: loadedFiles,
     scripts_run: [],
     output_paths: [],
     assertions: results,
@@ -231,11 +353,20 @@ function pct(numerator: number, denominator: number): string {
   return (numerator / denominator).toFixed(3);
 }
 
+function logsDirFor(outputDir: string): string {
+  const parent = dirname(outputDir);
+  if (basename(parent) === "runs") return join(parent, "..", "logs");
+  return join(parent, "logs");
+}
+
 function main() {
   const options = parseArgs();
   const suitePath = resolve(options.suitePath);
   const suite = loadSuite(suitePath);
-  const response = options.responseFile ? readFileSync(resolve(options.responseFile), "utf-8") : "";
+  const judgments = loadJudgments(options.judgmentsFile);
+  const targetSkillDir = resolve(options.targetSkillDir || inferTargetSkillDir(suitePath) || ".");
+  const corpus = options.responseFile ? { text: readFileSync(resolve(options.responseFile), "utf-8"), loadedFiles: [] } : readSkillCorpus(targetSkillDir);
+  const response = corpus.text;
   const outputDir = resolve(options.outputDir || join(dirname(suitePath), "..", "runs", options.iteration));
   mkdirSync(outputDir, { recursive: true });
 
@@ -244,21 +375,22 @@ function main() {
 
   for (const item of suite.cases) {
     const caseStarted = Date.now();
-    const results = item.assertions.map((assertion) => evaluateAssertion(assertion, response));
+    const results = item.assertions.map((assertion) => evaluateAssertion(item, assertion, response, targetSkillDir, judgments));
     const seconds = (Date.now() - caseStarted) / 1000;
     const status = caseStatus(results);
-    writeTrace(outputDir, options.iteration, item, results, seconds);
+    writeTrace(outputDir, options.iteration, item, results, seconds, corpus.loadedFiles);
     caseRows.push({ item, status, seconds });
   }
 
   const bySplit = (split: EvalCase["split"]) => caseRows.filter((row) => row.item.split === split);
   const passRate = (rows: typeof caseRows) => pct(rows.filter((row) => row.status === "pass").length, rows.length);
+  const primaryMetric = pct(caseRows.filter((row) => row.status === "pass").length, caseRows.length);
   const pendingCount = caseRows.filter((row) => row.status === "pending").length;
   const failedCount = caseRows.filter((row) => row.status === "fail" || row.status === "error").length;
   const decision = failedCount > 0 ? "discard" : pendingCount > 0 ? "needs-human-review" : "keep";
   const elapsed = (Date.now() - started) / 1000;
 
-  const logsDir = join(dirname(outputDir), "..", "logs");
+  const logsDir = logsDirFor(outputDir);
   mkdirSync(logsDir, { recursive: true });
   const resultsPath = join(logsDir, "results.tsv");
   if (!existsSync(resultsPath)) {
@@ -286,7 +418,7 @@ function main() {
   const notes = `${caseRows.length} cases, ${pendingCount} pending, ${failedCount} failed`;
   writeFileSync(
     resultsPath,
-    `${options.iteration}\t${new Date().toISOString()}\tevals\t${decision}\tn/a\tn/a\t${passRate(bySplit("dev"))}\t${passRate(
+    `${options.iteration}\t${new Date().toISOString()}\tevals\t${decision}\tn/a\t${primaryMetric}\t${passRate(bySplit("dev"))}\t${passRate(
       bySplit("holdout")
     )}\t${passRate(bySplit("regression"))}\t0\t${elapsed.toFixed(3)}\tn/a\t${notes}\n`,
     { flag: "a" }

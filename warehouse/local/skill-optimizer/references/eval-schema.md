@@ -66,17 +66,40 @@ The runner can execute these methods directly:
 - `not_contains`
 - `regex`
 - `file_exists`
+- `path_hit`
+- `fact_coverage`
+- `script_check`
 
 The runner marks these methods as `pending` unless an external evaluator supplies evidence:
 
 - `json_path`
-- `script_check`
-- `path_hit`
-- `fact_coverage`
 - `llm_judge`
 - `human_preference`
 
 Pending is not pass. A gate with pending critical assertions is `needs-human-review`.
+
+External evaluator or human judgments can be supplied with:
+
+```bash
+bun scripts/run-evals.ts <evals/evals.json> --judgments-file=judgments.json
+```
+
+`judgments.json` may be either an array or an object with a `judgments` array:
+
+```json
+{
+  "judgments": [
+    {
+      "case_id": "behavior-audit-1",
+      "assertion": "diagnosis-quality",
+      "status": "pass",
+      "evidence": "Reviewer found purpose, primary intent, eval strategy, mutation layer, and guardrail correct."
+    }
+  ]
+}
+```
+
+Judgments are trace evidence. They must explain the observed behavior, not just provide a score.
 
 Each run writes:
 

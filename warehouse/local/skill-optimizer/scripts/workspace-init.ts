@@ -1,5 +1,5 @@
 #!/usr/bin/env bun
-import { cpSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { basename, dirname, join, resolve } from "node:path";
 import { parse } from "yaml";
 
@@ -413,7 +413,16 @@ function assertionFor(item: AuditReport["evalPlan"][number]): EvalAssertion {
   };
 }
 
-function buildSuite(report: AuditReport): EvalSuite {
+function loadExistingSuite(skillDir: string): EvalSuite | null {
+  const path = join(skillDir, "evals", "evals.json");
+  if (!existsSync(path)) return null;
+  const suite = JSON.parse(readFileSync(path, "utf-8")) as EvalSuite;
+  if (!suite.skill_name || !Array.isArray(suite.cases)) fail(`Invalid eval suite: ${path}`);
+  return suite;
+}
+
+function buildSuite(report: AuditReport, existingSuite: EvalSuite | null): EvalSuite {
+  if (existingSuite) return existingSuite;
   return {
     skill_name: report.skillName,
     version: 1,
@@ -438,7 +447,7 @@ function splitSuite(suite: EvalSuite, split: EvalCase["split"]): EvalSuite {
   };
 }
 
-function evaluateAssertion(assertion: EvalAssertion, response: string): AssertionResult {
+function evaluateAssertion(assertion: EvalAssertion, response: string, targetSkillDir: string): AssertionResult {
   if (assertion.method === "contains") {
     const passed = response.includes(assertion.expect);
     return {
@@ -468,7 +477,7 @@ function evaluateAssertion(assertion: EvalAssertion, response: string): Assertio
     };
   }
   if (assertion.method === "file_exists") {
-    const path = resolve(assertion.expect);
+    const path = resolve(targetSkillDir, assertion.expect);
     const passed = existsSync(path);
     return {
       name: assertion.name,
@@ -477,12 +486,65 @@ function evaluateAssertion(assertion: EvalAssertion, response: string): Assertio
       evidence: passed ? `File exists: ${path}` : `File missing: ${path}`,
     };
   }
+  if (assertion.method === "path_hit") {
+    const path = resolve(targetSkillDir, assertion.expect);
+    const passed = existsSync(path) && response.includes(assertion.expect);
+    return {
+      name: assertion.name,
+      method: assertion.method,
+      status: passed ? "pass" : "fail",
+      evidence: passed ? `Corpus includes expected path and file exists: ${assertion.expect}` : `Expected path missing: ${assertion.expect}`,
+    };
+  }
+  if (assertion.method === "fact_coverage") {
+    const terms = assertion.expect
+      .split("|")
+      .map((item) => item.trim())
+      .filter(Boolean);
+    const missing = terms.filter((term) => !response.includes(term));
+    return {
+      name: assertion.name,
+      method: assertion.method,
+      status: missing.length === 0 ? "pass" : "fail",
+      evidence: missing.length === 0 ? `All ${terms.length} expected terms found.` : `Missing terms: ${missing.join(", ")}`,
+    };
+  }
+  if (assertion.method === "script_check") {
+    const path = resolve(targetSkillDir, assertion.expect);
+    const passed = existsSync(path) && readFileSync(path, "utf-8").includes("#!/usr/bin/env bun");
+    return {
+      name: assertion.name,
+      method: assertion.method,
+      status: passed ? "pass" : "fail",
+      evidence: passed ? `Script exists with Bun shebang: ${assertion.expect}` : `Script check failed: ${assertion.expect}`,
+    };
+  }
   return {
     name: assertion.name,
     method: assertion.method,
     status: "pending",
     evidence: `${assertion.method} requires external execution, trace inspection, LLM judgment, or human review.`,
   };
+}
+
+function readCorpus(root: string): string {
+  const parts: string[] = [];
+  const skipDirs = new Set([".git", "node_modules", "evals", "runs", "logs", "checkpoints", "restore-backups"]);
+  function walk(dir: string) {
+    for (const entry of readdirSync(dir)) {
+      if (entry === ".DS_Store" || skipDirs.has(entry)) continue;
+      const path = join(dir, entry);
+      const stat = statSync(path);
+      if (stat.isDirectory()) {
+        walk(path);
+        continue;
+      }
+      if (!stat.isFile() || !/\.(md|json|ts|js|yml|yaml|txt)$/.test(entry)) continue;
+      parts.push(`\n--- ${path.slice(root.length + 1)} ---\n${readFileSync(path, "utf-8")}`);
+    }
+  }
+  walk(root);
+  return parts.join("\n");
 }
 
 function caseStatus(results: AssertionResult[]): "pass" | "fail" | "pending" | "error" {
@@ -497,9 +559,11 @@ function runBaseline(workspace: string, suite: EvalSuite) {
   mkdirSync(runDir, { recursive: true });
   const started = Date.now();
   const rows: Array<{ item: EvalCase; status: "pass" | "fail" | "pending" | "error" }> = [];
+  const working = join(workspace, "source", "working");
+  const corpus = readCorpus(working);
 
   for (const item of suite.cases) {
-    const results = item.assertions.map((assertion) => evaluateAssertion(assertion, ""));
+    const results = item.assertions.map((assertion) => evaluateAssertion(assertion, corpus, working));
     const status = caseStatus(results);
     const caseDir = join(runDir, `eval-${item.id}`);
     mkdirSync(caseDir, { recursive: true });
@@ -679,7 +743,7 @@ function main() {
 
   const report = auditSkill(join(workspace, "source", "working"));
   report.targetPath = target;
-  const suite = buildSuite(report);
+  const suite = buildSuite(report, loadExistingSuite(join(workspace, "source", "working")));
   mkdirSync(join(workspace, "evals"), { recursive: true });
   writeFileSync(join(workspace, "evals", "evals.json"), `${JSON.stringify(suite, null, 2)}\n`, "utf-8");
   for (const split of ["dev", "holdout", "regression", "flaky"] as const) {
@@ -687,6 +751,20 @@ function main() {
   }
   const baseline = runBaseline(workspace, suite);
   writeEvolvePlan(workspace, report, baseline);
+  const skillRoot = resolve(join(dirname(new URL(import.meta.url).pathname), ".."));
+  const checkpointScript = join(skillRoot, "scripts", "checkpoint.ts");
+  const checkpoint = Bun.spawnSync([
+    "bun",
+    checkpointScript,
+    workspace,
+    "--iteration=baseline",
+    "--mutation-layer=initial",
+    "--summary=Initial restorable checkpoint created by workspace-init.",
+  ], { stdout: "pipe", stderr: "pipe" });
+  if (checkpoint.exitCode !== 0) {
+    fail([checkpoint.stdout.toString(), checkpoint.stderr.toString()].filter(Boolean).join("\n"));
+  }
+  writeFileSync(join(workspace, "logs", "last-restorable-checkpoint.txt"), "baseline\n", "utf-8");
 
   console.log(
     JSON.stringify(

@@ -30,6 +30,19 @@ type Trace = {
   cost?: { tokens?: number; seconds?: number };
 };
 
+type RunStats = {
+  pending: number;
+  failed: number;
+  passed: number;
+  errored: number;
+  boundaryFailed: boolean;
+  regressionFailed: boolean;
+  seconds: number;
+  tokens: number;
+  evidence: string[];
+  passRate: number;
+};
+
 function parseArgs() {
   const args = process.argv.slice(2);
   const options = {
@@ -106,33 +119,7 @@ function hasDangerousContent(workspace: string): string[] {
   return problems;
 }
 
-function decide(record: Omit<GateRecord, "outcome" | "recommendation">, allowPending: boolean): Pick<GateRecord, "outcome" | "recommendation"> {
-  const gate = record.gate;
-  if (!gate.safety) {
-    return { outcome: "discard", recommendation: "Discard or repair safety/structure before further evaluation." };
-  }
-  if (!gate.boundary || !gate.regression) {
-    return { outcome: "discard", recommendation: "Discard mutation because boundary or regression gate failed." };
-  }
-  if (!gate.cost) {
-    return { outcome: "keep-with-warning", recommendation: "Cost gate failed; keep only if the cost increase is justified by user value." };
-  }
-  if (record.failed > 0 || record.errored > 0) {
-    return { outcome: "discard", recommendation: "Discard mutation because one or more assertions failed or errored." };
-  }
-  if (record.pending > 0 && !allowPending) {
-    return { outcome: "needs-human-review", recommendation: "Resolve pending LLM/human/trace assertions before keep/discard." };
-  }
-  if (!gate.intent_metric) {
-    return { outcome: "needs-human-review", recommendation: "Intent metric is not proven; inspect traces before keeping the mutation." };
-  }
-  return { outcome: "keep", recommendation: "All gate dimensions passed." };
-}
-
-function main() {
-  const options = parseArgs();
-  const workspace = resolve(options.workspace);
-  const runDir = join(workspace, "runs", options.iteration);
+function collectRunStats(runDir: string): RunStats {
   const tracePaths = listTracePaths(runDir);
   if (tracePaths.length === 0) fail(`No trace.json files found under ${runDir}`);
 
@@ -166,22 +153,72 @@ function main() {
     evidence.push(`${caseId}: ${caseErrored ? "error" : caseFailed ? "fail" : casePending ? "pending" : "pass"}`);
   }
 
+  const total = pending + failed + passed + errored;
+  return {
+    pending,
+    failed,
+    passed,
+    errored,
+    boundaryFailed,
+    regressionFailed,
+    seconds,
+    tokens,
+    evidence,
+    passRate: total === 0 ? 0 : passed / total,
+  };
+}
+
+function decide(record: Omit<GateRecord, "outcome" | "recommendation">, allowPending: boolean): Pick<GateRecord, "outcome" | "recommendation"> {
+  const gate = record.gate;
+  if (!gate.safety) {
+    return { outcome: "discard", recommendation: "Discard or repair safety/structure before further evaluation." };
+  }
+  if (!gate.boundary || !gate.regression) {
+    return { outcome: "discard", recommendation: "Discard mutation because boundary or regression gate failed." };
+  }
+  if (!gate.cost) {
+    return { outcome: "keep-with-warning", recommendation: "Cost gate failed; keep only if the cost increase is justified by user value." };
+  }
+  if (record.failed > 0 || record.errored > 0) {
+    return { outcome: "discard", recommendation: "Discard mutation because one or more assertions failed or errored." };
+  }
+  if (record.pending > 0 && !allowPending) {
+    return { outcome: "needs-human-review", recommendation: "Resolve pending LLM/human/trace assertions before keep/discard." };
+  }
+  if (!gate.intent_metric) {
+    return { outcome: "needs-human-review", recommendation: "Intent metric is not proven; inspect traces before keeping the mutation." };
+  }
+  return { outcome: "keep", recommendation: "All gate dimensions passed." };
+}
+
+function main() {
+  const options = parseArgs();
+  const workspace = resolve(options.workspace);
+  const runDir = join(workspace, "runs", options.iteration);
+  const current = collectRunStats(runDir);
+  const baselineDir = join(workspace, "runs", "baseline");
+  const baseline = options.iteration === "baseline" || !existsSync(baselineDir) ? null : collectRunStats(baselineDir);
+  const metricDeltaOk = !baseline || current.passRate >= baseline.passRate;
+  const metricEvidence = baseline
+    ? [`primary_metric baseline=${baseline.passRate.toFixed(3)} current=${current.passRate.toFixed(3)} delta=${(current.passRate - baseline.passRate).toFixed(3)}`]
+    : [`primary_metric current=${current.passRate.toFixed(3)} baseline=n/a`];
+
   const safetyProblems = hasDangerousContent(workspace);
   const gateBase = {
     iteration: options.iteration,
     timestamp: new Date().toISOString(),
     gate: {
-      intent_metric: failed === 0 && errored === 0 && (pending === 0 || options.allowPending),
-      boundary: !boundaryFailed,
-      regression: !regressionFailed,
-      cost: seconds <= options.maxSeconds && (options.maxTokens === 0 || tokens <= options.maxTokens),
+      intent_metric: metricDeltaOk && current.failed === 0 && current.errored === 0 && (current.pending === 0 || options.allowPending),
+      boundary: !current.boundaryFailed,
+      regression: !current.regressionFailed,
+      cost: current.seconds <= options.maxSeconds && (options.maxTokens === 0 || current.tokens <= options.maxTokens),
       safety: safetyProblems.length === 0,
     },
-    pending,
-    failed,
-    passed,
-    errored,
-    evidence: [...evidence, ...safetyProblems],
+    pending: current.pending,
+    failed: current.failed,
+    passed: current.passed,
+    errored: current.errored,
+    evidence: [...metricEvidence, ...current.evidence, ...safetyProblems],
   };
   const decision = decide(gateBase, options.allowPending);
   const record: GateRecord = {

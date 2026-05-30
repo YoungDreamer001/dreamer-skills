@@ -34,6 +34,12 @@ Use an isolated workspace for self-training. Do not mutate the user's original s
     checkpoints.jsonl
     gates.jsonl
     last-gate.json
+    restores.jsonl
+    iterations.jsonl
+    last-iteration.json
+  restore-backups/
+    iteration-001-<timestamp>/
+      working/
   reports/
     evolve-plan.md
     final-report.md
@@ -100,6 +106,70 @@ The gate reads `runs/<iteration>/eval-*/trace.json`, checks safety patterns in `
 - `logs/last-gate.json`.
 
 Pending critical assertions produce `needs-human-review` unless `--allow-pending` is explicitly used.
+
+For non-baseline iterations, the gate compares `runs/<iteration>/` against `runs/baseline/` and records the primary metric delta. A mutation cannot pass the intent metric if it regresses against baseline.
+
+## Restore
+
+After a `discard` gate:
+
+```bash
+bun scripts/restore.ts <optimizer-workspace> --iteration=iteration-001 --require-discard
+```
+
+The restore command:
+
+1. Copies current `source/working/` to `restore-backups/`.
+2. Replaces `source/working/` with `checkpoints/<iteration>/working/`.
+3. Appends `logs/restores.jsonl`.
+4. Records the rollback in `logs/experiments.jsonl`.
+
+## Iteration
+
+After editing `source/working`, run one verification cycle:
+
+```bash
+bun scripts/iterate.ts <optimizer-workspace> --iteration=iteration-001 --suite=<optimizer-workspace>/evals/dev.json --mutation-layer=SKILL.md
+```
+
+If the checkpoint was created before the mutation, separate verification iteration from restore point:
+
+```bash
+bun scripts/iterate.ts <optimizer-workspace> --iteration=iteration-002 --restore-from=iteration-001 --suite=<optimizer-workspace>/evals/dev.json --mutation-layer=SKILL.md
+```
+
+The iteration command:
+
+1. Creates a checkpoint unless `--skip-checkpoint` is used.
+2. Runs evals into `runs/<iteration>/`.
+3. Runs the AND gate.
+4. Restores from checkpoint when the gate outcome is `discard`, unless `--no-restore` is used.
+5. Writes `logs/iterations.jsonl` and `logs/last-iteration.json`.
+
+It never mutates `source/working` before the checkpoint. It does not invent or apply skill changes.
+
+Discard restores from the latest restorable checkpoint that existed before verification. `workspace-init` creates the initial `baseline` checkpoint; a kept iteration becomes the new restorable checkpoint. This prevents a failed mutation from being snapshotted and then restored as if it were clean.
+
+## Mutation Proposal
+
+When an iteration has failed, errored, or pending traces, generate an evidence-backed proposal without editing files:
+
+```bash
+bun scripts/propose-mutation.ts <optimizer-workspace> --iteration=iteration-001
+```
+
+This writes `reports/mutation-proposal.json` with:
+
+- target case;
+- observed failure;
+- trace evidence;
+- hypothesis;
+- mutation layer;
+- proposed atomic change;
+- expected metric movement;
+- regression guard.
+
+The proposal is the ideation artifact for human/model review. It is not an automatic mutation.
 
 ## Baseline
 
