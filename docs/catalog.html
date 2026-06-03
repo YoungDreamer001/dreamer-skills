@@ -544,6 +544,124 @@
 | slack-gif-creator | ❌ | Slack 优化 GIF 动画创建 | make me a GIF for Slack, animated GIF |
 | theme-factory | ❌ | 主题样式工具包（10 套预设主题） | theme, styling, color palette, font, apply theme |
 | using-agent-skills | ❌ | 技能发现与调用元技能 | discover skills, which skill applies, invoke skill, meta-skill |
+
+---
+
+## 🔗 实用工作流组合
+
+以下是将多个技能串联使用的典型工作流。每个工作流按执行顺序排列，你可以按需裁剪步骤。
+
+### 1. 内容创作与多平台发布流
+
+适合将从素材收集到多平台分发的完整链路自动化。
+
+```
+素材采集 → 深度分析 → 内容创作 → 视觉包装 → 排版发布
+```
+
+| 步骤 | 推荐技能 | 作用 |
+|------|---------|------|
+| ① 素材采集 | `baoyu-url-to-markdown` / `baoyu-youtube-transcript` | 将网页/视频转为可编辑的 Markdown |
+| ② 深度分析 | `article-analyzer` | 对素材进行结构化拆解与洞察提取 |
+| ③ 内容创作 | `merge-drafts` / `subtext-article` | 多素材合并成文章，或视频转写润色 |
+| ④ 翻译润色 | `baoyu-translate` | 多语言翻译与术语统一 |
+| ⑤ 视觉包装 | `baoyu-cover-image` / `baoyu-article-illustrator` | 生成封面图与正文配图 |
+| ⑥ 排版转换 | `baoyu-markdown-to-html` | Markdown 转微信兼容 HTML |
+| ⑦ 多平台发布 | `baoyu-post-to-wechat` / `baoyu-post-to-weibo` / `baoyu-post-to-x` | 一键发布至各平台 |
+
+> 💡 如果你只有一篇原始素材想快速出稿，可以跳过 ①②，直接用 `article-analyzer` 提取要点后进入 ③。
+
+### 2. 知识萃取与知识库归档流
+
+适合将碎片化信息（视频、播客、文章）沉淀为结构化知识资产。
+
+```
+原始内容 → 转写/提取 → 分析重构 → 翻译整理 → 知识库归档
+```
+
+| 步骤 | 推荐技能 | 作用 |
+|------|---------|------|
+| ① 原始内容 | `baoyu-youtube-transcript` / `baoyu-url-to-markdown` | 获取视频字幕或网页原文 |
+| ② 转写重构 | `subtext-article` | 将字幕/ASR 转写转为可读文章 |
+| ③ 深度分析 | `article-analyzer` | 提取核心论点、框架与可行动洞察 |
+| ④ 概念寓言化 | `concept-fable` | 将复杂概念转为三段式寓言故事（可选） |
+| ⑤ 翻译整理 | `baoyu-translate` | 外文内容精翻，统一术语 |
+| ⑥ 知识库归档 | `ima-skill` | 上传至 IMA 知识库，建立个人/团队知识索引 |
+
+> 💡 配合 `weread-skills` 可将微信读书笔记同步纳入知识管理体系。
+
+### 3. 演示文稿快速制作流
+
+适合从大纲到成品的幻灯片/网页演示制作。
+
+```
+主题定义 → 内容生成 → 图表配图 → 幻灯片制作 → 封面收尾
+```
+
+| 步骤 | 推荐技能 | 作用 |
+|------|---------|------|
+| ① 主题定义 | `prompt-optimizer` | 将模糊需求编译为结构化 prompt |
+| ② 内容生成 | `HeavySkill` / `article-analyzer` | 深度思考生成大纲与逐页内容 |
+| ③ 图表配图 | `baoyu-diagram` / `baoyu-infographic` | 生成流程图、架构图或信息图 |
+| ④ 幻灯片制作 | `html-ppt` / `guizang-ppt-skill` / `baoyu-slide-deck` | 生成网页 PPT 或图片版幻灯片 |
+| ⑤ 封面收尾 | `baoyu-cover-image` | 生成演示封面与章节过渡页 |
+| ⑥ 品牌统一 | `theme-factory` | 应用统一主题配色与排版风格 |
+
+> 💡 若需要技术类演示，可额外使用 `architecture-diagram` 生成深色架构图。
+
+### 4. 产品研发与发布流
+
+适合从需求到上线的完整开发周期。
+
+```
+需求澄清 → 规格定义 → 增量开发 → 代码审查 → 质量保障 → 部署发布
+```
+
+| 步骤 | 推荐技能 | 作用 |
+|------|---------|------|
+| ① 需求澄清 | `to-prd` / `idea-refine` | 对话生成 PRD，或压力测试假设 |
+| ② 规格定义 | `spec-driven-development` | 编码前先写规范文档与接口契约 |
+| ③ 增量开发 | `incremental-implementation` / `tdd` | 大任务拆分，测试驱动逐步落地 |
+| ④ 代码审查 | `code-review-and-quality` | 多维度审查，合并前质量把关 |
+| ⑤ 质量保障 | `setup-pre-commit` / `webapp-testing` | 配置提交钩子与自动化测试 |
+| ⑥ 部署发布 | `deploy-to-vercel` / `release-skills` | 一键部署，自动检测版本与 changelog |
+
+> 💡 如需 API 设计，可在 ② 阶段加入 `api-and-interface-design` 或 `design-an-interface`。
+
+### 5. 社交媒体内容运营流
+
+适合将优质外部内容改编为自有社交媒体素材。
+
+```
+热点捕捉 → 内容改编 → 视觉设计 → 一键分发
+```
+
+| 步骤 | 推荐技能 | 作用 |
+|------|---------|------|
+| ① 热点捕捉 | `baoyu-x-to-markdown` / `baoyu-url-to-markdown` | 保存推文/文章为 Markdown |
+| ② 内容改编 | `merge-drafts` / `blog-checker` | 合稿并评估文章质量 |
+| ③ 视觉设计 | `guizang-social-card-skill` / `baoyu-infographic` | 生成小红书图文、信息图等 |
+| ④ 一键分发 | `baoyu-post-to-x` / `baoyu-post-to-weibo` / `baoyu-post-to-wechat` | 多平台同步发布 |
+
+> 💡 运营小红书时，`guizang-social-card-skill` 的 3:4 封面模板可直接使用。
+
+### 6. 长文精读与复盘沉淀流
+
+适合对高质量长文进行深度阅读并沉淀为个人方法论。
+
+```
+长文输入 → 伴读分析 → 复盘提取 → 提示词沉淀
+```
+
+| 步骤 | 推荐技能 | 作用 |
+|------|---------|------|
+| ① 长文输入 | `baoyu-url-to-markdown` | 将长文转为本地 Markdown |
+| ② 伴读分析 | `article-analyzer` / `HeavySkill` | 结构化拆解与深度思考 |
+| ③ 复盘提取 | `session-achieve` | 从阅读/对话中提取纠偏逻辑与关键洞察 |
+| ④ 提示词沉淀 | `prompt-optimizer` | 将个人阅读方法论固化为可复用 prompt |
+| ⑤ 归档管理 | `ima-skill` | 存入知识库，建立阅读索引 |
+
+> 💡 配合 `weread-skills` 可将微信读书中的划线与书评纳入同一复盘流程。
     </script>
 
     <script>
@@ -625,6 +743,33 @@
                 currentSectionContent.appendChild(subheader);
             }
             else if (token.type === 'table' && currentSectionContent) {
+                // Check if this is a skill catalog table (4+ columns)
+                const isSkillTable = token.header && token.header.length >= 4;
+
+                if (!isSkillTable) {
+                    // Render as a generic styled table for workflow/other tables
+                    const tableWrapper = document.createElement('div');
+                    tableWrapper.style.padding = '8px 16px';
+                    tableWrapper.style.overflowX = 'auto';
+
+                    let html = '<table style="width:100%;border-collapse:collapse;font-size:0.9rem;">';
+                    html += '<thead><tr>';
+                    token.header.forEach(h => {
+                        html += `<th style="border:1px solid #E5E7EB;padding:8px 12px;text-align:left;background:#F3F4F6;font-weight:600;">${marked.parseInline(h.text)}</th>`;
+                    });
+                    html += '</tr></thead><tbody>';
+                    token.rows.forEach(row => {
+                        html += '<tr>';
+                        row.forEach(cell => {
+                            html += `<td style="border:1px solid #E5E7EB;padding:8px 12px;">${marked.parseInline(cell.text)}</td>`;
+                        });
+                        html += '</tr>';
+                    });
+                    html += '</tbody></table>';
+
+                    tableWrapper.innerHTML = html;
+                    currentSectionContent.appendChild(tableWrapper);
+                } else {
                 token.rows.forEach((row, rowIndex) => {
                     const rowDiv = document.createElement('div');
                     rowDiv.className = 'row';
@@ -665,6 +810,7 @@
                     rowDiv.appendChild(descSpan);
                     currentSectionContent.appendChild(rowDiv);
                 });
+                }
             }
             else if (currentSectionContent && token.type !== 'space' && token.type !== 'hr') {
                 if (token.type === 'paragraph') {
