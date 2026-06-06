@@ -11,6 +11,8 @@ type AssertionMethod =
   | "script_check"
   | "path_hit"
   | "fact_coverage"
+  | "external_judgment"
+  // Backward-compatible alias for old eval files. New suites should use external_judgment.
   | "llm_judge"
   | "human_preference";
 

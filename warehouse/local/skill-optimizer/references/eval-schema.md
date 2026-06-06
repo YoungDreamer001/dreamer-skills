@@ -1,6 +1,6 @@
 # Eval Schema
 
-Use this schema shape for `evals/evals.json`. It is intentionally simple enough for agents to write and scripts to validate.
+Use this schema shape for `evals/evals.json`. It is intentionally simple enough for the LLM to translate requirements into JSON and for scripts to validate.
 
 ```json
 {
@@ -15,7 +15,7 @@ Use this schema shape for `evals/evals.json`. It is intentionally simple enough 
       "assertions": [
         {
           "name": "should-trigger",
-          "method": "llm_judge",
+          "method": "external_judgment",
           "expect": "yes",
           "criteria": "The skill should be loaded or explicitly selected."
         }
@@ -36,7 +36,7 @@ Use this schema shape for `evals/evals.json`. It is intentionally simple enough 
 - `type`: eval type.
 - `prompt`: user-facing task.
 - `expected_signal`: observable target behavior.
-- `assertions`: machine, LLM, or human checks.
+- `assertions`: script-executable checks or external judgment placeholders.
 - `split`: `dev`, `holdout`, `regression`, or `flaky`.
 
 ## Assertion Methods
@@ -49,7 +49,7 @@ Use this schema shape for `evals/evals.json`. It is intentionally simple enough 
 - `script_check`
 - `path_hit`
 - `fact_coverage`
-- `llm_judge`
+- `external_judgment`
 - `human_preference`
 
 ## Runner Contract
@@ -73,12 +73,14 @@ The runner can execute these methods directly:
 The runner marks these methods as `pending` unless an external evaluator supplies evidence:
 
 - `json_path`
-- `llm_judge`
+- `external_judgment`
 - `human_preference`
 
 Pending is not pass. A gate with pending critical assertions is `needs-human-review`.
 
-External evaluator or human judgments can be supplied with:
+LLM review can be used only by writing explicit evidence into `judgments.json`; it is external evidence, not automatic execution.
+
+External evaluator, LLM-review, or human judgments can be supplied with:
 
 ```bash
 bun scripts/run-evals.ts <evals/evals.json> --judgments-file=judgments.json

@@ -5,15 +5,27 @@ description: Audit, evaluate, and improve Agent Skills by first diagnosing the s
 
 # Skill Optimizer
 
-Optimize Agent Skills as adaptive behavior systems.
+Optimize Agent Skills as script-executed behavior systems.
 
 Core rule:
 
-> A skill is good when it fulfills its purpose. To fulfill that purpose, it may adapt.
+> What scripts can do, the LLM must not do. The LLM translates intent into structured inputs and reviewable proposals; scripts execute, verify, gate, and restore.
+
+Supporting rule:
+
+> A skill is good when it fulfills its purpose. To fulfill that purpose, it may adapt through script-controlled, trace-backed changes.
 
 Do not judge every skill against one fixed template. First identify the skill's purpose, then choose the evaluation and improvement strategy that fits that purpose.
 
 Use the minimum sufficient mechanism. Do not push a target skill into self-training, scripts, references, templates, or state machines unless that heavier mechanism fixes a specific purpose-blocking failure.
+
+Execution boundary:
+
+- LLM responsibilities: translate the user's request into mode, target path, constraints, eval requirements, and patch proposal text.
+- Script responsibilities: inspect files, generate audit JSON, generate eval suites, run deterministic assertions, initialize workspaces, checkpoint, gate, restore, iterate, and write logs.
+- Human or external judgment responsibilities: resolve qualitative assertions by supplying explicit judgment files.
+- The LLM must not directly execute optimization logic that a bundled script can run.
+- The LLM must not directly apply a behavior mutation during self-training; produce a patch proposal and require script/human application before verification.
 
 ## Workflow
 
@@ -26,7 +38,7 @@ Read the target skill directory before judging it:
 1. Read `SKILL.md`.
 2. Inspect the directory tree.
 3. Note bundled `references/`, `scripts/`, `assets/`, `evals/`, config, and examples.
-4. Identify whether the user wants audit-only, eval-plan, patch proposal, direct edit, or self-training.
+4. Identify whether the user wants audit-only, eval-plan, patch proposal, user-approved direct edit, or self-training.
 
 If the user did not provide a target path, ask for the skill directory path.
 
@@ -52,7 +64,7 @@ Choose evals based on intent, not habit.
 
 Use `references/eval-protocol.md`.
 
-At minimum, propose:
+At minimum, translate the requirement into a reviewable eval plan:
 
 - positive trigger cases;
 - negative trigger cases;
@@ -76,7 +88,7 @@ For deterministic first-pass audit, run:
 bun scripts/audit-skill.ts <target-skill-dir> --format=markdown
 ```
 
-Use the script output as evidence, then add human judgment for purpose, necessity, and eval quality.
+Use the script output as evidence. Any purpose, necessity, or eval-quality judgment that cannot be derived deterministically must be recorded as review text or supplied later through a judgment file; do not count it as an executed gate result.
 
 To turn the audit into a reviewable eval suite:
 
@@ -91,13 +103,13 @@ To run schema checks, deterministic assertions, and trace/log scaffolding:
 bun scripts/run-evals.ts <target-skill-dir>/evals/evals.json --iteration=baseline
 ```
 
-`path_hit`, `fact_coverage`, and `script_check` are deterministic. `llm_judge`, `human_preference`, and `json_path` assertions are marked `pending` unless an external evaluator supplies a judgment file:
+`path_hit`, `fact_coverage`, and `script_check` are deterministic. `external_judgment`, `human_preference`, and `json_path` assertions are marked `pending` unless an external evaluator supplies a judgment file:
 
 ```bash
 bun scripts/run-evals.ts <target-skill-dir>/evals/evals.json --judgments-file=judgments.json --iteration=behavior-review
 ```
 
-Pending cases require human, trace, or external runner judgment; do not count them as passed gates.
+Pending cases require human, trace, or external runner judgment; do not count them as passed gates. LLM review is allowed only as external evidence written to a judgment file, never as implicit execution.
 
 To initialize a protected self-training workspace:
 
@@ -166,7 +178,7 @@ Do not treat optional polish as a blocker.
 
 ### 6. Choose Mutation Strategy
 
-Choose the smallest change that can improve the target metric.
+Translate trace evidence into the smallest reviewable change that can improve the target metric.
 
 Use `references/mutation-policy.md`.
 Use `references/anti-overfitting.md` to decide whether the mutation is too heavy for the failure.
@@ -183,7 +195,7 @@ Each patch should change one layer and one intent dimension unless the user expl
 
 ### 7. Optional Self-Training Loop
 
-Use self-training only when the user asks for automatic iteration and the skill has enough evals to safely optimize.
+Use self-training only when the user asks for automatic iteration and the skill has enough evals to safely optimize through scripts.
 
 Use `references/self-training-protocol.md`.
 Use `references/runtime-workspace.md` for workspace layout.
@@ -195,7 +207,7 @@ The loop is:
 Setup -> Intent Diagnosis -> Eval Planning -> Baseline -> Review -> Ideate -> Modify -> Verify -> Gate -> Log -> Loop/Stop
 ```
 
-The model may propose and edit; programmatic gates decide keep or revert. No trace, no mutation. No eval suite, no baseline run, no self-training.
+The LLM may translate traces into a patch proposal. Scripts and explicit user-approved edits produce file changes; programmatic gates decide keep or revert. No trace, no mutation. No eval suite, no baseline run, no self-training.
 
 ### 8. Deliver
 
@@ -206,7 +218,7 @@ Default output is a concise audit package:
 3. Top findings with evidence.
 4. Eval plan.
 5. Recommended mutation strategy.
-6. Optional patch or direct edits if requested.
+6. Reviewable patch proposal, or direct edits only when the user explicitly requested them outside self-training.
 
 When producing a formal report, use `assets/audit-report-template.md`.
 When finishing an iterative optimization run, use `assets/final-report-template.md`.
@@ -218,6 +230,8 @@ When finishing an iterative optimization run, use `assets/final-report-template.
 - Prefer eval creation before major rewriting.
 - Prefer adding gotchas/regression for real failures over broad rewrites.
 - Prefer scripts for deterministic, repetitive, or fragile operations.
+- If a bundled script can inspect, generate, run, gate, restore, or log something, run the script instead of asking the LLM to simulate it.
+- Treat LLM output as translation or proposal until script evidence or an explicit judgment file makes it executable evidence.
 - Keep `SKILL.md` as the control plane; move heavy details to resources.
 - Do not force templates onto narrow skills.
 - Do not optimize for beauty, completeness, or length unless those serve the skill purpose.
@@ -225,7 +239,7 @@ When finishing an iterative optimization run, use `assets/final-report-template.
 - Preserve the target skill's native shape unless that shape blocks purpose fulfillment.
 - Start lightweight: `description -> gotcha -> output contract -> reference index -> script -> self-training`.
 - Do not start self-training without primary intent, baseline, dev eval, regression guard, trace capture, rollback/checkpoint, gate criteria, and human-auditable logs.
-- If direct edits are requested, preserve unrelated user changes.
+- If direct edits are requested outside self-training, preserve unrelated user changes and verify with scripts.
 
 ## Reference Files
 

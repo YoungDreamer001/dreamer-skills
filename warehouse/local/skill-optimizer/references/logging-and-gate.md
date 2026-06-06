@@ -1,6 +1,6 @@
 # Logging And Gate
 
-Program controls gate decisions. The model proposes changes.
+Program controls gate decisions. The LLM translates trace evidence into proposals; scripts execute gates and restores.
 
 ## AND Gate
 
@@ -70,7 +70,7 @@ The restore script backs up current `source/working`, restores `checkpoints/<ite
 
 ## Iteration Command
 
-After a human or model edits `source/working`, run:
+After a script or explicit user-approved edit changes `source/working`, run:
 
 ```bash
 bun scripts/iterate.ts <optimizer-workspace> --iteration=iteration-001 --suite=<optimizer-workspace>/evals/dev.json --mutation-layer=SKILL.md

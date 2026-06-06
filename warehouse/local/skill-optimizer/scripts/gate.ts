@@ -183,7 +183,7 @@ function decide(record: Omit<GateRecord, "outcome" | "recommendation">, allowPen
     return { outcome: "discard", recommendation: "Discard mutation because one or more assertions failed or errored." };
   }
   if (record.pending > 0 && !allowPending) {
-    return { outcome: "needs-human-review", recommendation: "Resolve pending LLM/human/trace assertions before keep/discard." };
+    return { outcome: "needs-human-review", recommendation: "Resolve pending external judgment or trace assertions before keep/discard." };
   }
   if (!gate.intent_metric) {
     return { outcome: "needs-human-review", recommendation: "Intent metric is not proven; inspect traces before keeping the mutation." };

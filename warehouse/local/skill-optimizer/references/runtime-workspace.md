@@ -169,7 +169,7 @@ This writes `reports/mutation-proposal.json` with:
 - expected metric movement;
 - regression guard.
 
-The proposal is the ideation artifact for human/model review. It is not an automatic mutation.
+The proposal is the ideation artifact for human or external review. It is not an automatic mutation.
 
 ## Baseline
 

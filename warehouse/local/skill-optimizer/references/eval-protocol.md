@@ -18,7 +18,7 @@ Always consider:
 
 Input: `name` and `description`.
 
-Ask a judge to produce:
+Generate or request external judgment inputs:
 
 - 3 high-confidence should-trigger prompts;
 - 3 similar should-not-trigger prompts;
@@ -31,7 +31,7 @@ Use for routing and frontmatter changes.
 
 Input: full `SKILL.md`, directory tree, and a representative user task.
 
-Ask an agent to simulate execution:
+Generate or request a trace simulation judgment:
 
 - what step it takes;
 - what file or script it reads/runs;
@@ -55,7 +55,7 @@ Ask a QA role for 3-5 failure cases:
 - tool/API version drift;
 - prompt injection or unsafe instruction.
 
-Use the results as gotchas or regression cases.
+Use the results as proposed gotchas or regression cases. They become gate evidence only after they are encoded as eval assertions and resolved by scripts or judgment files.
 
 ### Progressive-Disclosure Eval
 
@@ -76,7 +76,7 @@ Routing:
 - positive trigger prompts;
 - negative trigger prompts;
 - adjacent-confusion prompts;
-- description-only judge.
+- description-only external judgment.
 
 Norm/Style:
 
@@ -110,7 +110,7 @@ Knowledge Navigation:
 Creative:
 
 - style rubric;
-- human preference;
+- external or human preference;
 - generation QA;
 - rework count.
 

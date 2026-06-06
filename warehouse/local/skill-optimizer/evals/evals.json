@@ -298,7 +298,7 @@
     {
       "id": "external-judgment-contract",
       "type": "judge-contract",
-      "prompt": "Run behavior-level llm_judge or human_preference evals with external reviewer evidence.",
+      "prompt": "Run behavior-level external_judgment or human_preference evals with external reviewer evidence.",
       "expected_signal": "run-evals.ts accepts --judgments-file and maps case/assertion judgments into trace evidence.",
       "assertions": [
         {

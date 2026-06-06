@@ -358,7 +358,7 @@ function audit(targetPath: string): AuditReport {
   const hasJudgmentBridge =
     evalSuiteText.includes("external-judgment-contract") &&
     files.some((file) => file === "references/eval-schema.md") &&
-    behaviorJudgmentText.includes('"method": "llm_judge"') &&
+    behaviorJudgmentText.includes('"method": "external_judgment"') &&
     behaviorJudgmentText.includes('"method": "human_preference"');
   const hasMetricDeltaGate = evalSuiteText.includes("gate-baseline-delta") && files.some((file) => file === "scripts/gate.ts");
   const hasIterateSuccessRegression = evalSuiteText.includes("iterate-success-path") && files.some((file) => file === "scripts/iterate.ts");
@@ -589,14 +589,14 @@ function buildEvalPlan(skillName: string, description: string, intent: Intent): 
       type: "positive-trigger",
       prompt: positivePrompt,
       expectedSignal: `${target} should be selected or considered useful.`,
-      assertionOrJudge: "LLM judge: should trigger? YES/NO with evidence from description.",
+      assertionOrJudge: "External judgment: should trigger? YES/NO with evidence from description.",
     },
     {
       id: "trigger-negative-1",
       type: "negative-trigger",
       prompt: "User asks for an adjacent but out-of-scope task.",
       expectedSignal: `${target} should not be selected.`,
-      assertionOrJudge: "LLM judge: should not trigger? YES/NO with adjacent-boundary evidence.",
+      assertionOrJudge: "External judgment: should not trigger? YES/NO with adjacent-boundary evidence.",
     },
     {
       id: "necessity-hero-1",
@@ -659,7 +659,7 @@ function buildEvalPlan(skillName: string, description: string, intent: Intent): 
         type: "style-rubric",
         prompt: "Representative creative generation request.",
         expectedSignal: "Output matches style DNA and avoids forbidden patterns.",
-        assertionOrJudge: "Human preference or LLM rubric with concrete visual/style criteria.",
+        assertionOrJudge: "External or human preference judgment with concrete visual/style criteria.",
       },
     ],
     governance: [

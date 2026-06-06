@@ -14,6 +14,8 @@ type EvalAssertion = {
     | "script_check"
     | "path_hit"
     | "fact_coverage"
+    | "external_judgment"
+    // Backward-compatible alias for old eval files. New suites should use external_judgment.
     | "llm_judge"
     | "human_preference";
   expect: string;
@@ -96,7 +98,7 @@ function assertionFor(item: NonNullable<AuditReport["evalPlan"]>[number]): EvalA
   if (item.type === "negative-trigger" || item.type === "adjacent-confusion") {
     return {
       name: "should-not-trigger",
-      method: "llm_judge",
+      method: "external_judgment",
       expect: "yes",
       criteria: "The target skill should not be selected for this prompt.",
     };
@@ -113,7 +115,7 @@ function assertionFor(item: NonNullable<AuditReport["evalPlan"]>[number]): EvalA
 
   return {
     name: item.type === "necessity" ? "skill-adds-value" : "should-pass",
-    method: "llm_judge",
+    method: "external_judgment",
     expect: "yes",
     criteria: item.assertionOrJudge || "Judge whether the expected signal is satisfied.",
   };
@@ -134,7 +136,7 @@ function defaultCases(skillName: string): EvalCase[] {
       assertions: [
         {
           name: "skill-adds-value",
-          method: "llm_judge",
+          method: "external_judgment",
           expect: "yes",
           criteria: "Compare no-skill and with-skill outputs for purpose fulfillment.",
         },
@@ -151,7 +153,7 @@ function defaultCases(skillName: string): EvalCase[] {
       assertions: [
         {
           name: "should-not-trigger",
-          method: "llm_judge",
+          method: "external_judgment",
           expect: "yes",
           criteria: "The request should be handled without this skill.",
         },

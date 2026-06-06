@@ -16,6 +16,8 @@ type EvalAssertion = {
     | "script_check"
     | "path_hit"
     | "fact_coverage"
+    | "external_judgment"
+    // Backward-compatible alias for old eval files. New suites should use external_judgment.
     | "llm_judge"
     | "human_preference";
   expect: string;
@@ -292,14 +294,14 @@ function buildEvalPlan(skillName: string, description: string, intent: string): 
       type: "positive-trigger",
       prompt: positivePrompt,
       expectedSignal: `${target} should be selected or considered useful.`,
-      assertionOrJudge: "LLM judge: should trigger? YES/NO with evidence from description.",
+      assertionOrJudge: "External judgment: should trigger? YES/NO with evidence from description.",
     },
     {
       id: "trigger-negative-1",
       type: "negative-trigger",
       prompt: "User asks for an adjacent but out-of-scope task.",
       expectedSignal: `${target} should not be selected.`,
-      assertionOrJudge: "LLM judge: should not trigger? YES/NO with adjacent-boundary evidence.",
+      assertionOrJudge: "External judgment: should not trigger? YES/NO with adjacent-boundary evidence.",
     },
     {
       id: "necessity-hero-1",
@@ -362,7 +364,7 @@ function buildEvalPlan(skillName: string, description: string, intent: string): 
         type: "style-rubric",
         prompt: "Representative creative generation request.",
         expectedSignal: "Output matches style DNA and avoids forbidden patterns.",
-        assertionOrJudge: "Human preference or LLM rubric with concrete visual/style criteria.",
+        assertionOrJudge: "External or human preference judgment with concrete visual/style criteria.",
       },
     ],
     governance: [
@@ -392,7 +394,7 @@ function assertionFor(item: AuditReport["evalPlan"][number]): EvalAssertion {
   if (item.type === "negative-trigger" || item.type === "adjacent-confusion") {
     return {
       name: "should-not-trigger",
-      method: "llm_judge",
+      method: "external_judgment",
       expect: "yes",
       criteria: "The target skill should not be selected for this prompt.",
     };
@@ -407,7 +409,7 @@ function assertionFor(item: AuditReport["evalPlan"][number]): EvalAssertion {
   }
   return {
     name: item.type === "necessity" ? "skill-adds-value" : "should-pass",
-    method: "llm_judge",
+    method: "external_judgment",
     expect: "yes",
     criteria: item.assertionOrJudge,
   };
@@ -523,7 +525,7 @@ function evaluateAssertion(assertion: EvalAssertion, response: string, targetSki
     name: assertion.name,
     method: assertion.method,
     status: "pending",
-    evidence: `${assertion.method} requires external execution, trace inspection, LLM judgment, or human review.`,
+    evidence: `${assertion.method} requires external execution, trace inspection, or human review evidence.`,
   };
 }
 

@@ -1,6 +1,6 @@
 ---
 name: article-analyzer
-description: Analyze articles, papers, essays, technical blogs, business commentary, reports, raw notes, or long-form arguments into structured understanding, delivered as an output folder containing one Markdown file per selected analysis module plus a synthesis document. Use when the user asks for article analysis, 深度分析, 分析这篇文章, 拆解观点, 论文速读, paper scan, 分析这篇论文, thought refinement, 思想精炼, 提炼主线, 高密度表达, cognitive upgrade, 提维, 升维, 认知升级, 底层模型, or model reconstruction. Do not use for translation, publishable article rewriting, social-media packaging, title generation, cover creation, or external fact-checking unless the user explicitly asks for analysis first.
+description: Analyze articles, papers, essays, technical blogs, business commentary, reports, raw notes, or long-form arguments into structured understanding, delivered as an output folder containing one Markdown file per selected analysis module plus a synthesis document. Use when the user asks for article analysis, 深度分析, 分析这篇文章, 拆解观点, 论文速读, paper scan, 分析这篇论文, thought refinement, 思想精炼, 提炼主线, 高密度表达, cognitive upgrade, 提维, 升维, 认知升级, 底层模型, model reconstruction, fact/opinion audit, 事实核查, 事实观点分离, 观点是否有证据, or 核查证据. Do not use for translation, publishable article rewriting, social-media packaging, title generation, or cover creation.
 ---
 
 # Article Analyzer
@@ -13,12 +13,15 @@ Default to Chinese unless the user requests another language.
 
 Route before analyzing, then create a complete analysis package. This skill is a folder-output workflow, not an in-chat single report. The default package includes a source-faithful analysis layer plus a clearly separated cognitive upgrade: articles run `deep_analysis -> thought_refine -> cognitive_upgrade`; papers run `paper_scan -> deep_analysis -> thought_refine -> cognitive_upgrade`. The user can explicitly remove `cognitive_upgrade` by asking for faithful analysis only, no upgrade, no model reconstruction, or evidence-only analysis.
 
+External fact-checking is an explicit operator, not a default analysis behavior. Run it only when the user asks for fact-checking, claim verification, fact/view separation, evidence support, reference-link checking, authoritative news/source checking, or excluding self-media.
+
 Preserve evidence boundaries:
 
 - `原文明确`: directly stated by the source.
 - `合理推断`: inferred from the source's argument, examples, structure, or omissions.
 - `创造性延展`: a new framing, analogy, model, or synthesis created by the analyst.
 - `外部待验证`: a factual claim not present in the source and not verified in the current task. Avoid using it unless it is necessary to name a verification direction.
+- `外部已核验`: an external factual claim verified in this task with a named reliable source.
 - `信息不足`: cannot be answered from the provided source.
 
 Do not invent author background, publication context, SOTA status, market data, policy background, resource dependency, data source, external controversy, or intended audience. If an external fact is needed and the user did not ask for external research, mark it `外部待验证` or `信息不足` and state what evidence would be needed.
@@ -40,7 +43,7 @@ Before output, do a short internal routing pass:
 2. Infer user goal.
 3. Build the default package route with `cognitive_upgrade` unless the user explicitly asks to add or remove modules.
 4. Load only the matching reference prompt files.
-5. If the task is complex research, multi-source synthesis, due diligence, literature review, opportunity discovery, or explicit rigorous critique, also load `references/research_operators.md` and select the smallest useful operator set.
+5. If the task is complex research, multi-source synthesis, due diligence, literature review, opportunity discovery, explicit rigorous critique, or explicit fact/opinion audit, also load `references/research_operators.md` and select the smallest useful operator set.
 6. Create an output folder and write the selected module documents plus a synthesis document.
 
 If the source type is ambiguous, default to `article` and run the article package: `deep_analysis -> thought_refine -> cognitive_upgrade`.
@@ -66,6 +69,7 @@ If the source type is ambiguous, default to `article` and run the article packag
 | explicit narrow thought refinement | 只做思想精炼, 只要高密度表达, 不要提维 | `deep_analysis -> thought_refine` |
 | explicit cognitive upgrade | 提维, 升维, 认知升级, 底层模型, 新框架, 重构模型, 更高维度怎么看 | preserve the default route and emphasize `cognitive_upgrade` |
 | research operator package | 文献综述, 尽调, 多来源对比, 证据地图, 隐含假设, 矛盾点, 研究空白, 实施蓝图, 严苛评审 | default module chain + selected operators from `references/research_operators.md` |
+| fact/opinion audit | 事实核查, 核查证据, 事实观点分离, 哪些事实有证据, 观点是否有证据, 参考链接, 权威报道, 排除自媒体 | `fact_opinion_audit -> 99-summary`; when the user also asks for deep analysis, run `deep_analysis` first |
 
 When multiple goals are present, preserve this order:
 
@@ -74,6 +78,8 @@ When multiple goals are present, preserve this order:
 Default to the full package route, including `cognitive_upgrade`. Only remove `cognitive_upgrade` or a source-faithful module when the user explicitly says "只做", "不要", "跳过", "只要忠实分析", "不要提维", "不要升维", "不要认知升级", or gives an already completed upstream document.
 
 Research operators are analysis lenses, not a separate workflow. Do not run all operators by default. Use them to strengthen the selected module files and summarize the selected operator set in `99-summary.md`.
+
+`fact_opinion_auditor` is the exception that may produce its own module file because users often ask for a narrow fact/opinion verification output. When the user only asks for fact/opinion audit, do not add `thought_refine` or `cognitive_upgrade`.
 
 ## Module Protocol
 
@@ -120,6 +126,16 @@ Every module follows this shape: `purpose`, `trigger`, `inputs`, `outputs`, `evi
 - `skip_conditions`: Skip when the source is too thin to support a meaningful thesis/antithesis pair, or when the user asks for faithful summary, academic review, no upgrade, no model reconstruction, or evidence-only analysis.
 - `reference_prompt`: `references/cognitive_upgrade.md`
 
+### `fact_opinion_audit`
+
+- `purpose`: Separate author-claimed facts from author-stated opinions and verify whether each has reliable evidence.
+- `trigger`: Run only when the user explicitly asks for fact-checking, claim verification, fact/view separation, evidence support, reference-link checking, authoritative news/source checking, or excluding self-media.
+- `inputs`: Source text, optional reference links, optional source restrictions, and any user-provided verification scope.
+- `outputs`: Author-claimed facts with verification status; author-stated opinions with support status; supporting or contradicting sources; excluded source notes; unresolved verification gaps.
+- `evidence_policy`: Check user-provided reference links first. When external lookup is available, use primary sources, official publications, academic sources, company filings, or reputable news reports. Exclude self-media, anonymous reposts, content farms, and unsupported social posts. Use statuses `已证实`, `部分支持`, `未找到可靠证据`, `与可靠来源冲突`, or `无法核验` for facts; use `事实证据支撑`, `逻辑推论支撑`, `弱证据`, `无可靠证据`, or `无法判断` for opinions. Do not equate `未找到可靠证据` with false.
+- `skip_conditions`: Skip when the user asks only for source-faithful analysis, thought refinement, cognitive upgrade, rewriting, translation, or internal evidence mapping without external verification.
+- `reference_prompt`: `references/research_operators.md` operator `fact_opinion_auditor`
+
 ## Output Modes
 
 | Mode | When used | Output shape |
@@ -127,6 +143,7 @@ Every module follows this shape: `purpose`, `trigger`, `inputs`, `outputs`, `evi
 | `article_package` | default for articles, essays, blogs, reports, raw thoughts | `01-deep_analysis.md`, `02-thought_refine.md`, `03-cognitive_upgrade.md`, `99-summary.md` |
 | `paper_package` | default for papers and academic methods | `01-paper_scan.md`, `02-deep_analysis.md`, `03-thought_refine.md`, `04-cognitive_upgrade.md`, `99-summary.md` |
 | `upgrade_package` | when the user explicitly emphasizes cognitive upgrade/model reconstruction | source-faithful files first, then `0N-cognitive_upgrade.md`, then `99-summary.md` |
+| `fact_opinion_audit` | when the user explicitly asks to verify facts/opinions or evidence support | `01-fact_opinion_audit.md`, `99-summary.md`; add `01-deep_analysis.md` first only when deep analysis is also requested |
 | `narrow_package` | user explicitly skips modules | selected module files plus `99-summary.md` |
 
 Default output should be compact but not shallow. Prefer concrete claims, evidence, and boundaries over generic explanation.
@@ -175,6 +192,14 @@ article-analyzer-<short-slug>/
   99-summary.md
 ```
 
+For fact/opinion audit-only inputs, create at least two files:
+
+```text
+article-analyzer-<short-slug>/
+  01-fact_opinion_audit.md
+  99-summary.md
+```
+
 Only create fewer files when the user explicitly narrows the route. Preserve route order in numeric prefixes. If a module is skipped by explicit request, do not create an empty placeholder file.
 
 Write `99-summary.md` last. It must include:
@@ -195,6 +220,10 @@ Final chat response should be short: provide the output folder path and list gen
 - Do not collapse the default workflow into a single Markdown report.
 - Do not output fewer than four files for normal article inputs.
 - Do not output fewer than five files for normal paper inputs.
+- Do not run external fact-checking unless the user explicitly asks for it.
+- Do not treat self-media, reposts, or unsupported social posts as verification evidence.
+- Do not label a fact as verified without naming the source used for verification.
+- Do not treat `未找到可靠证据` as proof that a claim is false.
 - Do not treat `cognitive_upgrade` as faithful source analysis.
 - Do not skip `cognitive_upgrade` in the default package unless the user explicitly asks for faithful-only, evidence-only, or no-upgrade analysis, or the source is too thin to support it.
 - Do not label external facts, model memory, or common industry background as `原文明确`.

@@ -10,7 +10,7 @@
       "assertions": [
         {
           "name": "skill-adds-value",
-          "method": "llm_judge",
+          "method": "external_judgment",
           "expect": "yes",
           "criteria": "Compare no-skill and with-skill outputs for purpose fulfillment."
         }
@@ -27,7 +27,7 @@
       "assertions": [
         {
           "name": "should-trigger",
-          "method": "llm_judge",
+          "method": "external_judgment",
           "expect": "yes",
           "criteria": "The request matches the skill description and purpose."
         }
@@ -44,7 +44,7 @@
       "assertions": [
         {
           "name": "should-not-trigger",
-          "method": "llm_judge",
+          "method": "external_judgment",
           "expect": "yes",
           "criteria": "The request should be handled without this skill."
         }

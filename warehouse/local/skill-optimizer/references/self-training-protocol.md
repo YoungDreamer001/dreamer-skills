@@ -2,9 +2,10 @@
 
 Use only when the target skill has enough evals or the user explicitly asks for iterative optimization.
 
-Program controls the loop. The model proposes local changes.
+Program controls the loop. The LLM translates traces into reviewable patch proposals; scripts or explicit user-approved edits create local changes.
 
 No trace, no mutation.
+No script, no execution.
 
 ## Loop
 
@@ -12,8 +13,8 @@ No trace, no mutation.
 Phase -1: Necessity Gate
 Phase 0: Setup
 Phase 1: Review
-Phase 2: Ideate
-Phase 3: Modify
+Phase 2: Translate Trace To Proposal
+Phase 3: Apply Approved Patch
 Phase 4: Checkpoint
 Phase 5: Verify
 Phase 6: Gate
@@ -61,9 +62,9 @@ Extract:
 - avoid list;
 - candidate mutation layer.
 
-## Phase 2: Ideate
+## Phase 2: Translate Trace To Proposal
 
-Propose one atomic mutation from trace evidence.
+Translate trace evidence into one atomic mutation proposal.
 
 Required format:
 
@@ -88,9 +89,9 @@ Priority:
 6. simplify;
 7. radical mutation.
 
-## Phase 3: Modify
+## Phase 3: Apply Approved Patch
 
-Edit one layer:
+Apply one approved patch to one layer:
 
 1. Frontmatter.
 2. `SKILL.md`.
@@ -104,6 +105,7 @@ Atomicity:
 - if more than 5 files change, suspect non-atomic scope;
 - do not mix unrelated cleanup;
 - do not change eval and target behavior together unless justified.
+- do not let the LLM directly edit during self-training; use a patch proposal that a script or explicit user-approved edit applies.
 
 ## Phase 4: Checkpoint
 
@@ -142,14 +144,14 @@ L2 Dev Eval:
 - trigger positive/negative;
 - selected regression;
 - deterministic script checks;
-- LLM YES/NO judge where needed.
+- external judgment file where qualitative review is unavoidable.
 
 L3 Strict Eval:
 
 - holdout;
 - full regression;
 - blind A/B;
-- repeated noisy judge;
+- repeated noisy external judgment;
 - cross-model if relevant.
 
 Run L3 on cadence, before layer escalation, before final report, or after major routing changes.

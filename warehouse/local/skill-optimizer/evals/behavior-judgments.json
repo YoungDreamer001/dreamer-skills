@@ -10,7 +10,7 @@
       "assertions": [
         {
           "name": "routing-audit-quality",
-          "method": "llm_judge",
+          "method": "external_judgment",
           "expect": "yes",
           "criteria": "Pass only if the audit identifies routing as primary, frontmatter as first mutation layer, and adjacent-confusion as a required regression dimension."
         }
@@ -27,7 +27,7 @@
       "assertions": [
         {
           "name": "tool-script-audit-quality",
-          "method": "llm_judge",
+          "method": "external_judgment",
           "expect": "yes",
           "criteria": "Pass only if the audit identifies tool-script as primary, scripts as first mutation layer, and invalid-input recovery as an eval target."
         }
