@@ -1,285 +1,228 @@
-# Skill Catalog / 技能目录
+# 技能目录 (Skill Catalog)
 
-> 由 `./bin/hk-skill catalog` 自动生成并翻译整理。  
-> 技能按**使用场景**分组，每个技能标注启用状态。
+> 本目录按**使用场景**分组，双语标注触发关键词。  
+> **状态说明**：✅ = 已启用（全局或指定项目）；⬜ = 未启用。  
+> 技术术语（技能名、CLI 命令、路径）保持英文。
 
 ---
 
 ## 内容创作
 
-| 状态 | 技能 | 描述 |
-|------|------|------|
-| ✅ | `article-analyzer` | 文章/论文/技术博客深度分析与结构化拆解（article analysis, 深度分析, 论文速读, 认知升级）。 |
-| ✅ | `blog-checker` | 中文技术博客文章质量审阅与评估。 |
-| ✅ | `merge-drafts` | 多份草稿合并为单篇高质量文章（merge drafts, 合稿, 统稿, consolidate）。 |
-| ✅ | `subtext-article` | 字幕/ASR 转写/播客文本转为可发布的长文章（subtitles to article, 视频文稿）。 |
-| ✅ | `baoyu-translate` | 多语言翻译，支持快翻/标准/精翻三种模式与自定义术语表（translate, 翻译, 精翻, localize）。 |
-| ⏸ | `edit-article` | 编辑改进文章结构与表达，优化清晰度与行文（edit, revise article）。 |
+| 技能 | 一句话说明 | 状态 |
+|------|-----------|------|
+| **article-analyzer** | 深度分析文章、论文、报告，输出结构化理解（多模块 Markdown）。触发：`深度分析`、`paper scan`、`thought refinement`、`认知升级`、`事实核查` | ✅ 项目: kane_echoes, my-reports |
+| **subtext-article** | 将字幕/转写文本（B站/YouTube/播客/SRT 等）转为一篇忠实的长文。触发：`字幕转文章`、`视频文稿`、`ASR转写` | ✅ 项目: kane_echoes |
+| **edit-article** | 重构段落、提升清晰度、收紧措辞，润色文章草稿。触发：`edit article`、`revise` | ⬜ |
+| **merge-drafts** | 多份草稿合并为一篇高质量成文，择优为底稿并整合亮点。触发：`merge drafts`、`合稿`、`combine drafts` | ✅ 项目: kane_echoes |
+| **baoyu-translate** | 文章翻译，支持快翻/普通/精翻三档，可自定义术语表。触发：`translate`、`翻译`、`精翻`、`localization` | ✅ 项目: kane_echoes |
+| **baoyu-youtube-transcript** | 下载 YouTube 字幕/封面，支持多语言、翻译、章节、说话人识别。触发：`YouTube字幕`、`视频封面`、`get transcript` | ✅ 项目: kane_echoes, kane_vault |
+| **baoyu-format-markdown** | Markdown 自动排版：frontmatter、标题、加粗、列表、代码块等。触发：`format markdown`、`beautify article` | ✅ 项目: kane_echoes |
+| **baoyu-url-to-markdown** | 将任意网页保存为 Markdown（内置 X/Twitter、YouTube、HN 适配器）。触发：`save webpage as markdown` | ✅ 项目: kane_echoes |
+| **baoyu-danger-x-to-markdown** | X/Twitter 推文/文章转 Markdown（含 YAML front matter）。触发：`X to markdown`、`save tweet` | ✅ 项目: kane_echoes |
+| **ljg-read** | 伴读助手：翻译、结构批注、深度提问、跨域洞察。触发：`伴读`、`read with me`、`companion read` | ⬜ |
+| **internal-comms** | 内部沟通文案：状态报告、领导更新、FAQ、事故报告等。触发：`status report`、`newsletter`、`incident report` | ⬜ |
+
+---
 
 ## 社交媒体
 
-| 状态 | 技能 | 描述 |
-|------|------|------|
-| ✅ | `baoyu-post-to-wechat` | 微信公众号文章与贴图发布（支持 Markdown 转 HTML 与底部引用）。 |
-| ✅ | `baoyu-post-to-weibo` | 微博内容发布与头条文章。 |
-| ✅ | `baoyu-post-to-x` | X/Twitter 内容与长文发布。 |
-| ✅ | `guizang-social-card-skill` | 小红书图文、公众号封面等社交媒体卡片生成（social cards, 3:4 covers, 微信公众号封面）。 |
+| 技能 | 一句话说明 | 状态 |
+|------|-----------|------|
+| **baoyu-post-to-wechat** | 微信公众号文章/贴图发布（支持 HTML/Markdown/纯文本，外链转底部引用）。触发：`发布公众号`、`post to wechat` | ✅ 项目: kane_echoes |
+| **baoyu-post-to-weibo** | 微博发布（含头条文章），支持文本/图片/视频。触发：`发微博`、`post to Weibo`、`微博头条文章` | ✅ 项目: kane_echoes |
+| **baoyu-post-to-x** | X/Twitter 发布（含长文 X Articles）。触发：`post to X`、`tweet`、`share on X` | ✅ 项目: kane_echoes |
+| **guizang-social-card-skill** | 生成小红书图文、公众号封面（21:9 + 1:1）、瑞士风社交卡片。触发：`小红书图文`、`social cards`、`carousel images` | ✅ 项目: kane_echoes |
+
+---
 
 ## 图像处理
 
-| 状态 | 技能 | 描述 |
-|------|------|------|
-| ✅ | `baoyu-article-illustrator` | 文章配图智能生成（Type × Style × Palette 三维选型，illustrate article, 为文章配图）。 |
-| ✅ | `baoyu-comic` | 知识漫画/教育漫画创作，支持多风格与分镜布局（知识漫画, biography comic, tutorial comic）。 |
-| ✅ | `baoyu-cover-image` | 文章封面图生成（11 色板 × 7 渲染风格，支持 2.35:1 / 16:9 / 1:1）。 |
-| ✅ | `baoyu-compress-image` | 图片压缩与格式转换（WebP/PNG，compress image, optimize image）。 |
-| ✅ | `baoyu-infographic` | 信息图/可视化大图生成（21 布局 × 22 风格，infographic, 信息图, 可视化）。 |
-| ✅ | `ian-xiaohei-illustrations` | Ian 风格手绘中文正文配图（怪诞/小黑/纯白手绘风格，正文配图, 文章插图）。 |
-| ✅ | `baoyu-danger-gemini-web` | Gemini Web API 图像与文本生成（逆向工程接口，generate image with Gemini）。 |
-| ⏸ | `algorithmic-art` | p5.js 算法艺术/生成艺术（粒子系统、流场、seeded randomness）。 |
-| ⏸ | `canvas-design` | 海报/艺术品静态视觉设计（PNG/PDF，create poster, design）。 |
-| ⏸ | `gpt-image-2` | GPT Image-2 图像生成与编辑（18 大类 80+ 结构化模板，海报/UI/产品/信息图/漫画等）。 |
-| ⏸ | `ian-handdrawn-ppt` | 手绘风格中文技术 PPT 配图生成（handdrawn technical explanation style）。 |
-| ⏸ | `visual-style-ppt` | 风格驱动图片版 PPT 生成（Image 2 + 风格库管理，风格驱动 PPT, 图片版 PPT）。 |
+| 技能 | 一句话说明 | 状态 |
+|------|-----------|------|
+| **baoyu-article-illustrator** | 分析文章结构，按 Type × Style × Palette 三维度生成配图。触发：`illustrate article`、`为文章配图` | ✅ 项目: kane_echoes |
+| **baoyu-comic** | 知识/教育漫画创作，支持多种画风与分镜排版。触发：`知识漫画`、`教育漫画`、`tutorial comic` | ✅ 项目: kane_echoes |
+| **baoyu-cover-image** | 文章封面图生成（5 维度 × 11 色板 × 7 渲染风格）。触发：`generate cover image`、`create article cover` | ✅ 项目: kane_echoes |
+| **baoyu-compress-image** | 图片压缩为 WebP/PNG，自动选择最佳工具。触发：`compress image`、`optimize image`、`convert to webp` | ✅ 项目: kane_echoes |
+| **baoyu-infographic** | 专业信息图生成（21 种布局 × 22 种视觉风格）。触发：`infographic`、`信息图`、`visual summary` | ✅ 项目: kane_echoes |
+| **ian-xiaohei-illustrations** | Ian 小黑风格中文正文配图（手绘、纯白、红橙蓝批注）。触发：`小黑`、`正文配图`、`文章插图` | ✅ 项目: kane_echoes |
+| **gpt-image-2** | GPT Image 2 图像生成/编辑（18 大类 80+ 模板，海报/UI/产品/漫画/头像等）。触发：`GPT Image 2` | ⬜ |
+| **canvas-design** | 视觉艺术设计（海报/艺术品），输出 PNG/PDF。触发：`create poster`、`design`、`piece of art` | ⬜ |
+| **algorithmic-art** | 算法艺术（p5.js 生成艺术、流场、粒子系统）。触发：`generative art`、`algorithmic art`、`flow fields` | ⬜ |
+| **brand-guidelines** | 应用 Anthropic 官方品牌色与排版。触发：`brand colors`、`style guidelines` | ⬜ |
 
-## 网页与演示
+---
 
-| 状态 | 技能 | 描述 |
-|------|------|------|
-| ✅ | `architecture-diagram` | 深色主题架构图/系统拓扑图（HTML+SVG，system diagram, cloud diagram, 画个架构图）。 |
-| ✅ | `baoyu-diagram` | 专业 SVG 图表（流程图/时序图/思维导图/组织架构图等，diagram, flowchart, 画个图）。 |
-| ✅ | `baoyu-markdown-to-html` | Markdown 转样式化 HTML（微信兼容、代码高亮、Mermaid 渲染、外链转底部引用）。 |
-| ✅ | `baoyu-slide-deck` | 幻灯片/演示文稿图片生成（create slides, make a presentation, PPT）。 |
-| ✅ | `guizang-ppt-skill` | 横向翻页网页 PPT（杂志风/瑞士国际主义，单 HTML 文件，horizontal swipe deck）。 |
-| ✅ | `html-ppt` | HTML 演示文稿（多风格模板、键盘导航，presentation, slides, 幻灯片, 小红书图文）。 |
-| ✅ | `web-design` | Web 视觉设计（Landing Page/产品页/博客/SaaS，先出 DESIGN.md 再生成达标代码）。 |
-| ⏸ | `frontend-design` | 高质量前端界面/UI 设计（避免通用 AI 审美，web components, landing page）。 |
-| ⏸ | `frontend-ui-engineering` | 生产级 UI 组件开发（components, layouts, state management）。 |
-| ⏸ | `web-design-engineer` | 网页/仪表盘/原型/动画前端开发（HTML/CSS/JavaScript/React）。 |
-| ⏸ | `web-design-guidelines` | UI 代码合规性审查（可访问性/UX/最佳实践，review my UI, audit design）。 |
-| ⏸ | `web-video-presentation` | 文章转"看起来像视频"的点击驱动 16:9 网页演示，可选音频合成。 |
+## 网页设计与前端
 
-## 知识管理
+| 技能 | 一句话说明 | 状态 |
+|------|-----------|------|
+| **web-design** | Web 视觉设计：从 PRD/参考 URL/截图产出 DESIGN.md 规范，再生成达标网页。触发：`帮我做个网站`、`landing page`、`design 规范` | ✅ 项目: kane_echoes, my-reports |
+| **web-design-engineer** | 构建精致的浏览器可交互前端交付物（页面/仪表盘/原型/动画）。触发：`browser-rendered deliverable` | ⬜ |
+| **frontend-design** | 高品质前端界面设计，避免通用 AI 审美。触发：`build web components`、`landing page`、`dashboard` | ⬜ |
+| **frontend-ui-engineering** | 生产级 UI 构建（组件/布局/状态管理）。触发：`production-quality UI`、`components`、`layouts` | ⬜ |
+| **baoyu-design** | UI 原型/线框图/落地页/仪表盘/幻灯片的自包含 HTML 设计。触发：`mockup`、`prototype`、`wireframe`、`build me a landing page` | ⬜ |
+| **baoyu-markdown-to-html** | Markdown 转微信兼容 HTML（代码高亮/数学/Mermaid/PlantUML/脚注等）。触发：`markdown to html`、`md 转 html` | ✅ 项目: kane_echoes |
+| **web-artifacts-builder** | 复杂多组件 Claude.ai HTML 工件（React + Tailwind + shadcn/ui）。触发：`elaborate artifacts`、`multi-component` | ⬜ |
+| **web-design-guidelines** | 审查 UI 代码是否符合 Web Interface Guidelines。触发：`review my UI`、`check accessibility`、`audit design` | ⬜ |
+| **theme-factory** | 主题样式工具包（10 套预设主题，可应用于幻灯片/文档/网页）。触发：`apply theme`、`styling artifacts` | ⬜ |
 
-| 状态 | 技能 | 描述 |
-|------|------|------|
-| ✅ | `concept-fable` | 概念寓言/三段式故事解释领域概念（概念寓言, 用寓言解释领域概念, Concept Reveal）。 |
-| ✅ | `HeavySkill` | Agentic 深度思考内核技能（Heavy Thinking as the Inner Skill）。 |
-| ✅ | `ima-skill` | IMA 知识库与笔记统一管理（上传/搜索/创建/编辑，知识库, 笔记, 资料库）。 |
-| ✅ | `prompt-optimizer` | 提示词工程优化，将模糊需求编译为工业级结构化 prompt（optimize prompt, 优化提示词）。 |
-| ✅ | `session-achieve` | 多轮对话复盘，提取纠偏逻辑并沉淀黄金提示词（复盘对话, session review）。 |
-| ✅ | `weread-skills` | 微信读书助手（搜索/书架/笔记/书评/阅读统计）。 |
-| ⏸ | `kb-retriever` | 本地知识库目录检索与问答（PDF/Excel 渐进式检索，避免整文件加载）。 |
-| ⏸ | `ljg-read` | 伴读/文本深度阅读（翻译/结构标注/跨域洞察，伴读, 陪我读, read with me）。 |
-| ⏸ | `obsidian-vault` | Obsidian 笔记库搜索、创建与管理（wikilinks, index notes）。 |
+### Vercel 生态
+
+| 技能 | 一句话说明 | 状态 |
+|------|-----------|------|
+| **deploy-to-vercel** | 部署应用到 Vercel。触发：`deploy my app`、`push this live` | ⬜ |
+| **vercel-cli-with-tokens** | Vercel CLI Token 认证部署与管理。触发：`deploy to vercel`、`set up vercel` | ⬜ |
+| **vercel-composition-patterns** | React 组合模式（Compound Components、Render Props、Context）。触发：`compound components`、`render props` | ⬜ |
+| **vercel-react-best-practices** | React/Next.js 性能优化指南。触发：`React performance`、`Next.js optimization` | ⬜ |
+| **vercel-react-native-skills** | React Native / Expo 最佳实践。触发：`React Native`、`Expo`、`mobile performance` | ⬜ |
+| **vercel-react-view-transitions** | React View Transition API 实现平滑动画。触发：`view transitions`、`page transitions`、`shared element animations` | ⬜ |
+
+---
+
+## PPT / 演示
+
+| 技能 | 一句话说明 | 状态 |
+|------|-----------|------|
+| **baoyu-slide-deck** | 专业幻灯片图片生成（从内容大纲到单页图片）。触发：`create slides`、`make a presentation`、`PPT` | ✅ 项目: kane_echoes |
+| **guizang-ppt-skill** | 横向翻页网页 PPT（单 HTML，WebGL 背景 + 两种风格）。触发：`杂志风 PPT`、`Swiss Style`、`horizontal swipe deck` | ✅ 项目: kane_echoes |
+| **html-ppt** | HTML PPT Studio（多风格模板 + 键盘导航）。触发：`presentation`、`slides`、`deck`、`幻灯片`、`演讲稿` | ✅ 项目: kane_echoes |
+| **ian-handdrawn-ppt** | 手绘技术风 PPT 配图（从文章/Markdown/PDF 生成）。触发：`PPT`、`课件`、`演示稿`、`handdrawn style` | ⬜ |
+| **visual-style-ppt** | 风格驱动图片版 PPTX（提炼/保存/复用视觉风格）。触发：`风格驱动 PPT`、`图片版 PPT`、`保存 PPT 风格` | ⬜ |
+| **web-video-presentation** | 文章/口播稿转点击驱动 16:9 网页演示（可选音频合成）。触发：`网页做视频`、`口播稿转演示`、`产品 demo` | ⬜ |
+| **pptx** | PPTX 文件创建、编辑、解析、合并、拆分。触发：`.pptx`、`deck`、`slides`、`presentation` | ⬜ |
+
+---
 
 ## 开发辅助
 
-| 状态 | 技能 | 描述 |
-|------|------|------|
-| ✅ | `baoyu-danger-x-to-markdown` | X/Twitter 推文与文章转 Markdown（X to markdown, save tweet）。 |
-| ✅ | `baoyu-url-to-markdown` | 任意 URL 网页保存为 Markdown（支持 X/Twitter/YouTube/Hacker News）。 |
-| ✅ | `baoyu-youtube-transcript` | YouTube 字幕/封面下载与翻译（get YouTube transcript, YouTube字幕, 视频封面）。 |
-| ✅ | `release-skills` | 通用发布工作流（自动检测版本文件与 changelog，支持 Node/Python/Rust/GitHub Release）。 |
-| ✅ | `skill-creator` | 技能创建、评估、优化与基准测试（create a skill, benchmark skill）。 |
-| ⏸ | `api-and-interface-design` | API 与接口设计规范（REST/GraphQL/类型契约，module boundaries）。 |
-| ⏸ | `ci-cd-and-automation` | CI/CD 流水线自动化（build pipelines, deployment strategies）。 |
-| ⏸ | `claude-api` | Claude API / Anthropic SDK 应用开发与版本迁移（prompt caching, thinking, tool use）。 |
-| ⏸ | `design-an-interface` | 并行生成多种接口设计方案（design it twice, compare module shapes）。 |
-| ⏸ | `docx` | Word 文档（.docx）创建、编辑与格式处理（Word doc, letter, memo, report）。 |
-| ⏸ | `git-guardrails-claude-code` | Claude Code Git 安全钩子（阻止 push/reset --hard/branch -D 等危险操作）。 |
-| ⏸ | `git-workflow-and-versioning` | Git 工作流与版本管理（branching, merging, conflict resolution）。 |
-| ⏸ | `mcp-builder` | MCP（Model Context Protocol）服务器开发（Python FastMCP / Node MCP SDK）。 |
-| ⏸ | `pdf` | PDF 全面处理（阅读/合并/分割/OCR/表单/加密/水印/图片提取）。 |
-| ⏸ | `performance-optimization` | 应用性能优化（Core Web Vitals、加载时间、性能回归）。 |
-| ⏸ | `planning-and-task-breakdown` | 任务拆分与进度规划（break work into implementable tasks, estimate scope）。 |
-| ⏸ | `pptx` | PPT 演示文稿（.pptx）创建、读取、编辑与拆分（deck, slides, presentation）。 |
-| ⏸ | `scaffold-exercises` | 练习目录结构与习题模板生成（exercise stubs, course section）。 |
-| ⏸ | `setup-pre-commit` | Husky + lint-staged pre-commit 钩子配置（Prettier/类型检查/测试）。 |
-| ⏸ | `shipping-and-launch` | 生产发布准备（预发布检查清单/监控/灰度/回滚策略）。 |
-| ⏸ | `spec-driven-development` | 编码前先写规范文档（PRD/规格书，requirements unclear）。 |
-| ⏸ | `tdd` | 测试驱动开发（红绿重构循环，red-green-refactor, test-first）。 |
-| ⏸ | `test-driven-development` | 测试驱动开发（证明代码正确性，fixing bugs, changing behavior）。 |
-| ⏸ | `vercel-cli-with-tokens` | Vercel CLI 令牌认证部署（access tokens, non-interactive login）。 |
-| ⏸ | `vercel-composition-patterns` | React 组合模式（Compound Components, Render Props, Context Providers, React 19）。 |
-| ⏸ | `vercel-react-best-practices` | React/Next.js 性能优化最佳实践（data fetching, bundle optimization）。 |
-| ⏸ | `vercel-react-native-skills` | React Native / Expo 移动应用最佳实践（list performance, animations, native modules）。 |
-| ⏸ | `vercel-react-view-transitions` | React View Transition API 动画实现（page transitions, shared element animations, Next.js）。 |
-| ⏸ | `webapp-testing` | Playwright 本地 Web 应用测试与调试（screenshots, browser logs, UI verification）。 |
-| ⏸ | `xlsx` | 电子表格处理（.xlsx/.csv 读写、清洗、转换、图表、公式）。 |
-| ⏸ | `zoom-out` | 代码全局视角与高阶理解（跳出细节看大局，unfamiliar code section）。 |
+| 技能 | 一句话说明 | 状态 |
+|------|-----------|------|
+| **api-and-interface-design** | API 与接口设计指南（REST/GraphQL/类型契约）。触发：`designing APIs`、`module boundaries` | ⬜ |
+| **design-an-interface** | 并行生成多种接口设计方案对比。触发：`design it twice`、`explore interface options` | ⬜ |
+| **planning-and-task-breakdown** | 将需求拆解为可执行任务并排序。触发：`break down tasks`、`estimate scope` | ⬜ |
+| **incremental-implementation** | 增量式代码交付（避免一次性大量改动）。触发：`incremental delivery` | ⬜ |
+| **source-driven-development** | 基于官方文档的权威实现（避免过时模式）。触发：`authoritative code`、`source-cited` | ⬜ |
+| **spec-driven-development** | 编码前先写规格说明。触发：`create spec`、`requirements unclear` | ⬜ |
+| **idea-refine** | 想法发散与收敛精炼（结构化头脑风暴）。触发：`ideate`、`refine this idea`、`stress-test my plan` | ⬜ |
+| **context-engineering** | Agent 上下文优化配置（规则文件、会话质量）。触发：`context setup`、`agent output degrades` | ⬜ |
+| **using-agent-skills** | Agent Skill 发现与调用的元技能。触发：`discover skills`、`which skill applies` | ⬜ |
+| **mcp-builder** | MCP (Model Context Protocol) 服务器开发指南（Python/Node）。触发：`build MCP server` | ⬜ |
+| **claude-api** | Claude API / Anthropic SDK 应用开发与优化（含 prompt caching）。触发：`anthropic SDK`、`Claude API` | ⬜ |
+
+---
 
 ## 代码质量
 
-| 状态 | 技能 | 描述 |
-|------|------|------|
-| ⏸ | `code-review-and-quality` | 多维度代码审查（合并前评估，review code, assess quality）。 |
-| ⏸ | `code-simplification` | 代码简化与清晰化重构（refactoring for clarity, remove unnecessary complexity）。 |
-| ⏸ | `debugging-and-error-recovery` | 系统性根因调试方法论（tests fail, builds break, unexpected error）。 |
-| ⏸ | `deprecation-and-migration` | 弃用迁移与版本过渡管理（sunset APIs, migrate users）。 |
-| ⏸ | `diagnose` | 疑难 Bug 与性能回归诊断（ reproduce → minimise → hypothesise → fix → regression-test）。 |
-| ⏸ | `improve-codebase-architecture` | 代码架构优化与重构机会发现（consolidate modules, improve testability）。 |
-| ⏸ | `incremental-implementation` | 增量式代码交付（大任务拆分，逐步落地）。 |
-| ⏸ | `migrate-to-shoehorn` | TypeScript 测试 `as` 断言迁移至 @total-typescript/shoehorn（partial test data）。 |
-| ⏸ | `security-and-hardening` | 安全加固与漏洞防护（输入验证/认证/会话/第三方集成）。 |
-| ⏸ | `source-driven-development` | 基于官方文档的权威编码（避免过时模式，authoritative, source-cited code）。 |
+| 技能 | 一句话说明 | 状态 |
+|------|-----------|------|
+| **code-review-and-quality** | 多维度代码审查（合并前必用）。触发：`code review`、`assess code quality` | ⬜ |
+| **code-simplification** | 代码简化与清晰度重构（不改变行为）。触发：`refactor for clarity`、`simplify code` | ⬜ |
+| **debugging-and-error-recovery** | 系统化根因调试（测试失败/构建中断/行为异常）。触发：`tests fail`、`builds break`、`unexpected error` | ⬜ |
+| **diagnose** | 顽固 Bug 诊断循环（复现→最小化→假设→验证→修复→回归测试）。触发：`diagnose this`、`debug this`、`performance regression` | ⬜ |
+| **tdd** | 测试驱动开发（红绿重构循环）。触发：`TDD`、`red-green-refactor`、`test-first` | ⬜ |
+| **test-driven-development** | 用测试驱动任何逻辑实现、Bug 修复或行为变更。触发：`prove code works`、`modify existing functionality` | ⬜ |
+| **security-and-hardening** | 安全加固（输入/认证/存储/外部集成）。触发：`user input`、`authentication`、`data storage` | ⬜ |
+| **performance-optimization** | 应用性能优化（Core Web Vitals、加载时间）。触发：`performance regression`、`load times` | ⬜ |
+| **git-workflow-and-versioning** | Git 工作流规范（提交/分支/冲突解决）。触发：`commit`、`branch`、`resolve conflicts` | ⬜ |
+| **git-guardrails-claude-code** | Claude Code Git 安全钩子（阻止危险操作）。触发：`prevent destructive git`、`git safety hooks` | ⬜ |
+| **setup-pre-commit** | Husky pre-commit 钩子配置（Prettier + typecheck + tests）。触发：`pre-commit hooks`、`lint-staged` | ⬜ |
+| **browser-testing-with-devtools** | Chrome DevTools MCP 浏览器测试。触发：`inspect DOM`、`capture console errors` | ⬜ |
+| **webapp-testing** | Playwright 本地 Web 应用测试（截图/日志/前端功能验证）。触发：`test webapp`、`Playwright` | ⬜ |
+| **migrate-to-shoehorn** | 测试断言从 `as` 迁移到 @total-typescript/shoehorn。触发：`shoehorn`、`replace as in tests` | ⬜ |
+
+---
 
 ## 文档沟通
 
-| 状态 | 技能 | 描述 |
+| 技能 | 一句话说明 | 状态 |
+|------|-----------|------|
+| **documentation-and-adrs** | 架构决策与文档记录（ADR、API 变更、功能发布）。触发：`architectural decisions`、`public APIs`、`ship features` | ⬜ |
+| **doc-coauthoring** | 文档协作共创流程（技术规格、决策文档）。触发：`write documentation`、`draft specs`、`proposals` | ⬜ |
+| **deprecation-and-migration** | 废弃与迁移管理（API/功能下线）。触发：`remove old systems`、`migrate users` | ⬜ |
+| **ubiquitous-language** | DDD 统一语言词典提取（消除歧义、建立规范术语）。触发：`domain model`、`ubiquitous language`、`build glossary` | ⬜ |
+| **grill-with-docs** | 基于现有文档对计划进行压力测试（同步更新 CONTEXT.md/ADR）。触发：`stress-test plan against docs` | ⬜ |
+| **grill-me** | 面试式拷问计划/设计，直到达成共同理解。触发：`grill me`、`stress-test a plan` | ⬜ |
+| **qa** | 交互式 QA（背景探索 + GitHub Issue 提交）。触发：`report bugs`、`QA session` | ⬜ |
+| **caveman** | 极简压缩通信模式（减少约 75% token，保持技术精度）。触发：`caveman mode`、`less tokens`、`be brief` | ⬜ |
+
+---
+
+## 知识管理
+
+| 技能 | 一句话说明 | 状态 |
+|------|-----------|------|
+| **obsidian-vault** | Obsidian 笔记库搜索、创建与管理（支持 wikilinks）。触发：`Obsidian notes`、`find/create/organize notes` | ⬜ |
+| **ima-skill** | IMA 知识库与笔记管理（上传文件、添加网页、搜索知识库）。触发：`知识库`、`笔记`、`帮我记一下` | ✅ 项目: kane_echoes, kane_vault |
+| **weread-skills** | 微信读书助手（搜索书籍、书架管理、笔记划线、书评、阅读统计）。触发：`微信读书` | ✅ 项目: kane_echoes, kane_vault |
+| **kb-retriever** | 本地知识库目录检索问答（PDF/Excel 渐进式检索）。触发：`从知识库回答问题`、`查资料` | ⬜ |
+
+---
+
+## 图表与可视化
+
+| 技能 | 一句话说明 | 状态 |
+|------|-----------|------|
+| **architecture-diagram** | 暗色主题架构图（HTML+SVG，系统/云/安全/网络拓扑）。触发：`architecture diagram`、`system diagram` | ✅ 项目: kane_echoes |
+| **baoyu-diagram** | 专业暗色主题 SVG 图表（架构图/流程图/时序图/思维导图等）。触发：`画个图`、`flowchart`、`sequence diagram`、`draw me` | ✅ 项目: kane_echoes, my-reports |
+
+---
+
+## 发布与运维
+
+| 技能 | 一句话说明 | 状态 |
+|------|-----------|------|
+| **release-skills** | 通用发布工作流（Node/Python/Rust/GitHub Releases/版本回填）。触发：`release`、`发布`、`bump version`、`GitHub Release` | ✅ 项目: kane_echoes |
+| **shipping-and-launch** | 生产发布准备清单（监控/灰度/回滚策略）。触发：`deploy to production`、`pre-launch checklist` | ⬜ |
+| **ci-cd-and-automation** | CI/CD 流水线自动化（质量门禁/测试运行器/部署策略）。触发：`setup CI/CD`、`build pipeline` | ⬜ |
+| **to-issues** | 将计划/规格/PRD 拆解为独立可抓取的 Issue（ tracer-bullet 切片）。触发：`convert plan to issues`、`create tickets` | ⬜ |
+| **to-prd** | 将当前对话上下文转为 PRD 并发布到 Issue Tracker。触发：`create PRD from context` | ⬜ |
+
+---
+
+## Skill 管理与元技能
+
+| 技能 | 一句话说明 | 状态 |
+|------|-----------|------|
+| **skill-creator** | Skill 创建、修改、性能评估与触发优化。触发：`create skill`、`optimize skill`、`run evals` | ✅ 项目: hk-skills |
+| **write-a-skill** | 按规范创建新的 Agent Skill（渐进式披露 + 捆绑资源）。触发：`write a skill`、`build a new skill` | ⬜ |
+| **skill-installer** | 第三方 Skill 批量导入与适配。触发：`stage remote skill`、`intake GitHub-hosted skill` | ⬜ |
+| **skill-optimizer** | Skill 审计评估、突变策略与自训练协议。触发：`optimize a skill`、`assess skill quality` | ⬜ |
+| **HeavySkill** | Agentic Harness 中的深度思考内功。触发：`Heavy Thinking` | ✅ 全局 |
+
+---
+
+## 其他工具
+
+| 技能 | 一句话说明 | 状态 |
+|------|-----------|------|
+| **improve-codebase-architecture** | 代码库架构改进（基于 CONTEXT.md 与 ADR 的领域语言）。触发：`improve architecture`、`refactoring opportunities` | ⬜ |
+| **zoom-out** | 全局视角与高阶上下文（理解代码在更大图景中的位置）。触发：`zoom out`、`bigger picture` | ⬜ |
+| **docx** | Word 文档（.docx）创建、编辑、提取、转换。触发：`Word doc`、`.docx`、`report as Word` | ⬜ |
+| **pdf** | PDF 处理（提取/合并/分割/旋转/水印/OCR 等）。触发：`.pdf`、`extract text from PDF` | ⬜ |
+| **xlsx** | 电子表格处理（.xlsx/.csv 读写、清洗、公式、图表）。触发：`.xlsx`、`.csv`、`spreadsheet` | ⬜ |
+| **slack-gif-creator** | Slack 优化 GIF 制作（约束检查 + 动画概念）。触发：`GIF for Slack` | ⬜ |
+
+---
+
+## 本地自定义技能速查
+
+以下技能为本地自定义技能，按启用状态排列：
+
+### ✅ 已启用
+
+| 技能 | 说明 | 范围 |
 |------|------|------|
-| ⏸ | `doc-coauthoring` | 协作文档/技术规格/决策文档结构化撰写（write docs, draft specs, proposals）。 |
-| ⏸ | `documentation-and-adrs` | 架构决策记录（ADR）与项目文档维护（architectural decisions, public APIs）。 |
-| ⏸ | `internal-comms` | 内部沟通写作（状态报告/领导力更新/FAQ/事故报告/项目更新）。 |
-| ⏸ | `to-issues` | 计划/PRD 拆分为可执行 Issue（tracer-bullet 垂直切片）。 |
-| ⏸ | `to-prd` | 对话上下文生成 PRD 并发布至 Issue 追踪器。 |
-| ⏸ | `ubiquitous-language` | DDD 统一语言词汇表提取与术语规范化（domain model, glossary, DDD）。 |
+| **blog-checker** | 审阅和评估中文技术博客文章质量。触发：`审阅`、`检查技术文章`、`博客质量` | 全局 |
+| **concept-fable** | 提取高级领域概念，隐藏于三段式寓言后揭示映射。触发：`概念寓言`、`三段式寓言`、`用寓言解释` | 全局 |
+| **prompt-optimizer** | 将模糊需求编译为工业级结构化提示词。触发：`optimize prompt`、`优化提示词`、`优化prompt` | 全局 |
+| **session-achieve** | 复盘多轮对话，提取纠偏逻辑并沉淀黄金提示词。触发：`复盘对话`、`session review`、`review this session` | 全局 |
+| **article-analyzer** | 文章深度分析与结构化理解。触发同上 | 项目: kane_echoes, my-reports |
+| **merge-drafts** | 多稿合并为一篇高质量文章。触发同上 | 项目: kane_echoes |
+| **subtext-article** | 字幕/转写转长文。触发同上 | 项目: kane_echoes |
 
-## 通用工具
+### ⬜ 未启用
 
-| 状态 | 技能 | 描述 |
-|------|------|------|
-| ⏸ | `brand-guidelines` | Anthropic 品牌配色与排版应用（brand colors, typography, design standards）。 |
-| ⏸ | `browser-testing-with-devtools` | Chrome DevTools MCP 浏览器测试（DOM/控制台/网络/性能分析）。 |
-| ⏸ | `caveman` | 极简通信模式（节省约 75% Token，caveman mode, less tokens, be brief）。 |
-| ⏸ | `context-engineering` | Agent 上下文配置与规则文件优化（session setup, output quality degradation）。 |
-| ⏸ | `deploy-to-vercel` | Vercel 应用部署（预览/生产，deploy my app, push this live）。 |
-| ⏸ | `grill-me` | 计划/设计压力测试访谈（决策树穷尽，grill me, stress-test a plan）。 |
-| ⏸ | `grill-with-docs` | 计划与文档对齐压力测试（同步更新 CONTEXT.md/ADR）。 |
-| ⏸ | `idea-refine` | 发散-收敛式概念精炼与假设压力测试（ideate, refine this idea, stress-test assumptions）。 |
-| ⏸ | `qa` | 交互式 Bug 报告与 GitHub Issue 提交（QA session, file issues conversationally）。 |
-| ⏸ | `skill-installer` | 第三方技能导入与适配（stage remote skills, GitHub-hosted skill intake）。 |
-| ⏸ | `skill-optimizer` | Agent Skill 审计、评估与自训练（optimize SKILL.md, stress-test skill behavior）。 |
-| ⏸ | `slack-gif-creator` | Slack 优化 GIF 动画创建（animated GIFs for Slack）。 |
-| ⏸ | `theme-factory` | 主题样式工具包（10 套预设主题，幻灯片/文档/网页/落地页）。 |
-| ⏸ | `using-agent-skills` | 技能发现与调用元技能（discover and invoke skills）。 |
-| ⏸ | `write-a-skill` | Agent Skill 创建与结构化（progressive disclosure, bundled resources）。 |
-| ⏸ | `baoyu-format-markdown` | Markdown 格式化与排版优化（format markdown, beautify article）。 |
-
----
-
-## 🔗 实用工作流组合
-
-以下是将多个技能串联使用的典型工作流。每个工作流按执行顺序排列，你可以按需裁剪步骤。
-
-### 1. 内容创作与多平台发布流
-
-适合将从素材收集到多平台分发的完整链路自动化。
-
-```
-素材采集 → 深度分析 → 内容创作 → 视觉包装 → 排版发布
-```
-
-| 步骤 | 推荐技能 | 作用 |
-|------|---------|------|
-| ① 素材采集 | `baoyu-url-to-markdown` / `baoyu-youtube-transcript` | 将网页/视频转为可编辑的 Markdown |
-| ② 深度分析 | `article-analyzer` | 对素材进行结构化拆解与洞察提取 |
-| ③ 内容创作 | `merge-drafts` / `subtext-article` | 多素材合并成文章，或视频转写润色 |
-| ④ 翻译润色 | `baoyu-translate` | 多语言翻译与术语统一 |
-| ⑤ 视觉包装 | `baoyu-cover-image` / `baoyu-article-illustrator` | 生成封面图与正文配图 |
-| ⑥ 排版转换 | `baoyu-markdown-to-html` | Markdown 转微信兼容 HTML |
-| ⑦ 多平台发布 | `baoyu-post-to-wechat` / `baoyu-post-to-weibo` / `baoyu-post-to-x` | 一键发布至各平台 |
-
-> 💡 如果你只有一篇原始素材想快速出稿，可以跳过 ①②，直接用 `article-analyzer` 提取要点后进入 ③。
-
----
-
-### 2. 知识萃取与知识库归档流
-
-适合将碎片化信息（视频、播客、文章）沉淀为结构化知识资产。
-
-```
-原始内容 → 转写/提取 → 分析重构 → 翻译整理 → 知识库归档
-```
-
-| 步骤 | 推荐技能 | 作用 |
-|------|---------|------|
-| ① 原始内容 | `baoyu-youtube-transcript` / `baoyu-url-to-markdown` | 获取视频字幕或网页原文 |
-| ② 转写重构 | `subtext-article` | 将字幕/ASR 转写转为可读文章 |
-| ③ 深度分析 | `article-analyzer` | 提取核心论点、框架与可行动洞察 |
-| ④ 概念寓言化 | `concept-fable` | 将复杂概念转为三段式寓言故事（可选） |
-| ⑤ 翻译整理 | `baoyu-translate` | 外文内容精翻，统一术语 |
-| ⑥ 知识库归档 | `ima-skill` | 上传至 IMA 知识库，建立个人/团队知识索引 |
-
-> 💡 配合 `weread-skills` 可将微信读书笔记同步纳入知识管理体系。
-
----
-
-### 3. 演示文稿快速制作流
-
-适合从大纲到成品的幻灯片/网页演示制作。
-
-```
-主题定义 → 内容生成 → 图表配图 → 幻灯片制作 → 封面收尾
-```
-
-| 步骤 | 推荐技能 | 作用 |
-|------|---------|------|
-| ① 主题定义 | `prompt-optimizer` | 将模糊需求编译为结构化 prompt |
-| ② 内容生成 | `HeavySkill` / `article-analyzer` | 深度思考生成大纲与逐页内容 |
-| ③ 图表配图 | `baoyu-diagram` / `baoyu-infographic` | 生成流程图、架构图或信息图 |
-| ④ 幻灯片制作 | `html-ppt` / `guizang-ppt-skill` / `baoyu-slide-deck` | 生成网页 PPT 或图片版幻灯片 |
-| ⑤ 封面收尾 | `baoyu-cover-image` | 生成演示封面与章节过渡页 |
-| ⑥ 品牌统一 | `theme-factory` | 应用统一主题配色与排版风格 |
-
-> 💡 若需要技术类演示，可额外使用 `architecture-diagram` 生成深色架构图。
-
----
-
-### 4. 产品研发与发布流
-
-适合从需求到上线的完整开发周期。
-
-```
-需求澄清 → 规格定义 → 增量开发 → 代码审查 → 质量保障 → 部署发布
-```
-
-| 步骤 | 推荐技能 | 作用 |
-|------|---------|------|
-| ① 需求澄清 | `to-prd` / `idea-refine` | 对话生成 PRD，或压力测试假设 |
-| ② 规格定义 | `spec-driven-development` | 编码前先写规范文档与接口契约 |
-| ③ 增量开发 | `incremental-implementation` / `tdd` | 大任务拆分，测试驱动逐步落地 |
-| ④ 代码审查 | `code-review-and-quality` | 多维度审查，合并前质量把关 |
-| ⑤ 质量保障 | `setup-pre-commit` / `webapp-testing` | 配置提交钩子与自动化测试 |
-| ⑥ 部署发布 | `deploy-to-vercel` / `release-skills` | 一键部署，自动检测版本与 changelog |
-
-> 💡 如需 API 设计，可在 ② 阶段加入 `api-and-interface-design` 或 `design-an-interface`。
-
----
-
-### 5. 社交媒体内容运营流
-
-适合将优质外部内容改编为自有社交媒体素材。
-
-```
-热点捕捉 → 内容改编 → 视觉设计 → 一键分发
-```
-
-| 步骤 | 推荐技能 | 作用 |
-|------|---------|------|
-| ① 热点捕捉 | `baoyu-x-to-markdown` / `baoyu-url-to-markdown` | 保存推文/文章为 Markdown |
-| ② 内容改编 | `merge-drafts` / `blog-checker` | 合稿并评估文章质量 |
-| ③ 视觉设计 | `guizang-social-card-skill` / `baoyu-infographic` | 生成小红书图文、信息图等 |
-| ④ 一键分发 | `baoyu-post-to-x` / `baoyu-post-to-weibo` / `baoyu-post-to-wechat` | 多平台同步发布 |
-
-> 💡 运营小红书时，`guizang-social-card-skill` 的 3:4 封面模板可直接使用。
-
----
-
-### 6. 长文精读与复盘沉淀流
-
-适合对高质量长文进行深度阅读并沉淀为个人方法论。
-
-```
-长文输入 → 伴读分析 → 复盘提取 → 提示词沉淀
-```
-
-| 步骤 | 推荐技能 | 作用 |
-|------|---------|------|
-| ① 长文输入 | `baoyu-url-to-markdown` | 将长文转为本地 Markdown |
-| ② 伴读分析 | `article-analyzer` / `HeavySkill` | 结构化拆解与深度思考 |
-| ③ 复盘提取 | `session-achieve` | 从阅读/对话中提取纠偏逻辑与关键洞察 |
-| ④ 提示词沉淀 | `prompt-optimizer` | 将个人阅读方法论固化为可复用 prompt |
-| ⑤ 归档管理 | `ima-skill` | 存入知识库，建立阅读索引 |
-
-> 💡 配合 `weread-skills` 可将微信读书中的划线与书评纳入同一复盘流程。
+| 技能 | 说明 |
+|------|------|
+| **skill-installer** | 第三方 Skill 批量导入与适配 |
+| **skill-optimizer** | Skill 审计评估与自训练优化 |
