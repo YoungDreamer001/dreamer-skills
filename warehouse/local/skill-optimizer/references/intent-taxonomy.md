@@ -28,6 +28,24 @@ Example pattern:
 - A skill that publishes to a website may be tool-primary and workflow-secondary.
 - A skill that critiques articles may be norm-primary and evidence-governance-secondary.
 
+## Practical Skill Categories Mapping
+
+The following common skill categories map onto the Intent Matrix above. Use them as a quick reference during diagnosis; they do not replace the 8 core intents.
+
+| Practical Category | Primary Intent | Secondary Intent(s) |
+| --- | --- | --- |
+| Library/API reference | Knowledge Navigation | Tool/Script |
+| Product validation | Tool/Script | Workflow Orchestration |
+| Data acquisition and analysis | Knowledge Navigation | Tool/Script |
+| Business automation | Workflow Orchestration | — |
+| Scaffolding / templates | Workflow Orchestration | Creative Generation / Tool/Script |
+| Code quality / audit | Domain Governance | Norm/Style |
+| CI/CD / deployment | Tool/Script | Domain Governance |
+| Runbook | Workflow Orchestration | Knowledge Navigation |
+| Infrastructure operations | Tool/Script | Domain Governance |
+
+When classifying a skill, start with the practical category if it is obvious, then confirm the primary and secondary intents from the matrix before choosing evals and mutations.
+
 ## Intent Diagnosis Questions
 
 Answer these before improving:

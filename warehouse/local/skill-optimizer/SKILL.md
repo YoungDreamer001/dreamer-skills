@@ -80,6 +80,7 @@ If the skill is not mature enough for evals, produce an eval plan before suggest
 Run hygiene and failure-mode review.
 
 Use `references/hygiene-and-diagnostics.md`.
+Use `references/skill-design-principles.md` as a second opinion during structural audit.
 Use `references/anti-overfitting.md` before recommending heavier structure.
 
 For deterministic first-pass audit, run:

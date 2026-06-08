@@ -40,6 +40,15 @@ Hygiene is not excellence. It only catches structural problems.
 - Avoid enabling a skill for work better handled globally.
 - Ask: without this sentence, would the agent likely do worse?
 
+## Design Principle Checks
+
+- Does the skill merely repeat model common sense instead of adding a behavioral increment?
+- Are gotchas traced to real failures, or are they generic warnings?
+- Does `description` contain trigger phrases, exclusions, and adjacent-confusion boundaries?
+- Have large templates, API docs, or low-frequency rules been moved to `references/` or `assets/`?
+- Does every resource include a read condition so the agent knows when to load it?
+- Is any platform-specific mechanism presented as a universal rule?
+
 ## Diagnostic Map
 
 Skill not triggered:

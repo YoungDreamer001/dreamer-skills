@@ -21,6 +21,9 @@ yarn-error.log*
 selenium-debug.log
 logs/
 
+# Skill optimizer eval runs
+warehouse/local/skill-optimizer/runs/
+
 # Environment and local overrides
 .env
 .env.*
