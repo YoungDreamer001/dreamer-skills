@@ -85,4 +85,5 @@ SETUP_JAVASCRIPT_ONLY.md
 manifests/
 
 # HK-Skills registry (local-only, not shared)
-registry/
+registry/*
+!registry/sources.json

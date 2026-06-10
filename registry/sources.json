@@ -1,0 +1,173 @@
+{
+  "github.com_JimLiu_baoyu-skills@main": {
+    "type": "remote",
+    "repo": "https://github.com/JimLiu/baoyu-skills",
+    "ref": "main",
+    "commit": "ce84174bf7af6a178ae2c980f1bdcce4f1c3f7de",
+    "local_path": "warehouse/remote/github.com_JimLiu_baoyu-skills@main"
+  },
+  "github.com_op7418_guizang-ppt-skill@main": {
+    "type": "remote",
+    "repo": "https://github.com/op7418/guizang-ppt-skill",
+    "ref": "main",
+    "commit": "82fe5ae129e8c2a12e1155fcabed6703342749d6",
+    "local_path": "warehouse/remote/github.com_op7418_guizang-ppt-skill@main"
+  },
+  "github.com_lijigang_ljg-skills@main": {
+    "type": "remote",
+    "repo": "https://github.com/lijigang/ljg-skills",
+    "ref": "master",
+    "commit": "ecff25c7f931e38f590a7d3482fc62d428fb54e1",
+    "local_path": "warehouse/remote/github.com_lijigang_ljg-skills@main"
+  },
+  "github.com_vercel-labs_agent-skills@main": {
+    "type": "remote",
+    "repo": "https://github.com/vercel-labs/agent-skills",
+    "ref": "main",
+    "commit": "4ec6f84b61cd3c931046c3e6e398f3ae7de372f7",
+    "local_path": "warehouse/remote/github.com_vercel-labs_agent-skills@main"
+  },
+  "github.com_KAOPU-XiaoPu_web-design@main": {
+    "type": "remote",
+    "repo": "https://github.com/KAOPU-XiaoPu/web-design",
+    "ref": "main",
+    "commit": "fa2291c4d41f985987ccb48da7924b288f268538",
+    "local_path": "warehouse/remote/github.com_KAOPU-XiaoPu_web-design@main"
+  },
+  "github.com_helloianneo_ian-handdrawn-ppt@main": {
+    "type": "remote",
+    "repo": "https://github.com/helloianneo/ian-handdrawn-ppt",
+    "ref": "main",
+    "commit": "b2cc5f303337e5470fd6ac2870d261a43b218439",
+    "local_path": "warehouse/remote/github.com_helloianneo_ian-handdrawn-ppt@main"
+  },
+  "github.com_mattpocock_skills@main": {
+    "type": "remote",
+    "repo": "https://github.com/mattpocock/skills",
+    "ref": "main",
+    "commit": "be55a7970319ede7965edbb02b5e41cba1ca82c9",
+    "local_path": "warehouse/remote/github.com_mattpocock_skills@main"
+  },
+  "github.com_ConardLi_garden-skills@main": {
+    "type": "remote",
+    "repo": "https://github.com/ConardLi/garden-skills",
+    "ref": "main",
+    "commit": "e3e9ada877f47d984916d8169b7cf310ea0e2227",
+    "local_path": "warehouse/remote/github.com_ConardLi_garden-skills@main"
+  },
+  "github.com_irenerachel_visual-style-ppt-skill@main": {
+    "type": "remote",
+    "repo": "https://github.com/irenerachel/visual-style-ppt-skill",
+    "ref": "main",
+    "commit": "a1cca7d97c7a8992593fdf617a8a53e7348b0b3d",
+    "local_path": "warehouse/remote/github.com_irenerachel_visual-style-ppt-skill@main"
+  },
+  "github.com_addyosmani_agent-skills@main": {
+    "type": "remote",
+    "repo": "https://github.com/addyosmani/agent-skills",
+    "ref": "main",
+    "commit": "2e0dfbfb436ef3307bbe8ba172f14996de980784",
+    "local_path": "warehouse/remote/github.com_addyosmani_agent-skills@main"
+  },
+  "local-heavyskill-adapted": {
+    "type": "local",
+    "local_path": "warehouse/local/heavyskill-adapted"
+  },
+  "github.com_anthropics_skills@main": {
+    "type": "remote",
+    "repo": "https://github.com/anthropics/skills",
+    "ref": "main",
+    "commit": "da20c92503b2e8ff1cf28ca81a0df4673debdbf7",
+    "local_path": "warehouse/remote/github.com_anthropics_skills@main"
+  },
+  "local-prompt-optimizer": {
+    "type": "local",
+    "local_path": "warehouse/local/prompt-optimizer"
+  },
+  "local-session-achieve": {
+    "type": "local",
+    "local_path": "warehouse/local/session-achieve"
+  },
+  "local-subtext-article": {
+    "type": "local",
+    "local_path": "warehouse/local/subtext-article"
+  },
+  "local-skill-installer": {
+    "type": "local",
+    "local_path": "warehouse/local/skill-installer"
+  },
+  "local-blog-checker": {
+    "type": "local",
+    "local_path": "warehouse/local/blog-checker"
+  },
+  "local-merge-drafts": {
+    "type": "local",
+    "local_path": "warehouse/local/merge-drafts"
+  },
+  "local-article-analyzer": {
+    "type": "local",
+    "local_path": "warehouse/local/article-analyzer"
+  },
+  "local-concept-fable": {
+    "type": "local",
+    "local_path": "warehouse/local/concept-fable"
+  },
+  "cdn.weread.qq.com_skills_weread-skills.zip": {
+    "type": "remote",
+    "repo": "https://cdn.weread.qq.com/skills/weread-skills.zip",
+    "commit": "56a395f6889169d40a2cacf6690a92e47e68becf70aa8803c53748b98ca0c2f2",
+    "local_path": "warehouse/remote/cdn.weread.qq.com_skills_weread-skills.zip"
+  },
+  "app-dl.ima.qq.com_skills_ima-skills-1.1.7.zip": {
+    "type": "remote",
+    "repo": "https://app-dl.ima.qq.com/skills/ima-skills-1.1.7.zip",
+    "commit": "bd5878416aed4c358deb2b9bc34dfd7602a0da9d9602582227794791289f73b2",
+    "local_path": "warehouse/remote/app-dl.ima.qq.com_skills_ima-skills-1.1.7.zip"
+  },
+  "github.com_Cocoon-AI_architecture-diagram-generator@main": {
+    "type": "remote",
+    "repo": "https://github.com/Cocoon-AI/architecture-diagram-generator",
+    "ref": "main",
+    "commit": "4b9087d55268c79a935105439dbcd37b630fc3f3",
+    "local_path": "warehouse/remote/github.com_Cocoon-AI_architecture-diagram-generator@main"
+  },
+  "github.com_lewislulu_html-ppt-skill@main": {
+    "type": "remote",
+    "repo": "https://github.com/lewislulu/html-ppt-skill",
+    "ref": "main",
+    "commit": "f3a8435d3901697d5ac5e64d356c933637e43107",
+    "local_path": "warehouse/remote/github.com_lewislulu_html-ppt-skill@main"
+  },
+  "github.com_helloianneo_ian-xiaohei-illustrations@main": {
+    "type": "remote",
+    "repo": "https://github.com/helloianneo/ian-xiaohei-illustrations.git",
+    "ref": "main",
+    "commit": "91b560849e8f883922cc2fa8a358a668caa94105",
+    "local_path": "warehouse/remote/github.com_helloianneo_ian-xiaohei-illustrations@main"
+  },
+  "github.com_op7418_guizang-social-card-skill@main": {
+    "type": "remote",
+    "repo": "https://github.com/op7418/guizang-social-card-skill",
+    "ref": "main",
+    "commit": "032782ff67e0a20416bae8159f67000c1e4e7ae2",
+    "local_path": "warehouse/remote/github.com_op7418_guizang-social-card-skill@main"
+  },
+  "local-skill-optimizer": {
+    "type": "local",
+    "local_path": "warehouse/local/skill-optimizer"
+  },
+  "github.com_JimLiu_baoyu-design@main": {
+    "type": "remote",
+    "repo": "https://github.com/JimLiu/baoyu-design",
+    "ref": "main",
+    "commit": "81d3d3c44fe9e77478946c5efa6cf703a3b83cc3",
+    "local_path": "warehouse/remote/github.com_JimLiu_baoyu-design@main"
+  },
+  "github.com_EveryInc_compound-engineering-plugin@main": {
+    "type": "remote",
+    "repo": "https://github.com/EveryInc/compound-engineering-plugin",
+    "ref": "main",
+    "commit": "b6250490bec4c0488d68ad66d72bd99f6edb95fd",
+    "local_path": "warehouse/remote/github.com_EveryInc_compound-engineering-plugin@main"
+  }
+}
