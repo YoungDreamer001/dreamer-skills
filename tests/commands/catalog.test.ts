@@ -4,7 +4,7 @@ import path from "node:path";
 import os from "node:os";
 import { stringify } from "yaml";
 import { catalog } from "../../src/commands/catalog.js";
-import { saveSkillsRegistry } from "../../src/services/registry.js";
+import { saveSkillsRegistry, saveSourcesRegistry } from "../../src/services/registry.js";
 
 describe("catalog", () => {
   let tempDir: string;
@@ -40,6 +40,7 @@ describe("catalog", () => {
         manifest: "manifests/test-skill-local.yaml",
         installed: true,
         enabled_global: true,
+        enabled_global_ides: [],
         enabled_projects: [],
         updated_at: "2024-01-01T00:00:00Z",
         source_id: "local-test-skill-local",
@@ -48,17 +49,37 @@ describe("catalog", () => {
         manifest: "manifests/test-skill-remote.yaml",
         installed: true,
         enabled_global: false,
+        enabled_global_ides: [],
         enabled_projects: ["proj-a"],
         updated_at: "2024-01-02T00:00:00Z",
-        source_id: "remote-test-skill-remote",
+        source_id: "github.com_example_remote@main",
       },
       "test-skill-adapted": {
         manifest: "manifests/test-skill-adapted.yaml",
         installed: true,
         enabled_global: false,
+        enabled_global_ides: [],
         enabled_projects: [],
         updated_at: "2024-01-03T00:00:00Z",
         source_id: "adapted-test-skill-adapted",
+      },
+    });
+
+    saveSourcesRegistry(tempDir, {
+      "local-test-skill-local": {
+        type: "local",
+        local_path: "warehouse/local/test-skill-local",
+      },
+      "github.com_example_remote@main": {
+        type: "remote",
+        repo: "https://github.com/example/remote",
+        ref: "main",
+        commit: "abc123",
+        local_path: "warehouse/remote/github.com_example_remote@main",
+      },
+      "adapted-test-skill-adapted": {
+        type: "local",
+        local_path: "warehouse/local/test-skill-adapted",
       },
     });
 
@@ -111,9 +132,9 @@ describe("catalog", () => {
 
     const content = fs.readFileSync(catalogPath, "utf-8");
     expect(content).toContain("## Local");
-    expect(content).toContain("| Test Skill Local | local |");
+    expect(content).toContain("| Test Skill Local | warehouse/local/test-skill-local |");
     expect(content).toContain("## Remote");
-    expect(content).toContain("| Test Skill Remote | remote |");
+    expect(content).toContain("| Test Skill Remote | https://github.com/example/remote |");
     expect(content).toContain("## Adapted");
   });
 
@@ -134,6 +155,7 @@ describe("catalog", () => {
         manifest: "manifests/missing-skill.yaml",
         installed: true,
         enabled_global: false,
+        enabled_global_ides: [],
         enabled_projects: [],
         updated_at: "2024-01-01T00:00:00Z",
         source_id: "local-missing-skill",
@@ -151,63 +173,36 @@ describe("catalog", () => {
     expect(lowerContent.includes("unknown") || lowerContent.includes("error")).toBe(true);
   });
 
-  it("renders enabled status correctly", () => {
+  it("renders source URL correctly", () => {
     saveSkillsRegistry(tempDir, {
-      "test-skill-local": {
-        manifest: "manifests/test-skill-local.yaml",
+      "remote-skill": {
+        manifest: "manifests/remote-skill.yaml",
         installed: true,
-        enabled_global: true,
+        enabled_global: false,
+        enabled_global_ides: [],
         enabled_projects: [],
         updated_at: "2024-01-01T00:00:00Z",
-        source_id: "local-test-skill-local",
+        source_id: "github.com_anthropics_skills@main",
       },
-      "test-skill-remote": {
-        manifest: "manifests/test-skill-remote.yaml",
-        installed: true,
-        enabled_global: false,
-        enabled_projects: ["proj-a"],
-        updated_at: "2024-01-02T00:00:00Z",
-        source_id: "remote-test-skill-remote",
-      },
-      "test-skill-adapted": {
-        manifest: "manifests/test-skill-adapted.yaml",
-        installed: true,
-        enabled_global: false,
-        enabled_projects: [],
-        updated_at: "2024-01-03T00:00:00Z",
-        source_id: "adapted-test-skill-adapted",
+    });
+
+    saveSourcesRegistry(tempDir, {
+      "github.com_anthropics_skills@main": {
+        type: "remote",
+        repo: "https://github.com/anthropics/skills",
+        ref: "main",
+        commit: "da20c92503b2e8ff1cf28ca81a0df4673debdbf7",
+        local_path: "warehouse/remote/github.com_anthropics_skills@main",
       },
     });
 
     fs.writeFileSync(
-      path.join(tempDir, "manifests", "test-skill-local.yaml"),
+      path.join(tempDir, "manifests", "remote-skill.yaml"),
       stringify({
-        name: "test-skill-local",
-        display_name: "Test Skill Local",
-        source: { type: "local" },
-        status: { stage: "adapted" },
-      }),
-      "utf-8"
-    );
-
-    fs.writeFileSync(
-      path.join(tempDir, "manifests", "test-skill-remote.yaml"),
-      stringify({
-        name: "test-skill-remote",
-        display_name: "Test Skill Remote",
+        name: "remote-skill",
+        display_name: "Remote Skill",
         source: { type: "remote" },
         status: { stage: "stable" },
-      }),
-      "utf-8"
-    );
-
-    fs.writeFileSync(
-      path.join(tempDir, "manifests", "test-skill-adapted.yaml"),
-      stringify({
-        name: "test-skill-adapted",
-        display_name: "Test Skill Adapted",
-        source: { type: "adapted" },
-        status: { stage: "beta" },
       }),
       "utf-8"
     );
@@ -217,8 +212,9 @@ describe("catalog", () => {
     const catalogPath = path.join(tempDir, "docs", "catalog.md");
     const content = fs.readFileSync(catalogPath, "utf-8");
 
-    expect(content).toContain("global");
-    expect(content).toContain("项目: proj-a");
-    expect(content).toContain("disabled");
+    expect(content).toContain("https://github.com/anthropics/skills");
+    expect(content).not.toContain("global");
+    expect(content).not.toContain("disabled");
+    expect(content).not.toContain("项目:");
   });
 });

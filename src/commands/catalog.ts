@@ -1,17 +1,16 @@
 import fs from "node:fs";
 import path from "node:path";
 import { parse } from "yaml";
-import { loadSkillsRegistry } from "../services/registry.js";
+import { loadSkillsRegistry, loadSourcesRegistry } from "../services/registry.js";
 import { success } from "../utils/logger.js";
 
 type SkillInfo = {
   name: string;
   displayName: string;
-  source: string;
+  sourceUrl: string;
   stage: string;
   description: string;
   triggers: string;
-  enabled: string;
 };
 
 function parseSkillFrontmatter(skillPath: string): { description?: string } {
@@ -20,7 +19,8 @@ function parseSkillFrontmatter(skillPath: string): { description?: string } {
     const content = fs.readFileSync(skillPath, "utf-8");
     const match = content.match(/^---\s*\n([\s\S]*?)\n---/);
     if (!match) return {};
-    const frontmatter = parse(match[1]) as Record<string, unknown>;
+    const [, frontmatterText] = match;
+    const frontmatter = parse(frontmatterText!) as Record<string, unknown>;
     return {
       description: typeof frontmatter.description === "string" ? frontmatter.description : undefined,
     };
@@ -43,6 +43,7 @@ function extractTriggers(description: string): string {
 
 export function catalog(root: string): void {
   const registry = loadSkillsRegistry(root);
+  const sources = loadSourcesRegistry(root);
   const entries = Object.entries(registry);
 
   const docsDir = path.join(root, "docs");
@@ -72,7 +73,7 @@ export function catalog(root: string): void {
   for (const [name, entry] of entries) {
     const manifestPath = path.join(root, entry.manifest);
     let displayName = name;
-    let source = "unknown";
+    let sourceType = "unknown";
     let stage = "unknown";
     let description = "-";
     let triggers = "-";
@@ -82,19 +83,26 @@ export function catalog(root: string): void {
         const manifest = parse(fs.readFileSync(manifestPath, "utf-8")) as Record<string, unknown>;
         displayName = typeof manifest.display_name === "string" ? manifest.display_name : name;
         const manifestSource = manifest.source as Record<string, unknown> | undefined;
-        source = typeof manifestSource?.type === "string" ? manifestSource.type : "unknown";
+        sourceType = typeof manifestSource?.type === "string" ? manifestSource.type : "unknown";
         const manifestStatus = manifest.status as Record<string, unknown> | undefined;
         stage = typeof manifestStatus?.stage === "string" ? manifestStatus.stage : "unknown";
       } catch {
-        source = "error";
+        sourceType = "error";
         stage = "error";
       }
     } else {
-      source = "unknown";
+      sourceType = "unknown";
       stage = "unknown";
     }
 
-    const skillDir = stage === "local" ? "warehouse/local" : "warehouse/adapted";
+    const sourceEntry = sources[entry.source_id];
+    const sourceUrl = sourceEntry?.repo
+      ? sourceEntry.repo
+      : sourceEntry?.local_path
+        ? sourceEntry.local_path
+        : "unknown";
+
+    const skillDir = sourceType === "local" ? "warehouse/local" : "warehouse/adapted";
     const skillPath = path.join(root, skillDir, name, "SKILL.md");
     const frontmatter = parseSkillFrontmatter(skillPath);
     if (frontmatter.description) {
@@ -102,24 +110,16 @@ export function catalog(root: string): void {
       triggers = extractTriggers(frontmatter.description);
     }
 
-    let enabled = "disabled";
-    if (entry.enabled_global) {
-      enabled = "global";
-    } else if (entry.enabled_projects.length > 0) {
-      enabled = `项目: ${entry.enabled_projects.join(",")}`;
-    }
-
     const skillInfo: SkillInfo = {
       name,
       displayName,
-      source,
+      sourceUrl,
       stage,
       description,
       triggers,
-      enabled,
     };
 
-    const targetGroup = groups[source as keyof typeof groups];
+    const targetGroup = groups[sourceType as keyof typeof groups];
     if (targetGroup) {
       targetGroup.push(skillInfo);
     } else {
@@ -149,17 +149,16 @@ export function catalog(root: string): void {
     lines.push("");
     lines.push(`## ${groupTitles[groupKey]}`);
     lines.push("");
-    lines.push("| 名称 | 来源 | 状态 | 描述 | 触发关键词 | 启用状态 |");
-    lines.push("| --- | --- | --- | --- | --- | --- |");
+    lines.push("| 名称 | 源地址 | 状态 | 描述 | 触发关键词 |");
+    lines.push("| --- | --- | --- | --- | --- |");
 
     for (const skill of groupSkills) {
       const cells = [
         escapeCell(skill.displayName),
-        escapeCell(skill.source),
+        escapeCell(skill.sourceUrl),
         escapeCell(skill.stage),
         escapeCell(skill.description),
         escapeCell(skill.triggers),
-        escapeCell(skill.enabled),
       ];
       lines.push(`| ${cells.join(" | ")} |`);
     }

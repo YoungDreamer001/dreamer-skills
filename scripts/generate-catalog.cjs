@@ -2,7 +2,6 @@
 // Generate Chinese user-facing catalog.md and update catalog.html
 
 const fs = require('fs');
-const path = require('path');
 
 const CATALOG_MD = '/Users/kanehua/project/hk-skills/docs/catalog.md';
 const CATALOG_HTML = '/Users/kanehua/project/hk-skills/docs/catalog.html';
@@ -30,7 +29,7 @@ function parseCatalog(content) {
     let current = '';
     let count = 0;
     for (let i = 0; i < inner.length; i++) {
-      if (inner[i] === '|' && count < 5) {
+      if (inner[i] === '|' && count < 6) {
         parts.push(current.trim());
         current = '';
         count++;
@@ -46,7 +45,6 @@ function parseCatalog(content) {
         status: parts[2],
         desc: parts[3],
         triggers: parts[4],
-        enabled: parts[5] || ''
       };
     }
     return null;
@@ -89,12 +87,6 @@ function parseCatalog(content) {
     sections.push(currentSection);
   }
   return sections.flatMap(s => s.rows);
-}
-
-function getEnabledStatus(enabled) {
-  if (enabled.includes('global')) return '✅ 全局';
-  if (enabled.includes('项目:')) return '✅ 项目';
-  return '❌';
 }
 
 function isDeprecated(name) {
@@ -246,7 +238,7 @@ const DESCRIPTIONS = {
   'ce-compound-refresh': '刷新 docs/solutions/ 下过时或漂移的学习文档',
   'ce-sessions': '跨 Claude Code/Codex/Cursor 搜索并追问会话历史',
   'ce-slack-research': '搜索 Slack 并产出组织上下文综合研究报告',
-  'ce-strategy': '创建或维护 STRATEGY.md（产品方向/用户/指标/工作流）',
+  'ce-strategy': '创建或维护 STRATEGY.md（产品方向/用户/指标/工作线）',
 
   // Diagrams & visualization
   'architecture-diagram': '暗色主题架构图（HTML+SVG）',
@@ -286,10 +278,8 @@ const DESCRIPTIONS = {
 // Extract short trigger keywords (max 5) from trigger text
 function getTriggerKeywords(triggers) {
   if (!triggers) return '';
-  // Take first ~80 chars or up to first comma/period
   const t = triggers.replace(/\s+/g, ' ').trim();
   if (t.length <= 80) return t;
-  // Try to find a good cutoff
   let cutoff = t.indexOf('.', 60);
   if (cutoff === -1) cutoff = t.indexOf(',', 60);
   if (cutoff === -1 || cutoff > 120) cutoff = 100;
@@ -299,7 +289,6 @@ function getTriggerKeywords(triggers) {
 function getDescription(skill) {
   const custom = DESCRIPTIONS[skill.name];
   if (custom) return custom;
-  // Fallback: first sentence of desc, cleaned
   let d = skill.desc.replace(/\s+/g, ' ').trim();
   if (d.length > 100) {
     const end = d.indexOf('.', 80);
@@ -515,127 +504,44 @@ function generateCatalogMarkdown(skills) {
   ];
 
   let md = `# Skill Catalog（技能目录）\n\n`;
-  md += `> 由 \`./bin/hk-skill catalog\` 自动生成并翻译整理。技能按**使用场景**分组，同时标注启用状态。\n`;
-  md += `> 状态说明：✅ 项目 = 项目级启用　|　✅ 全局 = 全局启用　|　❌ = 未启用\n\n`;
+  md += `> 由 \`./bin/hk-skill catalog\` 自动生成并翻译整理。技能按**使用场景**分组，可点击技能名称查看详情与推荐组合。\n\n`;
   md += `---\n\n`;
 
   sectionOrder.forEach(cat => {
     const catSkills = categories[cat];
     if (!catSkills || catSkills.length === 0) return;
 
-    // Sort: enabled first, then by name
-    catSkills.sort((a, b) => {
-      const ea = getEnabledStatus(a.enabled);
-      const eb = getEnabledStatus(b.enabled);
-      if (ea.startsWith('✅') && !eb.startsWith('✅')) return -1;
-      if (!ea.startsWith('✅') && eb.startsWith('✅')) return 1;
-      return a.name.localeCompare(b.name);
-    });
+    catSkills.sort((a, b) => a.name.localeCompare(b.name));
 
     const isWebDesign = cat === '网页设计';
     const isSubsection = isWebDesign;
 
     if (isSubsection) {
       md += `## ${cat}\n\n`;
-      md += `| 技能名称 | 状态 | 描述 | 触发关键词 |\n`;
-      md += `|---|---|---|---|\n`;
+      md += `| 技能名称 | 源地址 | 状态 | 描述 | 触发关键词 |\n`;
+      md += `|---|---|---|---|---|\n`;
       catSkills.filter(s => !s.name.startsWith('vercel-') && s.name !== 'deploy-to-vercel').forEach(s => {
         const dep = isDeprecated(s.name) ? ' ⛔' : '';
-        md += `| ${s.name}${dep} | ${getEnabledStatus(s.enabled)} | ${getDescription(s)} | ${getTriggerKeywords(s.triggers)} |\n`;
+        md += `| ${s.name}${dep} | ${s.source} | ${s.status} | ${getDescription(s)} | ${getTriggerKeywords(s.triggers)} |\n`;
       });
       md += `\n### Vercel 生态\n\n`;
-      md += `| 技能名称 | 状态 | 描述 | 触发关键词 |\n`;
-      md += `|---|---|---|---|\n`;
+      md += `| 技能名称 | 源地址 | 状态 | 描述 | 触发关键词 |\n`;
+      md += `|---|---|---|---|---|\n`;
       catSkills.filter(s => s.name.startsWith('vercel-') || s.name === 'deploy-to-vercel').forEach(s => {
         const dep = isDeprecated(s.name) ? ' ⛔' : '';
-        md += `| ${s.name}${dep} | ${getEnabledStatus(s.enabled)} | ${getDescription(s)} | ${getTriggerKeywords(s.triggers)} |\n`;
+        md += `| ${s.name}${dep} | ${s.source} | ${s.status} | ${getDescription(s)} | ${getTriggerKeywords(s.triggers)} |\n`;
       });
     } else {
       md += `## ${cat}\n\n`;
-      md += `| 技能名称 | 状态 | 描述 | 触发关键词 |\n`;
-      md += `|---|---|---|---|\n`;
+      md += `| 技能名称 | 源地址 | 状态 | 描述 | 触发关键词 |\n`;
+      md += `|---|---|---|---|---|\n`;
       catSkills.forEach(s => {
         const dep = isDeprecated(s.name) ? ' ⛔' : '';
-        md += `| ${s.name}${dep} | ${getEnabledStatus(s.enabled)} | ${getDescription(s)} | ${getTriggerKeywords(s.triggers)} |\n`;
+        md += `| ${s.name}${dep} | ${s.source} | ${s.status} | ${getDescription(s)} | ${getTriggerKeywords(s.triggers)} |\n`;
       });
     }
     md += `\n`;
   });
-
-  // Add workflow combinations
-  md += `---\n\n`;
-  md += `## 🔗 实用工作流组合\n\n`;
-  md += `以下是将多个技能串联使用的典型工作流。每个工作流按执行顺序排列，你可以按需裁剪步骤。\n\n`;
-
-  md += `### 1. 内容创作与多平台发布流\n\n`;
-  md += `适合将从素材收集到多平台分发的完整链路自动化。\n\n`;
-  md += `\`\`\`\n素材采集 → 深度分析 → 内容创作 → 视觉包装 → 排版发布\n\`\`\`\n\n`;
-  md += `| 步骤 | 推荐技能 | 作用 |\n|---|---|---|\n`;
-  md += `| ① 素材采集 | \`baoyu-url-to-markdown\` / \`baoyu-youtube-transcript\` | 将网页/视频转为可编辑的 Markdown |\n`;
-  md += `| ② 深度分析 | \`article-analyzer\` | 对素材进行结构化拆解与洞察提取 |\n`;
-  md += `| ③ 内容创作 | \`merge-drafts\` / \`subtext-article\` | 多素材合并成文章，或视频转写润色 |\n`;
-  md += `| ④ 翻译润色 | \`baoyu-translate\` | 多语言翻译与术语统一 |\n`;
-  md += `| ⑤ 视觉包装 | \`baoyu-cover-image\` / \`baoyu-article-illustrator\` | 生成封面图与正文配图 |\n`;
-  md += `| ⑥ 排版转换 | \`baoyu-markdown-to-html\` | Markdown 转微信兼容 HTML |\n`;
-  md += `| ⑦ 多平台发布 | \`baoyu-post-to-wechat\` / \`baoyu-post-to-weibo\` / \`baoyu-post-to-x\` | 一键发布至各平台 |\n\n`;
-  md += `> 💡 如果你只有一篇原始素材想快速出稿，可以跳过 ①②，直接用 \`article-analyzer\` 提取要点后进入 ③。\n\n`;
-
-  md += `### 2. 知识萃取与知识库归档流\n\n`;
-  md += `适合将碎片化信息（视频、播客、文章）沉淀为结构化知识资产。\n\n`;
-  md += `\`\`\`\n原始内容 → 转写/提取 → 分析重构 → 翻译整理 → 知识库归档\n\`\`\`\n\n`;
-  md += `| 步骤 | 推荐技能 | 作用 |\n|---|---|---|\n`;
-  md += `| ① 原始内容 | \`baoyu-youtube-transcript\` / \`baoyu-url-to-markdown\` | 获取视频字幕或网页原文 |\n`;
-  md += `| ② 转写重构 | \`subtext-article\` | 将字幕/ASR 转写转为可读文章 |\n`;
-  md += `| ③ 深度分析 | \`article-analyzer\` | 提取核心论点、框架与可行动洞察 |\n`;
-  md += `| ④ 概念寓言化 | \`concept-fable\` | 将复杂概念转为三段式寓言故事（可选） |\n`;
-  md += `| ⑤ 翻译整理 | \`baoyu-translate\` | 外文内容精翻，统一术语 |\n`;
-  md += `| ⑥ 知识库归档 | \`ima-skill\` | 上传至 IMA 知识库，建立个人/团队知识索引 |\n\n`;
-  md += `> 💡 配合 \`weread-skills\` 可将微信读书笔记同步纳入知识管理体系。\n\n`;
-
-  md += `### 3. 演示文稿快速制作流\n\n`;
-  md += `适合从大纲到成品的幻灯片/网页演示制作。\n\n`;
-  md += `\`\`\`\n主题定义 → 内容生成 → 图表配图 → 幻灯片制作 → 封面收尾\n\`\`\`\n\n`;
-  md += `| 步骤 | 推荐技能 | 作用 |\n|---|---|---|\n`;
-  md += `| ① 主题定义 | \`prompt-optimizer\` | 将模糊需求编译为结构化 prompt |\n`;
-  md += `| ② 内容生成 | \`HeavySkill\` / \`article-analyzer\` | 深度思考生成大纲与逐页内容 |\n`;
-  md += `| ③ 图表配图 | \`baoyu-diagram\` / \`baoyu-infographic\` | 生成流程图、架构图或信息图 |\n`;
-  md += `| ④ 幻灯片制作 | \`html-ppt\` / \`guizang-ppt-skill\` / \`baoyu-slide-deck\` | 生成网页 PPT 或图片版幻灯片 |\n`;
-  md += `| ⑤ 封面收尾 | \`baoyu-cover-image\` | 生成演示封面与章节过渡页 |\n`;
-  md += `| ⑥ 品牌统一 | \`theme-factory\` | 应用统一主题配色与排版风格 |\n\n`;
-  md += `> 💡 若需要技术类演示，可额外使用 \`architecture-diagram\` 生成深色架构图。\n\n`;
-
-  md += `### 4. 产品研发与发布流\n\n`;
-  md += `适合从需求到上线的完整开发周期。\n\n`;
-  md += `\`\`\`\n需求澄清 → 规格定义 → 增量开发 → 代码审查 → 质量保障 → 部署发布\n\`\`\`\n\n`;
-  md += `| 步骤 | 推荐技能 | 作用 |\n|---|---|---|\n`;
-  md += `| ① 需求澄清 | \`to-prd\` / \`idea-refine\` | 对话生成 PRD，或压力测试假设 |\n`;
-  md += `| ② 规格定义 | \`spec-driven-development\` | 编码前先写规范文档与接口契约 |\n`;
-  md += `| ③ 增量开发 | \`incremental-implementation\` / \`tdd\` | 大任务拆分，测试驱动逐步落地 |\n`;
-  md += `| ④ 代码审查 | \`code-review-and-quality\` | 多维度审查，合并前质量把关 |\n`;
-  md += `| ⑤ 质量保障 | \`setup-pre-commit\` / \`webapp-testing\` | 配置提交钩子与自动化测试 |\n`;
-  md += `| ⑥ 部署发布 | \`deploy-to-vercel\` / \`release-skills\` | 一键部署，自动检测版本与 changelog |\n\n`;
-  md += `> 💡 如需 API 设计，可在 ② 阶段加入 \`api-and-interface-design\` 或 \`design-an-interface\`。\n\n`;
-
-  md += `### 5. 社交媒体内容运营流\n\n`;
-  md += `适合将优质外部内容改编为自有社交媒体素材。\n\n`;
-  md += `\`\`\`\n热点捕捉 → 内容改编 → 视觉设计 → 一键分发\n\`\`\`\n\n`;
-  md += `| 步骤 | 推荐技能 | 作用 |\n|---|---|---|\n`;
-  md += `| ① 热点捕捉 | \`baoyu-x-to-markdown\` / \`baoyu-url-to-markdown\` | 保存推文/文章为 Markdown |\n`;
-  md += `| ② 内容改编 | \`merge-drafts\` / \`blog-checker\` | 合稿并评估文章质量 |\n`;
-  md += `| ③ 视觉设计 | \`guizang-social-card-skill\` / \`baoyu-infographic\` | 生成小红书图文、信息图等 |\n`;
-  md += `| ④ 一键分发 | \`baoyu-post-to-x\` / \`baoyu-post-to-weibo\` / \`baoyu-post-to-wechat\` | 多平台同步发布 |\n\n`;
-  md += `> 💡 运营小红书时，\`guizang-social-card-skill\` 的 3:4 封面模板可直接使用。\n\n`;
-
-  md += `### 6. 长文精读与复盘沉淀流\n\n`;
-  md += `适合对高质量长文进行深度阅读并沉淀为个人方法论。\n\n`;
-  md += `\`\`\`\n长文输入 → 伴读分析 → 复盘提取 → 提示词沉淀\n\`\`\`\n\n`;
-  md += `| 步骤 | 推荐技能 | 作用 |\n|---|---|---|\n`;
-  md += `| ① 长文输入 | \`baoyu-url-to-markdown\` | 将长文转为本地 Markdown |\n`;
-  md += `| ② 伴读分析 | \`article-analyzer\` / \`HeavySkill\` | 结构化拆解与深度思考 |\n`;
-  md += `| ③ 复盘提取 | \`session-achieve\` | 从阅读/对话中提取纠偏逻辑与关键洞察 |\n`;
-  md += `| ④ 提示词沉淀 | \`prompt-optimizer\` | 将个人阅读方法论固化为可复用 prompt |\n`;
-  md += `| ⑤ 归档管理 | \`ima-skill\` | 存入知识库，建立阅读索引 |\n\n`;
-  md += `> 💡 配合 \`weread-skills\` 可将微信读书中的划线与书评纳入同一复盘流程。\n\n`;
 
   return md;
 }
