@@ -17,7 +17,7 @@
     "type": "remote",
     "repo": "https://github.com/lijigang/ljg-skills",
     "ref": "master",
-    "commit": "ecff25c7f931e38f590a7d3482fc62d428fb54e1",
+    "commit": "6b07ef29f87042d0be4fd9fc997f480c81010141",
     "local_path": "warehouse/remote/github.com_lijigang_ljg-skills@main"
   },
   "github.com_vercel-labs_agent-skills@main": {
@@ -169,5 +169,12 @@
     "ref": "main",
     "commit": "b6250490bec4c0488d68ad66d72bd99f6edb95fd",
     "local_path": "warehouse/remote/github.com_EveryInc_compound-engineering-plugin@main"
+  },
+  "github.com_muxuuu_serenity-skill@main": {
+    "type": "remote",
+    "repo": "https://github.com/muxuuu/serenity-skill",
+    "ref": "main",
+    "commit": "c2fe93deedfd0d1bd9fe7ef0601ea1b9c20ea24a",
+    "local_path": "warehouse/remote/github.com_muxuuu_serenity-skill@main"
   }
 }
