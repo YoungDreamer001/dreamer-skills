@@ -3,7 +3,7 @@
     "type": "remote",
     "repo": "https://github.com/JimLiu/baoyu-skills",
     "ref": "main",
-    "commit": "ce84174bf7af6a178ae2c980f1bdcce4f1c3f7de",
+    "commit": "441ca307a60c594e8eda0ac156609503687544c0",
     "local_path": "warehouse/remote/github.com_JimLiu_baoyu-skills@main"
   },
   "github.com_op7418_guizang-ppt-skill@main": {
@@ -17,14 +17,14 @@
     "type": "remote",
     "repo": "https://github.com/lijigang/ljg-skills",
     "ref": "master",
-    "commit": "6b07ef29f87042d0be4fd9fc997f480c81010141",
+    "commit": "63b1c9c00e06be50f2aa761fbcbaf807584fc884",
     "local_path": "warehouse/remote/github.com_lijigang_ljg-skills@main"
   },
   "github.com_vercel-labs_agent-skills@main": {
     "type": "remote",
     "repo": "https://github.com/vercel-labs/agent-skills",
     "ref": "main",
-    "commit": "4ec6f84b61cd3c931046c3e6e398f3ae7de372f7",
+    "commit": "f8a72b9603728bb92a217a879b7e62e43ad76c81",
     "local_path": "warehouse/remote/github.com_vercel-labs_agent-skills@main"
   },
   "github.com_KAOPU-XiaoPu_web-design@main": {
@@ -45,14 +45,14 @@
     "type": "remote",
     "repo": "https://github.com/mattpocock/skills",
     "ref": "main",
-    "commit": "be55a7970319ede7965edbb02b5e41cba1ca82c9",
+    "commit": "694fa30311e02c2639942308513555e61ee84a6f",
     "local_path": "warehouse/remote/github.com_mattpocock_skills@main"
   },
   "github.com_ConardLi_garden-skills@main": {
     "type": "remote",
     "repo": "https://github.com/ConardLi/garden-skills",
     "ref": "main",
-    "commit": "e3e9ada877f47d984916d8169b7cf310ea0e2227",
+    "commit": "fbd6453c984e2a150c9553efe3075e1f62338df8",
     "local_path": "warehouse/remote/github.com_ConardLi_garden-skills@main"
   },
   "github.com_irenerachel_visual-style-ppt-skill@main": {
@@ -66,7 +66,7 @@
     "type": "remote",
     "repo": "https://github.com/addyosmani/agent-skills",
     "ref": "main",
-    "commit": "2e0dfbfb436ef3307bbe8ba172f14996de980784",
+    "commit": "3a6fc6392823e31e2362091bd4e3cddf5b77af14",
     "local_path": "warehouse/remote/github.com_addyosmani_agent-skills@main"
   },
   "local-heavyskill-adapted": {
@@ -77,7 +77,7 @@
     "type": "remote",
     "repo": "https://github.com/anthropics/skills",
     "ref": "main",
-    "commit": "da20c92503b2e8ff1cf28ca81a0df4673debdbf7",
+    "commit": "57546260929473d4e0d1c1bb75297be2fdfa1949",
     "local_path": "warehouse/remote/github.com_anthropics_skills@main"
   },
   "local-prompt-optimizer": {
@@ -160,14 +160,14 @@
     "type": "remote",
     "repo": "https://github.com/JimLiu/baoyu-design",
     "ref": "main",
-    "commit": "81d3d3c44fe9e77478946c5efa6cf703a3b83cc3",
+    "commit": "cd58cf7a613382e651958e6a4524460ce6799a8e",
     "local_path": "warehouse/remote/github.com_JimLiu_baoyu-design@main"
   },
   "github.com_EveryInc_compound-engineering-plugin@main": {
     "type": "remote",
     "repo": "https://github.com/EveryInc/compound-engineering-plugin",
     "ref": "main",
-    "commit": "b6250490bec4c0488d68ad66d72bd99f6edb95fd",
+    "commit": "5e6eccabb10e46fb2c149d06f82c4f46299e44b5",
     "local_path": "warehouse/remote/github.com_EveryInc_compound-engineering-plugin@main"
   },
   "github.com_muxuuu_serenity-skill@main": {
@@ -176,5 +176,12 @@
     "ref": "main",
     "commit": "c2fe93deedfd0d1bd9fe7ef0601ea1b9c20ea24a",
     "local_path": "warehouse/remote/github.com_muxuuu_serenity-skill@main"
+  },
+  "github.com_helloianneo_ian-xiaohei-scenes@main": {
+    "type": "remote",
+    "repo": "https://github.com/helloianneo/ian-xiaohei-scenes",
+    "ref": "main",
+    "commit": "3555bcb9ecaba284aec77ee492fdfd21c52faae3",
+    "local_path": "warehouse/remote/github.com_helloianneo_ian-xiaohei-scenes@main"
   }
 }
