@@ -380,6 +380,35 @@
       "split": "dev",
       "source": "manual",
       "notes": "Adds executable trace-driven ideation without automatic risky edits."
+    },
+    {
+      "id": "description-trigger-harness-reference",
+      "type": "routing-regression",
+      "prompt": "Optimize a skill description so it triggers on relevant user requests and stays silent on adjacent out-of-scope requests.",
+      "expected_signal": "The optimizer routes frontmatter trigger work to the description trigger harness and preserves dev/holdout repeated-run gating.",
+      "assertions": [
+        {
+          "name": "harness-reference-exists",
+          "method": "path_hit",
+          "expect": "references/description-trigger-harness.md",
+          "criteria": "Description trigger tuning must have a separately loadable reference."
+        },
+        {
+          "name": "harness-contract-present",
+          "method": "fact_coverage",
+          "expect": "should-trigger|should-not-trigger|adjacent-confusion|dev|holdout|repeats|Failure Packet|description-only mutations|scripts/description-harness.ts|false positives|false negatives|temporary project|fake skill|claude -p|Previous descriptions|Full SKILL.md",
+          "criteria": "Harness must preserve trigger case taxonomy, split protocol, repeated-run evidence, and description mutation boundary."
+        },
+        {
+          "name": "harness-script-exists",
+          "method": "script_check",
+          "expect": "scripts/description-harness.ts",
+          "criteria": "Description harness must have deterministic scoring support."
+        }
+      ],
+      "split": "regression",
+      "source": "manual",
+      "notes": "Regression for the user-supplied harness engineering reference on description optimization."
     }
   ]
 }

@@ -75,6 +75,8 @@ At minimum, translate the requirement into a reviewable eval plan:
 
 If the skill is not mature enough for evals, produce an eval plan before suggesting major rewrites.
 
+For frontmatter trigger accuracy or `description` boundary tuning, use `references/description-trigger-harness.md`. Treat it as the repeatable protocol for should-trigger / should-not-trigger / adjacent-confusion cases, dev/holdout splits, repeated routing runs, and description-only mutations.
+
 ### 5. Audit Structure And Failure Modes
 
 Run hygiene and failure-mode review.
@@ -111,6 +113,14 @@ bun scripts/run-evals.ts <target-skill-dir>/evals/evals.json --judgments-file=ju
 ```
 
 Pending cases require human, trace, or external runner judgment; do not count them as passed gates. LLM review is allowed only as external evidence written to a judgment file, never as implicit execution.
+
+To validate and score a frontmatter description trigger harness:
+
+```bash
+bun scripts/description-harness.ts --cases=description-cases.json --results=description-results.json --output=summary.json --packet=failure-packet.md
+```
+
+The script validates case splits, aggregates repeated routing runs, calculates false positives and false negatives, and writes the failure packet used for a description mutation proposal. Pass `--skill-md=SKILL.md` when the packet should include the full skill. The script does not call an external model or decide a new description.
 
 To initialize a protected self-training workspace:
 
@@ -183,6 +193,7 @@ Translate trace evidence into the smallest reviewable change that can improve th
 
 Use `references/mutation-policy.md`.
 Use `references/anti-overfitting.md` to decide whether the mutation is too heavy for the failure.
+Use `references/description-trigger-harness.md` when the selected mutation layer is frontmatter `description` and the evidence is trigger under-selection, over-selection, or adjacent-skill confusion.
 
 Mutation order:
 
@@ -248,6 +259,7 @@ When finishing an iterative optimization run, use `assets/final-report-template.
 - `references/intent-taxonomy.md` — classify skill purpose and choose success metrics.
 - `references/eval-protocol.md` — choose evals and assertions by intent.
 - `references/eval-schema.md` — JSON shape for eval plans.
+- `references/description-trigger-harness.md` — run repeatable description trigger optimization with dev/holdout splits, repeated routing checks, and failure packets.
 - `references/mutation-policy.md` — choose safe improvement layers.
 - `references/anti-overfitting.md` — prevent heavy-method and template overfitting.
 - `references/self-training-protocol.md` — run trace-driven self-training with gates.

@@ -27,6 +27,8 @@ Generate or request external judgment inputs:
 
 Use for routing and frontmatter changes.
 
+For systematic `description` tuning, use `description-trigger-harness.md`. It extends Discovery Eval into a repeatable harness with about 20 should-trigger / should-not-trigger / adjacent-confusion cases, dev/holdout splits, repeated routing runs, false-positive/false-negative packets, and description-only mutation gates.
+
 ### Logic Simulation Eval
 
 Input: full `SKILL.md`, directory tree, and a representative user task.
@@ -77,6 +79,7 @@ Routing:
 - negative trigger prompts;
 - adjacent-confusion prompts;
 - description-only external judgment.
+- description trigger harness when routing accuracy is the primary metric.
 
 Norm/Style:
 

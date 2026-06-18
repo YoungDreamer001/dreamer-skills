@@ -43,6 +43,8 @@ Actions:
 7. Establish baseline.
 8. Write `reports/evolve-plan.md`.
 
+If the primary target is frontmatter trigger accuracy, load `description-trigger-harness.md` during setup and create its case set before any description mutation. Do not self-train a `description` from unsplit or dev-only cases.
+
 ## Phase 1: Review
 
 Read memory before changing anything:
@@ -145,6 +147,7 @@ L2 Dev Eval:
 - selected regression;
 - deterministic script checks;
 - external judgment file where qualitative review is unavoidable.
+- for description tuning, repeated dev routing runs with false-positive and false-negative traces from `description-trigger-harness.md`.
 
 L3 Strict Eval:
 
@@ -153,6 +156,7 @@ L3 Strict Eval:
 - blind A/B;
 - repeated noisy external judgment;
 - cross-model if relevant.
+- for description tuning, holdout trigger accuracy plus adjacent-confusion and regression checks.
 
 Run L3 on cadence, before layer escalation, before final report, or after major routing changes.
 
