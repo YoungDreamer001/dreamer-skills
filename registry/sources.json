@@ -187,5 +187,9 @@
   "local-request-refactor-plan": {
     "type": "local",
     "local_path": "warehouse/local/request-refactor-plan"
+  },
+  "local-it-system-skill-distiller": {
+    "type": "local",
+    "local_path": "warehouse/local/it-system-skill-distiller"
   }
 }
