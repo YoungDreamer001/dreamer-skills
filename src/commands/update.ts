@@ -138,7 +138,7 @@ export async function updateSkill(
   root: string,
   name: string,
   fetchCache?: Map<string, FetchRemoteResult>
-): Promise<{ status: "updated" | "skipped" | "failed"; message?: string }> {
+): Promise<{ status: "updated" | "uptodate" | "skipped" | "failed"; message?: string }> {
   const registry = loadSkillsRegistry(root);
   const entry = registry[name];
   if (!entry || !entry.installed) {
@@ -191,7 +191,7 @@ export async function updateSkill(
   const currentCommit = manifest.source?.commit;
   if (currentCommit && currentCommit === fetchResult.commit) {
     info(`Skill "${name}" is already up to date`);
-    return { status: "skipped" };
+    return { status: "uptodate" };
   }
 
   const { adaptedBackup, manifestBackup } = backupSkill(root, name);
@@ -280,9 +280,10 @@ export async function update(
 
     const results: {
       updated: string[];
+      uptodate: string[];
       skipped: string[];
       failed: { name: string; message?: string }[];
-    } = { updated: [], skipped: [], failed: [] };
+    } = { updated: [], uptodate: [], skipped: [], failed: [] };
 
     const fetchCache = new Map<string, FetchRemoteResult>();
 
@@ -290,6 +291,8 @@ export async function update(
       const result = await updateSkill(root, skillName, fetchCache);
       if (result.status === "updated") {
         results.updated.push(skillName);
+      } else if (result.status === "uptodate") {
+        results.uptodate.push(skillName);
       } else if (result.status === "skipped") {
         results.skipped.push(skillName);
       } else {
@@ -299,6 +302,9 @@ export async function update(
 
     if (results.updated.length > 0) {
       success(`Updated ${results.updated.length} skill(s): ${results.updated.join(", ")}`);
+    }
+    if (results.uptodate.length > 0) {
+      info(`Already up to date: ${results.uptodate.length} skill(s)`);
     }
     if (results.skipped.length > 0) {
       info(`Skipped ${results.skipped.length} skill(s): ${results.skipped.join(", ")}`);

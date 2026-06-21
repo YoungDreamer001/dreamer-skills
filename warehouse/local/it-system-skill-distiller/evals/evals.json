@@ -103,6 +103,40 @@
       "split": "regression",
       "source": "manual",
       "notes": "Script execution itself is covered by task-local smoke commands; this assertion protects script presence."
+    },
+    {
+      "id": "script-check-validate-package",
+      "type": "script-check",
+      "prompt": "Run the bundled validator against a completed distilled output directory.",
+      "expected_signal": "The validator script should exist and be the final gate before handoff.",
+      "assertions": [
+        {
+          "name": "validator-script-exists",
+          "method": "file_exists",
+          "expect": "scripts/validate_distilled_package.py",
+          "criteria": "The target skill includes a deterministic validator for the standard output package."
+        }
+      ],
+      "split": "regression",
+      "source": "manual",
+      "notes": "Protects the user's requirement that agent runs produce standard output files rather than only an unchecked scaffold."
+    },
+    {
+      "id": "script-check-agent-smoke",
+      "type": "script-check",
+      "prompt": "Run the enabled-skill smoke test through .agents/skills/it-system-skill-distiller.",
+      "expected_signal": "The smoke script should exist and prove that an enabled agent skill path can produce a valid distilled package.",
+      "assertions": [
+        {
+          "name": "agent-smoke-script-exists",
+          "method": "file_exists",
+          "expect": "scripts/smoke_agent_run.py",
+          "criteria": "The target skill includes a reusable smoke test for the agent execution path."
+        }
+      ],
+      "split": "regression",
+      "source": "manual",
+      "notes": "Protects project enablement and standard-output generation as a repeatable check."
     }
   ]
 }

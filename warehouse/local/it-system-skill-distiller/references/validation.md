@@ -16,6 +16,7 @@
 - [ ] API 文档里出现的枚举和错误码都能在 `reference/` 查到。
 - [ ] 冲突已登记到 `reference/model-code-conflicts.md`。
 - [ ] 关键交叉引用使用 `[[slug]]`，且对象、接口、Schema、枚举和冲突之间能互相追溯。
+- [ ] 已运行 `scripts/validate_distilled_package.py <distilled-dir>`，并修复所有失败项。
 
 ## 动态验证场景
 
@@ -55,4 +56,3 @@
 - 全程不直接访问数据库。
 
 如果跳过动态验证，必须记录原因，并把结论标注为“仅通过静态验证”。
-

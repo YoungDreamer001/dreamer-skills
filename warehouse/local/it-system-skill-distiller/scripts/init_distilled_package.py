@@ -197,9 +197,20 @@ FILES = {
 """,
     "validation/results.md": """# 验证结果
 
+## 结论
+
+{placeholder}
+
+## 静态验证
+
 | 场景 | 状态 | 证据 | 缺口 / 修复 |
 | --- | --- | --- | --- |
 | {placeholder} | pending | {placeholder} | {placeholder} |
+
+## 动态验证
+
+- 状态：{placeholder}
+- 原因 / 证据：{placeholder}
 """,
 }
 
@@ -252,4 +263,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
