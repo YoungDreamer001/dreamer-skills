@@ -3,7 +3,7 @@
     "type": "remote",
     "repo": "https://github.com/JimLiu/baoyu-skills",
     "ref": "main",
-    "commit": "441ca307a60c594e8eda0ac156609503687544c0",
+    "commit": "348dc826123c306999b511d8c0417e4642ea82eb",
     "local_path": "warehouse/remote/github.com_JimLiu_baoyu-skills@main"
   },
   "github.com_op7418_guizang-ppt-skill@main": {
@@ -17,7 +17,7 @@
     "type": "remote",
     "repo": "https://github.com/lijigang/ljg-skills",
     "ref": "master",
-    "commit": "63b1c9c00e06be50f2aa761fbcbaf807584fc884",
+    "commit": "2bcce7c72d14f83f60fe4bdf6460a24bab7f40ee",
     "local_path": "warehouse/remote/github.com_lijigang_ljg-skills@main"
   },
   "github.com_vercel-labs_agent-skills@main": {
@@ -45,7 +45,7 @@
     "type": "remote",
     "repo": "https://github.com/mattpocock/skills",
     "ref": "main",
-    "commit": "694fa30311e02c2639942308513555e61ee84a6f",
+    "commit": "6eeb81b5fcfeeb5bd531dd47ab2f9f2bbea27461",
     "local_path": "warehouse/remote/github.com_mattpocock_skills@main"
   },
   "github.com_ConardLi_garden-skills@main": {
@@ -66,7 +66,7 @@
     "type": "remote",
     "repo": "https://github.com/addyosmani/agent-skills",
     "ref": "main",
-    "commit": "a5f0b176381e9fea24a61aefc243506686aa2435",
+    "commit": "17214a29c429a19f7a9607f2c06f9d650ea87eb0",
     "local_path": "warehouse/remote/github.com_addyosmani_agent-skills@main"
   },
   "local-heavyskill-adapted": {
@@ -160,14 +160,14 @@
     "type": "remote",
     "repo": "https://github.com/JimLiu/baoyu-design",
     "ref": "main",
-    "commit": "33f14b1dd2c24b773ff5cb1ae1b38327be1ff7c0",
+    "commit": "edde718ef4b9e7265782177f374cebf735b784f8",
     "local_path": "warehouse/remote/github.com_JimLiu_baoyu-design@main"
   },
   "github.com_EveryInc_compound-engineering-plugin@main": {
     "type": "remote",
     "repo": "https://github.com/EveryInc/compound-engineering-plugin",
     "ref": "main",
-    "commit": "d8d688b30d97eb5efc3142cec16dd8314ac48e47",
+    "commit": "c759a26041559360e7b10148dd407406e716fc3b",
     "local_path": "warehouse/remote/github.com_EveryInc_compound-engineering-plugin@main"
   },
   "github.com_muxuuu_serenity-skill@main": {
