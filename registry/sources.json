@@ -191,5 +191,9 @@
   "local-it-system-skill-distiller": {
     "type": "local",
     "local_path": "warehouse/local/it-system-skill-distiller"
+  },
+  "local-douban-dice-review": {
+    "type": "local",
+    "local_path": "warehouse/local/douban-dice-review"
   }
 }

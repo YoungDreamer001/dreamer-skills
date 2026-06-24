@@ -1,0 +1,4 @@
+interface:
+  display_name: "骰子豆瓣影评"
+  short_description: "用六个理论骰子生成三篇中文豆瓣影评"
+  default_prompt: "使用 $douban-dice-review 为《电影名》生成三篇豆瓣风格影评，并保存影评文档。"
