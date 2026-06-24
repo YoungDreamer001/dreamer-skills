@@ -26,7 +26,6 @@
 | 技能名 | 说明 |
 |--------|------|
 | `baoyu-compress-image` | 将图片压缩为 WebP 或 PNG，自动选择工具，用于优化图片体积。 |
-| `baoyu-markdown-to-html` | Markdown 转样式化 HTML，支持将 Mermaid 通过无头 Chrome 渲染为 PNG。 |
 
 ## 3. 图表、图示与架构图
 
@@ -40,7 +39,6 @@
 | 技能名 | 说明 |
 |--------|------|
 | `baoyu-design` | 创建独立 HTML 设计工件：UI 线框图、交互原型、落地页、仪表盘、App 界面、幻灯片、视觉探索。 |
-| `web-design` | Web 视觉设计 SKILL：输入 PRD / 参考 URL / 截图 / 关键词，产出 DESIGN.md 并生成 UI/UX、动效、响应式界面。 |
 | `web-design-engineer` | 使用 HTML/CSS/JavaScript/React 构建精美网页工件：页面、仪表盘、原型、幻灯片、动画、UI 模型。 |
 | `web-design-guidelines` | 审查 UI 代码是否符合 Web Interface Guidelines，覆盖可访问性、UX、设计审计。 |
 | `design-an-interface` | 使用并行子代理为模块生成多种截然不同的接口设计方案。 |
@@ -57,27 +55,4 @@
 | `baoyu-slide-deck` | 将内容生成专业幻灯片图片，制定大纲与风格指令后逐页出图。 |
 | `guizang-ppt-skill` | 生成横向翻页网页 PPT（单 HTML），含 WebGL 背景、章节幕封、数据大字报、图片网格等模板。 |
 | `guizang-social-card-skill` | 生成 Guizang 风格社交卡片图集与微信公众号封面图对，支持小红书图文。 |
-| `html-ppt` | HTML PPT Studio，使用模板创作多种风格、布局、动画的静态 HTML 演示。 |
 | `ian-handdrawn-ppt` | 将文章、Markdown、PDF、PPT 等转换为手绘风格的中文技术文章 / PPT 页面图片。 |
-| `pptx` | 任何涉及 .pptx 的技能：创建、读取、编辑幻灯片、演示文稿。 |
-| `ljg-card` | 内容铸型，将内容转化为 PNG 视觉图，支持长阅读卡、信息图、多卡、编辑速记等七种模具。 |
-| `ljg-word-flow` | 深度单词分析 + 信息图卡片一体化，输出单词语义分析与 PNG 信息图。 |
-| `ljg-paper-flow` | 论文阅读 + 信息图卡片一体化，对每篇论文输出 org 分析与 PNG 信息图。 |
-| `ljg-present` | 演讲铸造器，将 orgmode/markdown outline 1:1 视觉化为色块大字幻灯片。 |
-| `ljg-travel` | 深度旅行研究，输出结构化知识文档 + PNG 便携参考卡片。 |
-
-
-## 7. 社交媒体与发布中的图像
-
-| 技能名 | 说明 |
-|--------|------|
-| `baoyu-post-to-wechat` | 微信公众号发文，支持文章（HTML/markdown）与贴图（图片）发布。 |
-| `baoyu-post-to-weibo` | 微博发文，支持普通图文帖与头条文章。 |
-
----
-
-## 汇总统计
-
-共收录 **46** 个与图像/视觉相关的技能。
-
-*注：`ima-skill` 虽支持文件上传，但核心是知识库/笔记管理，未纳入本清单。*
