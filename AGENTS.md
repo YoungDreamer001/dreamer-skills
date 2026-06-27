@@ -6,24 +6,24 @@ This repository is the default skill management home for this machine.
 
 ### Tech Stack
 
-- Runtime: [Node/Python/Rust/etc.]
-- Framework: [React/Next/Vite/etc.]
-- Package manager: [npm/pnpm/uv/cargo/etc.]
+- Runtime: Bun + TypeScript
+- Framework: Node.js CLI (no frontend framework)
+- Package manager: Bun
 
 ### Commands
 
-- Install: `[command]`
-- Dev: `[command]`
-- Test: `[command]`
-- Typecheck: `[command]`
-- Lint: `[command]`
-- Build: `[command]`
+- Install: `./bin/hk-skill install <source>`
+- Dev: `python3 -m http.server 8080 --directory docs` (for catalog preview)
+- Test: `bun test`
+- Typecheck: `[typecheck command]`
+- Lint: `[lint command]`
+- Build: `bun run build:catalog`
 
 ### Verification
 
-- After changing runtime behavior, run `[test command]`.
-- After changing types or public interfaces, run `[typecheck command]`.
-- After changing frontend UI, verify in browser at `[local URL]`.
+- After changing runtime behavior, run `bun test`.
+- After changing types or public interfaces, run `bun run typecheck` (if configured).
+- After changing frontend UI, verify in browser at `http://localhost:8080/catalog.html`.
 - If a check is skipped, report it explicitly.
 
 ### Boundaries
@@ -78,7 +78,11 @@ Generate and translate the skill catalog:
    - **Mark deprecated skills**: Use ⛔ for deprecated skills (e.g., baoyu-image-gen, baoyu-xhs-images).
    - **Separate enabled/disabled**: Clearly distinguish enabled skills from disabled ones.
    - **Keep technical terms**: Keep skill names, CLI commands, and file paths in English.
-4. Write the translated catalog back to `docs/catalog.md`.
+4. Execute `warehouse/adapted/baoyu-format-markdown` on `docs/catalog.md` to add frontmatter, fix CJK typography, and format tables.
+5. Write the formatted catalog back to `docs/catalog.md`.
+6. Run `bun run build:catalog` to regenerate `docs/catalog.html` from the updated `docs/catalog.md`.
+
+> Note: `docs/catalog.html` is a generated file (from `scripts/build-catalog-html.ts`). Do not edit it by hand; regenerate it via `bun run build:catalog`.
 
 ### `安装 {source}`
 
