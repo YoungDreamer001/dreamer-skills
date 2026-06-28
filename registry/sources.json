@@ -195,5 +195,16 @@
   "local-douban-dice-review": {
     "type": "local",
     "local_path": "warehouse/local/douban-dice-review"
+  },
+  "github.com_irenerachel_comic-ip-onboarder-skill@main": {
+    "type": "remote",
+    "repo": "https://github.com/irenerachel/comic-ip-onboarder-skill",
+    "ref": "main",
+    "commit": "88cf66a689d0791a9eecd15f5f50bf5f1d920619",
+    "local_path": "warehouse/remote/github.com_irenerachel_comic-ip-onboarder-skill@main"
+  },
+  "local-skill-evaluator": {
+    "type": "local",
+    "local_path": "warehouse/local/skill-evaluator"
   }
 }
