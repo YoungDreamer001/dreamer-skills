@@ -10,6 +10,7 @@ interface Skill {
   description: string;
   triggers: string;
   section: string;
+  status?: "enabled" | "disabled";
 }
 
 interface Section {
@@ -40,14 +41,26 @@ function parseCatalog(mdPath: string): { frontmatter: Record<string, string>; se
     if (line.startsWith("## ")) {
       if (currentSection) sections.push(currentSection);
       currentSection = { name: line.replace("## ", "").trim(), skills: [] };
-    } else if (currentSection && line.startsWith("| `") && !line.includes("Skill 名称")) {
+    } else if (currentSection && line.startsWith("| ") && !line.includes("---") && !line.includes("技能名称") && !line.includes("状态 ")) {
       const cells = line.split("|").map((s) => s.trim()).filter(Boolean);
-      if (cells.length >= 3) {
+      // Support two catalog formats:
+      // 1. Legacy 3-column: | `name` | description | triggers |
+      // 2. Chinese 5-column: | status | name | source | description | triggers |
+      if (cells.length === 3) {
         currentSection.skills.push({
           name: cells[0].replace(/^`/, "").replace(/`$/, ""),
           description: cells[1],
           triggers: cells[2],
           section: currentSection.name,
+        });
+      } else if (cells.length === 5) {
+        const status = cells[0].trim();
+        currentSection.skills.push({
+          name: cells[1],
+          description: cells[3],
+          triggers: cells[4],
+          section: currentSection.name,
+          status: status === "✅" ? "enabled" : status === "⏸️" ? "disabled" : undefined,
         });
       }
     }
@@ -418,6 +431,31 @@ function generateHtml(frontmatter: Record<string, string>, sections: Section[]):
       white-space: nowrap;
     }
 
+    .status-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 12px;
+      margin-bottom: 8px;
+      width: fit-content;
+    }
+
+    .status-badge.enabled {
+      background: rgba(42, 138, 74, 0.12);
+      color: #2a8a4a;
+    }
+
+    [data-theme="dark"] .status-badge.enabled {
+      background: rgba(74, 196, 120, 0.15);
+      color: #4ac478;
+    }
+
+    .status-badge.disabled {
+      background: rgba(153, 153, 153, 0.12);
+      color: var(--text-tertiary);
+    }
+
     .skill-description {
       font-size: 15px;
       color: var(--text);
@@ -721,11 +759,15 @@ function generateHtml(frontmatter: Record<string, string>, sections: Section[]):
     }
 
     function renderSkillCard(skill) {
+      const statusHtml = skill.status
+        ? '<span class="status-badge ' + skill.status + '">' + (skill.status === "enabled" ? "已启用" : "未启用") + '</span>'
+        : '';
       return '<article class="skill-card">' +
         '<div class="skill-header">' +
           '<code class="skill-name" onclick="copySkill(this, ' + "'" + escapeHtml(skill.name).replace(/'/g, "&#039;") + "'" + ')" title="点击复制">' + highlight(skill.name, searchQuery) + '</code>' +
           '<span class="skill-section-tag">' + escapeHtml(skill.section) + '</span>' +
         '</div>' +
+        statusHtml +
         '<p class="skill-description">' + highlight(skill.description, searchQuery) + '</p>' +
         '<div class="skill-triggers"><strong>触发：</strong>' + highlight(skill.triggers, searchQuery) + '</div>' +
       '</article>';

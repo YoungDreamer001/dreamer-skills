@@ -206,5 +206,19 @@
   "local-skill-evaluator": {
     "type": "local",
     "local_path": "warehouse/local/skill-evaluator"
+  },
+  "github.com_cclank_lanshu-animated-architecture-diagram@main": {
+    "type": "remote",
+    "repo": "https://github.com/cclank/lanshu-animated-architecture-diagram",
+    "ref": "main",
+    "commit": "1818562e9fa84f36b632c745a8931cee64acf947",
+    "local_path": "warehouse/remote/github.com_cclank_lanshu-animated-architecture-diagram@main"
+  },
+  "github.com_nolangz_pixel2motion@main": {
+    "type": "remote",
+    "repo": "https://github.com/nolangz/pixel2motion",
+    "ref": "main",
+    "commit": "5049f5bf5c896f804dd7a45695dec8e47f9e11aa",
+    "local_path": "warehouse/remote/github.com_nolangz_pixel2motion@main"
   }
 }
