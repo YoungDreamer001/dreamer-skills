@@ -220,5 +220,12 @@
     "ref": "main",
     "commit": "5049f5bf5c896f804dd7a45695dec8e47f9e11aa",
     "local_path": "warehouse/remote/github.com_nolangz_pixel2motion@main"
+  },
+  "github.com_luoluoluo22_jianying-editor-skill@main": {
+    "type": "remote",
+    "repo": "https://github.com/luoluoluo22/jianying-editor-skill",
+    "ref": "main",
+    "commit": "f421c8a036f4fda888a83b38fc90bb9c00d6faa9",
+    "local_path": "warehouse/remote/github.com_luoluoluo22_jianying-editor-skill@main"
   }
 }
