@@ -131,4 +131,51 @@ describe("update-lifecycle", () => {
       expect(sources[sourceId]!.type).toBe("remote");
     }
   });
+
+  it("discovers new subpath when upstream skill is moved", async () => {
+    init(tempDir);
+
+    let fetchCallCount = 0;
+    fetchRemoteSpy = spyOn(fetcher, "fetchRemote").mockImplementation(async (root, repoUrl) => {
+      const name = "moved-skill";
+      const source_id = "github.com_user_moved-skill@main";
+      const targetPath = path.join(root, "warehouse", "remote", source_id);
+
+      fs.rmSync(targetPath, { recursive: true, force: true });
+      fs.mkdirSync(targetPath, { recursive: true });
+
+      fetchCallCount++;
+      const commit = fetchCallCount === 1 ? "abc123" : "def456";
+      const skillDir =
+        fetchCallCount === 1
+          ? path.join(targetPath, "plugins", "compound-engineering", "skills", name)
+          : path.join(targetPath, "skills", name);
+
+      fs.mkdirSync(skillDir, { recursive: true });
+      fs.writeFileSync(
+        path.join(skillDir, "SKILL.md"),
+        `---\nname: ${name}\n---\n\n# ${name} commit ${commit}\n`,
+        "utf-8"
+      );
+
+      return { source_id, name, repoUrl, ref: "main", commit };
+    });
+
+    await install(tempDir, "https://github.com/user/moved-skill");
+
+    const registryAfterInstall = loadSkillsRegistry(tempDir);
+    expect(registryAfterInstall["moved-skill"]).toBeDefined();
+    expect(registryAfterInstall["moved-skill"]!.subpath).toBe(
+      "plugins/compound-engineering/skills/moved-skill"
+    );
+
+    await update(tempDir, "moved-skill", {});
+
+    const registryAfterUpdate = loadSkillsRegistry(tempDir);
+    expect(registryAfterUpdate["moved-skill"]!.subpath).toBe("skills/moved-skill");
+
+    const manifestPath = path.join(tempDir, "manifests", "moved-skill.yaml");
+    const manifest = parse(fs.readFileSync(manifestPath, "utf-8")) as Record<string, unknown>;
+    expect((manifest.source as Record<string, string>).commit).toBe("def456");
+  });
 });

@@ -5,6 +5,7 @@ import { parse } from "yaml";
 import { fetchRemote, type FetchRemoteResult } from "../core/fetcher.js";
 import { vet } from "../core/vetter.js";
 import { adapt } from "../core/adapter.js";
+import { discoverSkills } from "../core/discover-skills.js";
 import { enableSkill, refreshSkillLinks } from "../core/activator.js";
 import {
   loadSkillsRegistry,
@@ -198,7 +199,20 @@ export async function updateSkill(
 
   try {
     const remoteBasePath = path.join(getWarehousePath(root, "remote"), source_id);
-    const vetPath = subpath ? path.join(remoteBasePath, subpath) : remoteBasePath;
+    let vetPath = subpath ? path.join(remoteBasePath, subpath) : remoteBasePath;
+
+    if (!fs.existsSync(vetPath)) {
+      info(`Stored path for skill "${name}" not found; discovering new location...`);
+      const discovered = discoverSkills(remoteBasePath);
+      const match = discovered.find((s) => s.name === name);
+      if (match) {
+        info(
+          `Skill "${name}" moved from "${subpath ?? "<root>"}" to "${match.subpath || "<root>"}"; updating registry`
+        );
+        entry.subpath = match.subpath || undefined;
+        vetPath = path.join(remoteBasePath, match.subpath);
+      }
+    }
 
     const vetResult = vet(vetPath);
     if (!vetResult.passed) {
