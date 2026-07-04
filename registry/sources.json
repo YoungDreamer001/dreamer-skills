@@ -179,5 +179,12 @@
     "ref": "main",
     "commit": "f421c8a036f4fda888a83b38fc90bb9c00d6faa9",
     "local_path": "warehouse/remote/github.com_luoluoluo22_jianying-editor-skill@main"
+  },
+  "github.com_kanelogger_kane-skills@main": {
+    "type": "remote",
+    "repo": "https://github.com/kanelogger/kane-skills",
+    "ref": "main",
+    "commit": "55be1ef175f750337e70b51cdeaae58d4a0612e1",
+    "local_path": "warehouse/remote/github.com_kanelogger_kane-skills@main"
   }
 }
