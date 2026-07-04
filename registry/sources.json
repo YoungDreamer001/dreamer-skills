@@ -80,37 +80,9 @@
     "commit": "9d2f1ae187231d8199c64b5b762e1bdf2244733d",
     "local_path": "warehouse/remote/github.com_anthropics_skills@main"
   },
-  "local-prompt-optimizer": {
-    "type": "local",
-    "local_path": "warehouse/local/prompt-optimizer"
-  },
-  "local-session-achieve": {
-    "type": "local",
-    "local_path": "warehouse/local/session-achieve"
-  },
-  "local-subtext-article": {
-    "type": "local",
-    "local_path": "warehouse/local/subtext-article"
-  },
   "local-skill-installer": {
     "type": "local",
     "local_path": "warehouse/local/skill-installer"
-  },
-  "local-blog-checker": {
-    "type": "local",
-    "local_path": "warehouse/local/blog-checker"
-  },
-  "local-merge-drafts": {
-    "type": "local",
-    "local_path": "warehouse/local/merge-drafts"
-  },
-  "local-article-analyzer": {
-    "type": "local",
-    "local_path": "warehouse/local/article-analyzer"
-  },
-  "local-concept-fable": {
-    "type": "local",
-    "local_path": "warehouse/local/concept-fable"
   },
   "cdn.weread.qq.com_skills_weread-skills.zip": {
     "type": "remote",
@@ -152,10 +124,6 @@
     "commit": "cf4b810fac1c73fb65a2bb31d8c9278d82cbc4c5",
     "local_path": "warehouse/remote/github.com_op7418_guizang-social-card-skill@main"
   },
-  "local-skill-optimizer": {
-    "type": "local",
-    "local_path": "warehouse/local/skill-optimizer"
-  },
   "github.com_JimLiu_baoyu-design@main": {
     "type": "remote",
     "repo": "https://github.com/JimLiu/baoyu-design",
@@ -184,28 +152,12 @@
     "commit": "3555bcb9ecaba284aec77ee492fdfd21c52faae3",
     "local_path": "warehouse/remote/github.com_helloianneo_ian-xiaohei-scenes@main"
   },
-  "local-request-refactor-plan": {
-    "type": "local",
-    "local_path": "warehouse/local/request-refactor-plan"
-  },
-  "local-it-system-skill-distiller": {
-    "type": "local",
-    "local_path": "warehouse/local/it-system-skill-distiller"
-  },
-  "local-douban-dice-review": {
-    "type": "local",
-    "local_path": "warehouse/local/douban-dice-review"
-  },
   "github.com_irenerachel_comic-ip-onboarder-skill@main": {
     "type": "remote",
     "repo": "https://github.com/irenerachel/comic-ip-onboarder-skill",
     "ref": "main",
     "commit": "88cf66a689d0791a9eecd15f5f50bf5f1d920619",
     "local_path": "warehouse/remote/github.com_irenerachel_comic-ip-onboarder-skill@main"
-  },
-  "local-skill-evaluator": {
-    "type": "local",
-    "local_path": "warehouse/local/skill-evaluator"
   },
   "github.com_cclank_lanshu-animated-architecture-diagram@main": {
     "type": "remote",
