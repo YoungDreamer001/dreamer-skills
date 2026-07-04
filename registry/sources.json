@@ -3,7 +3,7 @@
     "type": "remote",
     "repo": "https://github.com/JimLiu/baoyu-skills",
     "ref": "main",
-    "commit": "c9a50cc908d0473f5d754efdbe08cbe387714f63",
+    "commit": "a4e78af8136fa0bbfd7a8243d2f6813b4b6398c9",
     "local_path": "warehouse/remote/github.com_JimLiu_baoyu-skills@main"
   },
   "github.com_op7418_guizang-ppt-skill@main": {
@@ -17,7 +17,7 @@
     "type": "remote",
     "repo": "https://github.com/lijigang/ljg-skills",
     "ref": "master",
-    "commit": "e131ff4795e3af73e3fe3a81c81d61aed75b7682",
+    "commit": "9681c304e9ad5c5539bad8a582f11fe9a05bf352",
     "local_path": "warehouse/remote/github.com_lijigang_ljg-skills@main"
   },
   "github.com_vercel-labs_agent-skills@main": {
@@ -34,18 +34,11 @@
     "commit": "fa2291c4d41f985987ccb48da7924b288f268538",
     "local_path": "warehouse/remote/github.com_KAOPU-XiaoPu_web-design@main"
   },
-  "github.com_helloianneo_ian-handdrawn-ppt@main": {
-    "type": "remote",
-    "repo": "https://github.com/helloianneo/ian-handdrawn-ppt",
-    "ref": "main",
-    "commit": "b2cc5f303337e5470fd6ac2870d261a43b218439",
-    "local_path": "warehouse/remote/github.com_helloianneo_ian-handdrawn-ppt@main"
-  },
   "github.com_mattpocock_skills@main": {
     "type": "remote",
     "repo": "https://github.com/mattpocock/skills",
     "ref": "main",
-    "commit": "7a83a3a682adf699f24dbc06613de87f4e52a0a0",
+    "commit": "272f99b22574f50e4266791c86b9302682970e23",
     "local_path": "warehouse/remote/github.com_mattpocock_skills@main"
   },
   "github.com_ConardLi_garden-skills@main": {
@@ -66,7 +59,7 @@
     "type": "remote",
     "repo": "https://github.com/addyosmani/agent-skills",
     "ref": "main",
-    "commit": "aba7c4e9695c363e65cb59effe926c7f1d1abe3d",
+    "commit": "8c6530305396f341b5da7201cf1f7e390fdb863f",
     "local_path": "warehouse/remote/github.com_addyosmani_agent-skills@main"
   },
   "local-heavyskill-adapted": {
@@ -87,7 +80,7 @@
   "cdn.weread.qq.com_skills_weread-skills.zip": {
     "type": "remote",
     "repo": "https://cdn.weread.qq.com/skills/weread-skills.zip",
-    "commit": "56a395f6889169d40a2cacf6690a92e47e68becf70aa8803c53748b98ca0c2f2",
+    "commit": "c762f01a00d9fe92fb9410f6f90574d58c973d881c8ed4116ac45b2fba3a2f0c",
     "local_path": "warehouse/remote/cdn.weread.qq.com_skills_weread-skills.zip"
   },
   "app-dl.ima.qq.com_skills_ima-skills-1.1.7.zip": {
@@ -110,13 +103,6 @@
     "commit": "f3a8435d3901697d5ac5e64d356c933637e43107",
     "local_path": "warehouse/remote/github.com_lewislulu_html-ppt-skill@main"
   },
-  "github.com_helloianneo_ian-xiaohei-illustrations@main": {
-    "type": "remote",
-    "repo": "https://github.com/helloianneo/ian-xiaohei-illustrations.git",
-    "ref": "main",
-    "commit": "91b560849e8f883922cc2fa8a358a668caa94105",
-    "local_path": "warehouse/remote/github.com_helloianneo_ian-xiaohei-illustrations@main"
-  },
   "github.com_op7418_guizang-social-card-skill@main": {
     "type": "remote",
     "repo": "https://github.com/op7418/guizang-social-card-skill",
@@ -128,14 +114,14 @@
     "type": "remote",
     "repo": "https://github.com/JimLiu/baoyu-design",
     "ref": "main",
-    "commit": "1a4b5c47581066b96b6c303b9203676d7926cbc4",
+    "commit": "2e30c7c4505cba221911586a7a09628172ebb940",
     "local_path": "warehouse/remote/github.com_JimLiu_baoyu-design@main"
   },
   "github.com_EveryInc_compound-engineering-plugin@main": {
     "type": "remote",
     "repo": "https://github.com/EveryInc/compound-engineering-plugin",
     "ref": "main",
-    "commit": "db21ba21eff9cc216537cd75c6e44dd49e1a4200",
+    "commit": "d3f35297adccea3ad8735e988253966ffa8cf74c",
     "local_path": "warehouse/remote/github.com_EveryInc_compound-engineering-plugin@main"
   },
   "github.com_muxuuu_serenity-skill@main": {
@@ -144,13 +130,6 @@
     "ref": "main",
     "commit": "c2fe93deedfd0d1bd9fe7ef0601ea1b9c20ea24a",
     "local_path": "warehouse/remote/github.com_muxuuu_serenity-skill@main"
-  },
-  "github.com_helloianneo_ian-xiaohei-scenes@main": {
-    "type": "remote",
-    "repo": "https://github.com/helloianneo/ian-xiaohei-scenes",
-    "ref": "main",
-    "commit": "3555bcb9ecaba284aec77ee492fdfd21c52faae3",
-    "local_path": "warehouse/remote/github.com_helloianneo_ian-xiaohei-scenes@main"
   },
   "github.com_irenerachel_comic-ip-onboarder-skill@main": {
     "type": "remote",
@@ -184,7 +163,7 @@
     "type": "remote",
     "repo": "https://github.com/kanelogger/kane-skills",
     "ref": "main",
-    "commit": "55be1ef175f750337e70b51cdeaae58d4a0612e1",
+    "commit": "fc80aa79dc15a3ab23224f8aac2517c35500e1ba",
     "local_path": "warehouse/remote/github.com_kanelogger_kane-skills@main"
   }
 }

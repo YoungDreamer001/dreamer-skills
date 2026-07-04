@@ -12,12 +12,12 @@ description: "按使用场景整理的中文技能目录，保留英文触发关
 
 | 状态 | 技能名称                        | 来源 | 说明                                          | 触发关键词                                                                                                                    |
 | -- | --------------------------- | -- | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| ✅  | article-analyzer            | 本地 | 对文章、论文、博客、报告等进行结构化深度分析，输出多模块 Markdown 理解文档。 | the user asks for article analysis, 深度分析，分析这篇文章，拆解观点，论文速读，paper scan, 分析这篇论文，thought refinement, 思想精炼，提炼主线，高密度表达，|
+| ✅  | article-analyzer            | 本地 | 对文章、论文、博客、报告等进行结构化深度分析，输出多模块 Markdown 理解文档。 | the user asks for article analysis, 深度分析，分析这篇文章，拆解观点，论文速读，paper scan, 分析这篇论文，thought refinement, 思想精炼，提炼主线，高密度表达，        |
 | ✅  | ce-brainstorm               | 远程 | 通过协作对话探索需求与方案，输出合适体量的需求文档。                  | the user says "let's brainstorm", "what should we build", or "help me think through X", presents a vague or ambitious fe |
 | ✅  | ce-ideate                   | 远程 | 针对主题生成并批判性地评估扎根想法。                          | asking what to improve, requesting idea generation, exploring surprising directions, or wanting the AI to proactively su |
 | ✅  | ce-plan                     | 远程 | 为多步骤任务创建结构化计划，并可深化已有计划。                     | the user says 'plan this', 'create a plan', 'how should we build', 'break this down', or when a brainstorm doc is ready  |
 | ✅  | ce-strategy                 | 远程 | 创建或维护 STRATEGY.md，明确产品目标、打法与关键指标。           | starting a new product, updating direction, or when prompts like 'write our strategy', 'update the roadmap', 'what are w |
-| ✅  | concept-fable               | 本地 | 用三段式寓言故事解释一个高阶领域概念，最后揭示并映射理论。               | the user asks for 概念寓言，三段式寓言，用寓言解释领域概念，story-based concept explanation, Concept Reveal, or asks to turn a domain into |
+| ✅  | concept-fable               | 本地 | 用三段式寓言故事解释一个高阶领域概念，最后揭示并映射理论。               | the user asks for 概念寓言，三段式寓言，用寓言解释领域概念，story-based concept explanation, Concept Reveal, or asks to turn a domain into    |
 | ✅  | douban-dice-review          | 本地 | 用六个理论骰子为电影生成豆瓣风格中文影评。                       | 用 6 个理论骰子为电影生成豆瓣风格中文影评。当用户要求写影评、生成影评、豆瓣影评、用骰子写影评、六个骰子写影评、为某部电影输出多份影评，尤其要求先检索电影信息...                                      |
 | ✅  | edit-article                | 远程 | 通过重组结构与润色语言来编辑和改进文章草稿。                      | user wants to edit, revise, or improve an article draft                                                                  |
 | ✅  | grill-me                    | 远程 | 通过犀利问答打磨计划或设计。                              | A relentless interview to sharpen a plan or design.                                                                      |
@@ -37,7 +37,7 @@ description: "按使用场景整理的中文技能目录，保留英文触发关
 | ✅  | ljg-writes                  | 远程 | 像手术刀一样逐层剖开观点，输出 1000-1500 字中文文章。            | 写作引擎。像手术刀剖开一个观点，一层层剥到底。1000-1500 字。                                                                                      |
 | ✅  | merge-drafts                | 本地 | 将多份草稿合并为一篇高质量文章。                            | Merges multiple draft documents into a single high-quality article. Reads all dr...                                      |
 | ✅  | planning-and-task-breakdown | 远程 | 把明确需求拆分为可执行的有序任务。                           | you have a spec or clear requirements and need to break work into implementable tasks                                    |
-| ✅  | subtext-article             | 本地 | 将字幕、转写稿、播客文稿等转写为忠实的长篇中文文章。                  | the user asks to turn subtitles, subtext, transcript, video captions, B 站字幕，YouTube 字幕，ASR 转写，口语稿，播客转写，or 视频文稿 into a  |
+| ✅  | subtext-article             | 本地 | 将字幕、转写稿、播客文稿等转写为忠实的长篇中文文章。                  | the user asks to turn subtitles, subtext, transcript, video captions, B 站字幕，YouTube 字幕，ASR 转写，口语稿，播客转写，or 视频文稿 into a    |
 | ✅  | writing-shape               | 远程 | 将 raw material 逐段塑造成一篇完整文章。                 | Writing, exploit — shape raw material into an article, paragraph by paragraph.                                           |
 | ⏸️ | grill-with-docs             | 远程 | 在打磨计划的同时生成 ADR 与术语表文档。                      | A relentless interview to sharpen a plan or design, which also creates docs (ADR...                                      |
 | ⏸️ | grilling                    | 远程 | 对用户计划或设计进行无情追问与压力测试。                        | the user wants to stress-test a plan before building, or uses any 'grill' trigger phrases                                |
@@ -45,22 +45,23 @@ description: "按使用场景整理的中文技能目录，保留英文触发关
 | ⏸️ | prototype                   | 远程 | 为设计问题快速搭建可丢弃的原型。                            | Build a throwaway prototype to flesh out a design — a runnable terminal app for ...                                      |
 | ⏸️ | writing-beats               | 远程 | 把原始素材组装成一段有节奏的内容旅程。                         | Writing, exploit — assemble raw material into a journey of beats, grounding each...                                      |
 | ⏸️ | writing-fragments           | 远程 | 从原始素材中挖掘碎片化灵感，暂不结构化。                        | Writing, explore — mine raw fragments, no structure yet.                                                                 |
+| ✅  | blog-checker                | 远程 | 审阅和评估中文技术博客文章的质量，仅用于技术类内容。                  | 用户要求审阅、检查、评估中文技术博客/技术文章/技术写作时触发。                                                                                         |
+| ⏸️ | jianying-editor             | 远程 | 剪映 AI 自动化剪辑的高级封装，支持录屏、素材导入、字幕生成与项目导出。       | 用户提到剪映、JianYing、视频剪辑、自动化剪辑、字幕生成、项目导出时触发。                                                                                 |
 
 ## 社交媒体
 
-| 状态 | 技能名称                      | 来源 | 说明                                            | 触发关键词                                                                                                                    |
-| -- | ------------------------- | -- | --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| ✅  | baoyu-post-to-wechat      | 远程 | 通过 API 或 Chrome CDP 发布微信公众号文章/贴图。             | user mentions "发布公众号", "post to wechat", "微信公众号", or "贴图/图文/文章"                                                          |
-| ✅  | baoyu-post-to-weibo       | 远程 | 发微博、头条文章与多媒体内容。                               | user asks to "post to Weibo", "发微博", "发布微博", "publish to Weibo", "share on Weibo", "写微博", or "微博头条文章"                    |
-| ✅  | baoyu-post-to-x           | 远程 | 发布 X/Twitter 帖子与长文。                           | available and fall back to real Chrome CDP scripts only when allowed                                                     |
+| 状态 | 技能名称                      | 来源 | 说明                                            | 触发关键词                                                                                                                      |
+| -- | ------------------------- | -- | --------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| ✅  | baoyu-post-to-wechat      | 远程 | 通过 API 或 Chrome CDP 发布微信公众号文章/贴图。             | user mentions "发布公众号", "post to wechat", "微信公众号", or "贴图/图文/文章"                                                            |
+| ✅  | baoyu-post-to-weibo       | 远程 | 发微博、头条文章与多媒体内容。                               | user asks to "post to Weibo", "发微博", "发布微博", "publish to Weibo", "share on Weibo", "写微博", or "微博头条文章"                      |
+| ✅  | baoyu-post-to-x           | 远程 | 发布 X/Twitter 帖子与长文。                           | available and fall back to real Chrome CDP scripts only when allowed                                                       |
 | ✅  | baoyu-youtube-transcript  | 远程 | 下载 YouTube 字幕、翻译、章节与封面。                       | user asks to "get YouTube transcript", "download subtitles", "get captions", "YouTube 字幕", "YouTube 封面", "视频封面", "video th |
-| ✅  | guizang-social-card-skill | 远程 | 从文章/脚本生成小红书图文与公众号封面套图。                        | the user asks for 小红书图文，Rednote/Xiaohongshu images, social cards, carousel images, 3:4 covers, 微信公众号封面，WeChat 21:9 + 1 |
-| ✅  | ian-handdrawn-ppt         | 远程 | 把文章/脚本/PDF 转成中文手绘技术讲解风格 PPT 图片。               | the user asks to turn content into PPT/PPTX/slides/courseware/课件/演示稿/配图/效果图 in a refined Chinese handdrawn technical exp |
-| ✅  | ljg-card                  | 远程 | 把内容铸造成多种版式的 PNG 视觉卡片（阅读卡片、信息图、漫画、白板、小红书大字图等）。 | user says '铸', 'cast', '做成图', '做成卡片', '做成信息图', '做成海报', '视觉笔记', 'sketchnote', '杂志', 'editorial', '漫画', 'comic', 'manga',  |
-| ✅  | ljg-present               | 远程 | 按 outline 层级 1:1 生成色块大字风格的演讲 HTML。            | 演讲铸造器（Outline-Faithful）。基于 orgmode/markdown outline 层级 1:1 视觉化呈现——色块大字、ultra-bol...                                      |
-| ⏸️ | pptx                      | 远程 | 创建、读取、编辑任何 .pptx 文件。                          | deck,                                                                                                                    |
-| ⏸️ | slack-gif-creator         | 远程 | 创建适合 Slack 使用的动画 GIF。                         | users request animated GIFs for Slack like "make me a GIF of X doing Y for Slack                                         |
-| ⏸️ | visual-style-ppt          | 远程 | 用 Image 2 生成风格驱动的图片版 PPTX。                    | the user asks for a "PPT Skill", "风格驱动 PPT", "提炼风格做 PPT", "调用某个风格做 PPT", "图片版 PPT", "保存 PPT 风格", "列出 PPT 风格", "文档生成 PPT" |
+| ✅  | guizang-social-card-skill | 远程 | 从文章/脚本生成小红书图文与公众号封面套图。                        | the user asks for 小红书图文，Rednote/Xiaohongshu images, social cards, carousel images, 3:4 covers, 微信公众号封面，WeChat 21:9 + 1     |
+| ✅  | ljg-card                  | 远程 | 把内容铸造成多种版式的 PNG 视觉卡片（阅读卡片、信息图、漫画、白板、小红书大字图等）。 | user says '铸', 'cast', '做成图', '做成卡片', '做成信息图', '做成海报', '视觉笔记', 'sketchnote', '杂志', 'editorial', '漫画', 'comic', 'manga',    |
+| ✅  | ljg-present               | 远程 | 按 outline 层级 1:1 生成色块大字风格的演讲 HTML。            | 演讲铸造器（Outline-Faithful）。基于 orgmode/markdown outline 层级 1:1 视觉化呈现——色块大字、ultra-bol...                                        |
+| ⏸️ | pptx                      | 远程 | 创建、读取、编辑任何 .pptx 文件。                          | deck,                                                                                                                      |
+| ⏸️ | slack-gif-creator         | 远程 | 创建适合 Slack 使用的动画 GIF。                         | users request animated GIFs for Slack like "make me a GIF of X doing Y for Slack                                           |
+| ⏸️ | visual-style-ppt          | 远程 | 用 Image 2 生成风格驱动的图片版 PPTX。                    | the user asks for a "PPT Skill", "风格驱动 PPT", "提炼风格做 PPT", "调用某个风格做 PPT", "图片版 PPT", "保存 PPT 风格", "列出 PPT 风格", "文档生成 PPT"   |
 
 ## 图像处理
 
@@ -76,7 +77,6 @@ description: "按使用场景整理的中文技能目录，保留英文触发关
 | ✅  | baoyu-diagram                        | 远程 | 创建专业深色 SVG 架构图、流程图、时序图、思维导图等。                | Create professional, dark-themed SVG diagrams of any type — architecture diagram...                                      |
 | ✅  | baoyu-infographic                    | 远程 | 用 21 种布局 × 22 种视觉风格生成专业信息图。                  | user asks to create "infographic", "信息图", "visual summary", "可视化", or "高密度信息大图"                                          |
 | ✅  | comic-ip-onboarder                   | 远程 | 把照片/玩偶/头像接入简约漫画信息图体系，生成 IP DNA 档案。           | 把用户自己的照片、玩偶、头像、角色设定或品牌吉祥物接入简约漫画信息图体系时使用。用于新 IP 入驻、IP DNA 分析、把照片转成扁平手绘漫画角色、生成正面全身...                                      |
-| ✅  | ian-xiaohei-illustrations            | 远程 | 生成 Ian「小黑」风格的中文正文配图。                         | 生成 Ian 风格的中文正文配图。用于用户要求为中文文章、帖子、博客、Notion 文档、工作流文档、方法论、流程、结构、状态、隐喻或观点生成“怪诞”“小黑”“...                                      |
 | ⏸️ | algorithmic-art                      | 远程 | 用 p5.js 创作算法艺术、粒子系统与流场。                      | Creating algorithmic art using p5.js with seeded randomness and interactive para...                                      |
 | ⏸️ | brand-guidelines                     | 远程 | 将 Anthropic 品牌色与字体应用到各类视觉产物。                 | Applies Anthropic's official brand colors and typography to any sort of artifact...                                      |
 | ⏸️ | canvas-design                        | 远程 | 用设计哲学创作 PNG/PDF 静态视觉作品。                      | Create beautiful visual art in .png and .pdf documents using design philosophy. ...                                      |
@@ -105,41 +105,42 @@ description: "按使用场景整理的中文技能目录，保留英文触发关
 
 ## 开发辅助
 
-| 状态 | 技能名称                         | 来源 | 说明                                         | 触发关键词                                                                                                                    |
-| -- | ---------------------------- | -- | ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
-| ✅  | ce-agent-native-architecture | 远程 | 设计 Agent 作为一等公民的应用架构。                      | Build applications where agents are first-class citizens. Use this skill when de...                                      |
-| ✅  | ce-agent-native-audit        | 远程 | 对 Agent-Native 架构进行评分式全面审查。                | Run comprehensive agent-native architecture review with scored principles                                                |
-| ✅  | ce-clean-gone-branches       | 远程 | 清理远程已不存在的本地分支及其 worktree。                  | the user says "clean up branches", "delete gone branches", "prune local branches", "clean gone", or wants to remove stal |
-| ✅  | ce-commit                    | 远程 | 用清晰、价值导向的信息创建 git commit。                  | the user says "commit", "commit this", "save my changes", "create a commit", or wants to commit staged or unstaged work  |
-| ✅  | ce-commit-push-pr            | 远程 | 提交、推送并打开价值优先的自适应 PR。                       | the user says "commit and PR", "ship this", "create a PR", or "open a pull request"                                      |
-| ✅  | ce-demo-reel                 | 远程 | 为 PR 描述捕获 GIF、终端录屏或截图形式的演示证据。              | shipping UI changes, CLI features, or any work with observable behavior that benefits from visual proof                  |
-| ✅  | ce-product-pulse             | 远程 | 生成时间窗口内的产品使用与质量脉搏报告。                       | the user says 'run a pulse', 'show me the pulse', 'how are we doing', 'weekly recap', 'launch-day check', or passes a ti |
-| ✅  | ce-report-bug                | 远程 | 向 compound-engineering 插件报告 bug。           | Report a bug in the compound-engineering plugin                                                                          |
-| ✅  | ce-riffrec-feedback-analysis | 远程 | 处理 Riffrec 产品反馈包（录屏 + 事件+json）。              | Riffrec product-feedback workflow. ALWAYS load when the user posts a \`riffrec-\*....                                    |
-| ✅  | ce-sessions                  | 远程 | 跨 Claude Code/Codex/Cursor 搜索历史会话并回答问题。    | asking what was worked on, what was tried before, how a problem was investigated across sessions, what happened recently |
-| ✅  | ce-setup                     | 远程 | 诊断并配置 compound-engineering 环境依赖。           | troubleshooting missing tools, verifying setup, or before onboarding                                                     |
-| ✅  | ce-slack-research            | 远程 | 搜索 Slack 并产出组织上下文合成研究报告。                   | the user says 'search slack for', 'what did we discuss about', 'slack context for', or 'what does the team think about'  |
-| ✅  | ce-work                      | 远程 | 高效执行开发任务并保证质量、完成功能。                        | Execute work efficiently while maintaining quality and finishing features                                                |
-| ✅  | ce-work-beta                 | 远程 | ce-work 实验版，支持外部代理委托以节省 token。             | \[BETA] Execute work with external delegate support. Same as ce-work but includes...                                     |
-| ✅  | ce-worktree                  | 远程 | 确保工作在隔离的 git worktree 中不干扰当前 checkout。     | starting work that should stay isolated, or when `ce-work` or `ce-code-review` offers a worktree option                  |
-| ✅  | HeavySkill                   | 本地 | （占位 skill，暂无描述）                            | -                                                                                                                        |
-| ✅  | it-system-skill-distiller    | 本地 | 将 IT 业务系统/源码/API 逆向蒸馏为 AI 可调用的 Skills 技能包。 | 将已有 IT 业务系统、企业应用、SaaS 产品、内部工具或遗留业务代码库逆向蒸馏为 AI 可理解、可检索、可调用的独立 Skills 技能包。适用于用户要求分...                                      |
-| ✅  | lfg                          | 远程 | 端到端自主工程流水线：计划、实现、Review、测试、提交、PR、CI 看守。    | Run the full autonomous engineering pipeline end-to-end (plan, work, code review\...                                     |
-| ✅  | mcp-builder                  | 远程 | 创建高质量 MCP Server 以让 LLM 调用外部服务。            | building MCP servers to integrate external APIs or services, whether in Python (FastMCP) or Node/TypeScript (MCP SDK)    |
-| ✅  | release-skills               | 远程 | 通用发布工作流，支持版本号、Changelog、GitHub Release 等。  | user says "release", "发布", "new version", "bump version", "push", "推送", "release notes", "GitHub Release", or "回填 Releas |
-| ✅  | request-refactor-plan        | 远程 | 通过用户访谈生成详细重构计划并提交为 GitHub issue。           | user wants to plan a refactor, create a refactoring RFC, or break a refactor into safe incremental steps                 |
-| ✅  | shipping-and-launch          | 远程 | 准备生产发布，提供预发布检查单、监控与回滚策略。                   | preparing to deploy to production                                                                                        |
-| ✅  | skill-creator                | 远程 | 创建、修改、优化 Skills 并运行评测。                     | users want to create a skill from scratch, edit, or optimize an existing skill, run evals to test a skill, benchmark ski |
-| ✅  | skill-evaluator              | 本地 | 为 Agent Skill 建立运行时测评体系（用例、评分、基线、报告）。      | 为 Agent Skill 建立完整的运行时测评体系——设计用例集、制定评分规则、建立基线、执行测评、分析报告。当用户说"测评技能"、"评估技能"、"给这个 S...                                      |
-| ✅  | skill-installer              | 本地 | 将第三方远程 skill 暂存到 remote/ 区域并适配到 skills/。   | a user asks to list candidate skills, stage a remote skill, or intake a GitHub-hosted skill for local adaptation         |
-| ✅  | skill-optimizer              | 本地 | 审计、评估并改进 Agent Skill。                      | the user wants to optimize a skill, improve SKILL                                                                        |
-| ✅  | using-agent-skills           | 远程 | 发现与调用当前可用的 Agent Skills（元技能）。              | starting a session or when you need to discover which skill applies to the current task                                  |
-| ⏸️ | ask-matt                     | 远程 | 判断当前情境适合调用哪个 skill 的路由器。                   | Ask which skill or flow fits your situation. A router over the user-invoked skil...                                      |
-| ⏸️ | ce-compound                  | 远程 | 将最近解决的问题沉淀为团队知识或 CONCEPTS.md 词条。           | Document a recently solved problem to compound your team's knowledge or CONCEPTS...                                      |
-| ⏸️ | ce-compound-refresh          | 远程 | 审查 docs/solutions/ 下的学习文档并更新/合并/删除漂移内容。    | the user asks to "refresh my learnings", "audit docs/solutions/", "clean up stale learnings", or "consolidate overlappin |
-| ⏸️ | ce-proof                     | 远程 | 通过 Proof API 发布、查看、评论与编辑 Markdown。         | the user says "view this in proof", "share to proof", "publish to proof", or wants a shareable markdown surface for a sp |
-| ⏸️ | handoff                      | 远程 | 将当前对话压缩为交接文档供其他代理继续。                       | Compact the current conversation into a handoff document for another agent to pi...                                      |
-| ⏸️ | teach                        | 远程 | 在工作空间内教会用户一项新技能或概念。                        | Teach the user a new skill or concept, within this workspace.                                                            |
+| 状态 | 技能名称                         | 来源 | 说明                                         | 触发关键词                                                                                                                                                |
+| -- | ---------------------------- | -- | ------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ✅  | ce-agent-native-architecture | 远程 | 设计 Agent 作为一等公民的应用架构。                      | Build applications where agents are first-class citizens. Use this skill when de...                                                                  |
+| ✅  | ce-agent-native-audit        | 远程 | 对 Agent-Native 架构进行评分式全面审查。                | Run comprehensive agent-native architecture review with scored principles                                                                            |
+| ✅  | ce-clean-gone-branches       | 远程 | 清理远程已不存在的本地分支及其 worktree。                  | the user says "clean up branches", "delete gone branches", "prune local branches", "clean gone", or wants to remove stal                             |
+| ✅  | ce-commit                    | 远程 | 用清晰、价值导向的信息创建 git commit。                  | the user says "commit", "commit this", "save my changes", "create a commit", or wants to commit staged or unstaged work                              |
+| ✅  | ce-commit-push-pr            | 远程 | 提交、推送并打开价值优先的自适应 PR。                       | the user says "commit and PR", "ship this", "create a PR", or "open a pull request"                                                                  |
+| ✅  | ce-demo-reel                 | 远程 | 为 PR 描述捕获 GIF、终端录屏或截图形式的演示证据。              | shipping UI changes, CLI features, or any work with observable behavior that benefits from visual proof                                              |
+| ✅  | ce-product-pulse             | 远程 | 生成时间窗口内的产品使用与质量脉搏报告。                       | the user says 'run a pulse', 'show me the pulse', 'how are we doing', 'weekly recap', 'launch-day check', or passes a ti                             |
+| ✅  | ce-report-bug                | 远程 | 向 compound-engineering 插件报告 bug。           | Report a bug in the compound-engineering plugin                                                                                                      |
+| ✅  | ce-riffrec-feedback-analysis | 远程 | 处理 Riffrec 产品反馈包（录屏 + 事件+json）。            | Riffrec product-feedback workflow. ALWAYS load when the user posts a \`riffrec-\*....                                                                |
+| ✅  | ce-sessions                  | 远程 | 跨 Claude Code/Codex/Cursor 搜索历史会话并回答问题。    | asking what was worked on, what was tried before, how a problem was investigated across sessions, what happened recently                             |
+| ✅  | ce-setup                     | 远程 | 诊断并配置 compound-engineering 环境依赖。           | troubleshooting missing tools, verifying setup, or before onboarding                                                                                 |
+| ✅  | ce-slack-research            | 远程 | 搜索 Slack 并产出组织上下文合成研究报告。                   | the user says 'search slack for', 'what did we discuss about', 'slack context for', or 'what does the team think about'                              |
+| ✅  | ce-work                      | 远程 | 高效执行开发任务并保证质量、完成功能。                        | Execute work efficiently while maintaining quality and finishing features                                                                            |
+| ✅  | ce-work-beta                 | 远程 | ce-work 实验版，支持外部代理委托以节省 token。             | \[BETA] Execute work with external delegate support. Same as ce-work but includes...                                                                 |
+| ✅  | ce-worktree                  | 远程 | 确保工作在隔离的 git worktree 中不干扰当前 checkout。     | starting work that should stay isolated, or when `ce-work` or `ce-code-review` offers a worktree option                                              |
+| ✅  | HeavySkill                   | 本地 | （占位 skill，暂无描述）                            | -                                                                                                                                                    |
+| ✅  | it-system-skill-distiller    | 本地 | 将 IT 业务系统/源码/API 逆向蒸馏为 AI 可调用的 Skills 技能包。 | 将已有 IT 业务系统、企业应用、SaaS 产品、内部工具或遗留业务代码库逆向蒸馏为 AI 可理解、可检索、可调用的独立 Skills 技能包。适用于用户要求分...                                                                  |
+| ✅  | lfg                          | 远程 | 端到端自主工程流水线：计划、实现、Review、测试、提交、PR、CI 看守。    | Run the full autonomous engineering pipeline end-to-end (plan, work, code review\...                                                                 |
+| ✅  | mcp-builder                  | 远程 | 创建高质量 MCP Server 以让 LLM 调用外部服务。            | building MCP servers to integrate external APIs or services, whether in Python (FastMCP) or Node/TypeScript (MCP SDK)                                |
+| ✅  | release-skills               | 远程 | 通用发布工作流，支持版本号、Changelog、GitHub Release 等。  | user says "release", "发布", "new version", "bump version", "push", "推送", "release notes", "GitHub Release", or "回填 Releas                             |
+| ✅  | request-refactor-plan        | 远程 | 通过用户访谈生成详细重构计划并提交为 GitHub issue。           | user wants to plan a refactor, create a refactoring RFC, or break a refactor into safe incremental steps                                             |
+| ✅  | shipping-and-launch          | 远程 | 准备生产发布，提供预发布检查单、监控与回滚策略。                   | preparing to deploy to production                                                                                                                    |
+| ✅  | skill-creator                | 远程 | 创建、修改、优化 Skills 并运行评测。                     | users want to create a skill from scratch, edit, or optimize an existing skill, run evals to test a skill, benchmark ski                             |
+| ✅  | skill-evaluator              | 本地 | 为 Agent Skill 建立运行时测评体系（用例、评分、基线、报告）。      | 为 Agent Skill 建立完整的运行时测评体系——设计用例集、制定评分规则、建立基线、执行测评、分析报告。当用户说"测评技能"、"评估技能"、"给这个 S...                                                                  |
+| ✅  | skill-installer              | 本地 | 将第三方远程 skill 暂存到 remote/ 区域并适配到 skills/。   | a user asks to list candidate skills, stage a remote skill, or intake a GitHub-hosted skill for local adaptation                                     |
+| ✅  | skill-optimizer              | 本地 | 审计、评估并改进 Agent Skill。                      | the user wants to optimize a skill, improve SKILL                                                                                                    |
+| ✅  | using-agent-skills           | 远程 | 发现与调用当前可用的 Agent Skills（元技能）。              | starting a session or when you need to discover which skill applies to the current task                                                              |
+| ⏸️ | ask-matt                     | 远程 | 判断当前情境适合调用哪个 skill 的路由器。                   | Ask which skill or flow fits your situation. A router over the user-invoked skil...                                                                  |
+| ⏸️ | ce-compound                  | 远程 | 将最近解决的问题沉淀为团队知识或 CONCEPTS.md 词条。           | Document a recently solved problem to compound your team's knowledge or CONCEPTS...                                                                  |
+| ⏸️ | ce-compound-refresh          | 远程 | 审查 docs/solutions/ 下的学习文档并更新/合并/删除漂移内容。    | the user asks to "refresh my learnings", "audit docs/solutions/", "clean up stale learnings", or "consolidate overlappin                             |
+| ⏸️ | ce-proof                     | 远程 | 通过 Proof API 发布、查看、评论与编辑 Markdown。         | the user says "view this in proof", "share to proof", "publish to proof", or wants a shareable markdown surface for a sp                             |
+| ⏸️ | handoff                      | 远程 | 将当前对话压缩为交接文档供其他代理继续。                       | Compact the current conversation into a handoff document for another agent to pi...                                                                  |
+| ⏸️ | teach                        | 远程 | 在工作空间内教会用户一项新技能或概念。                        | Teach the user a new skill or concept, within this workspace.                                                                                        |
+| ✅  | ce-update                    | 远程 | 检查 compound-engineering 插件版本并推荐更新命令。       | user says "update compound engineering", "check compound engineering version", "ce update", "is compound engineering up to date", "update ce plugin" |
 
 ## 代码质量
 
@@ -186,7 +187,7 @@ description: "按使用场景整理的中文技能目录，保留英文触发关
 | ⏸️ | diagnosing-bugs               | 远程 | 针对棘手 bug 与性能回退的诊断循环。                         | the user says "diagnose"/"debug this", or reports something broken/throwing/failing/slow                                 |
 | ⏸️ | domain-modeling               | 远程 | 构建并打磨项目的领域模型与统一语言。                           | the user wants to pin down domain terminology or a ubiquitous language, record an architectural decision, or when anothe |
 | ⏸️ | resolving-merge-conflicts     | 远程 | 解决进行中的 git merge/rebase 冲突。                  | you need to resolve an in-progress git merge/rebase conflict                                                             |
-| ⏸️ | review                        | 远程 | 从固定基准点 Review 改动的 Standards 与 Spec 两个维度。      | the user wants to review a branch, a PR, work-in-progress changes, or asks to "review since X"                           |
+| ⏸️ | review                        | 远程 | 从固定基准点 Review 改动的 Standards 与 Spec 两个维度。     | the user wants to review a branch, a PR, work-in-progress changes, or asks to "review since X"                           |
 | ⏸️ | setup-matt-pocock-skills      | 远程 | 为工程 skills 配置 issue tracker、标签与领域文档布局。       | Configure this repo for the engineering skills — set up its issue tracker, triag...                                      |
 | ⏸️ | to-prd                        | 远程 | 将当前对话合成为 PRD 并发布到项目 issue tracker。           | Turn the current conversation into a PRD and publish it to the project issue tra...                                      |
 | ⏸️ | triage                        | 远程 | 将 issue 与外部 PR 按分类、验证、grill、brief 状态机推进。     | Move issues and external PRs through a state machine of triage roles — categoris...                                      |
@@ -224,9 +225,10 @@ description: "按使用场景整理的中文技能目录，保留英文触发关
 | ✅  | ljg-travel       | 远程 | 为城市生成博物馆与古建深度旅行研究文档与参考卡片。                         | user says '旅行研究', '博物馆功课', '古建功课', 'travel research', '出发前功课', or provides a city name with intent to do deep cultural t  |
 | ✅  | session-achieve  | 本地 | 复盘多轮对话，提取纠偏逻辑并沉淀黄金提示词。                            | 复盘当前多轮对话，提取纠偏逻辑并沉淀黄金提示词。当用户输入"复盘对话"、"总结这次对话"、"session review"、"review this sessi...                                       |
 | ✅  | weread-skills    | 远程 | 微信读书助手：搜书、书架、笔记、书评、阅读统计。                          | 微信读书助手 — 搜索书籍、管理书架、查看笔记划线、浏览书评、阅读统计、发现推荐好书                                                                                |
-| ⏸️ | kb-retriever     | 远程 | 面向本地知识库目录的渐进式检索与问答。                               | 面向本地知识库目录的检索和问答助手。核心流程：(1) 分层索引导航 (2) 遇到 PDF/Excel 时必须先读取 references 学习处理方法 (3) 处理文件后再检...                                       |
+| ⏸️ | kb-retriever     | 远程 | 面向本地知识库目录的渐进式检索与问答。                               | 面向本地知识库目录的检索和问答助手。核心流程：(1) 分层索引导航 (2) 遇到 PDF/Excel 时必须先读取 references 学习处理方法 (3) 处理文件后再检...                                |
 | ⏸️ | obsidian-vault   | 远程 | 在 Obsidian 知识库中搜索、创建与管理笔记。                        | user wants to find, create, or organize notes in Obsidian                                                                 |
 | ⏸️ | serenity-skill   | 远程 | 把投资代理变成供应链瓶颈猎人，做溯源研究与股票筛选。                        | Turn an investment agent into a supply-chain bottleneck hunter. Use this skill f...                                       |
+| ✅  | ima-skill        | 远程 | 统一的 IMA OpenAPI 技能，支持笔记管理与知识库操作。                  | 用户提到知识库、资料库、笔记、备忘录、记事，或想上传文件/添加网页到知识库/搜索知识库/创建编辑笔记时触发。                                                                    |
 
 ## Vercel 生态
 
