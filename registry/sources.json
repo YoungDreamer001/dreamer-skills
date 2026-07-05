@@ -165,5 +165,13 @@
     "ref": "main",
     "commit": "fc80aa79dc15a3ab23224f8aac2517c35500e1ba",
     "local_path": "warehouse/remote/github.com_kanelogger_kane-skills@main"
+  },
+  "local-kane-q-infographic": {
+    "type": "local",
+    "local_path": "warehouse/local/kane-q-infographic"
+  },
+  "local-kane-q-cover-image": {
+    "type": "local",
+    "local_path": "warehouse/local/kane-q-cover-image"
   }
 }
