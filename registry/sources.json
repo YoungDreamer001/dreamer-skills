@@ -38,7 +38,7 @@
     "type": "remote",
     "repo": "https://github.com/mattpocock/skills",
     "ref": "main",
-    "commit": "272f99b22574f50e4266791c86b9302682970e23",
+    "commit": "4691566bbb2744bf56505531f8050102f02a7a12",
     "local_path": "warehouse/remote/github.com_mattpocock_skills@main"
   },
   "github.com_ConardLi_garden-skills@main": {
