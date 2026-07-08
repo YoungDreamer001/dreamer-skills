@@ -36,24 +36,52 @@ function parseCatalog(mdPath: string): { frontmatter: Record<string, string>; se
   // Parse sections and table rows
   const sections: Section[] = [];
   let currentSection: Section | null = null;
+  let currentTable: "legacy3" | "chinese4" | "chinese5" | null = null;
+
+  const pushCurrentSection = () => {
+    if (currentSection && currentSection.skills.length > 0) {
+      sections.push(currentSection);
+    }
+  };
 
   for (const line of body.split("\n")) {
     if (line.startsWith("## ")) {
-      if (currentSection) sections.push(currentSection);
+      pushCurrentSection();
       currentSection = { name: line.replace("## ", "").trim(), skills: [] };
-    } else if (currentSection && line.startsWith("| ") && !line.includes("---") && !line.includes("技能名称") && !line.includes("状态 ")) {
+      currentTable = null;
+    } else if (currentSection && line.startsWith("| ")) {
       const cells = line.split("|").map((s) => s.trim()).filter(Boolean);
+      if (cells.includes("技能名称")) {
+        currentTable = cells.length === 3
+          ? "legacy3"
+          : cells.length === 4
+            ? "chinese4"
+            : cells.length === 5
+              ? "chinese5"
+              : null;
+        continue;
+      }
+      if (line.includes("---") || !currentTable) continue;
+
       // Support two catalog formats:
       // 1. Legacy 3-column: | `name` | description | triggers |
-      // 2. Chinese 5-column: | status | name | source | description | triggers |
-      if (cells.length === 3) {
+      // 2. Chinese 4-column: | name | source | description | triggers |
+      // 3. Chinese 5-column: | status | name | source | description | triggers |
+      if (currentTable === "legacy3" && cells.length === 3) {
         currentSection.skills.push({
           name: cells[0].replace(/^`/, "").replace(/`$/, ""),
           description: cells[1],
           triggers: cells[2],
           section: currentSection.name,
         });
-      } else if (cells.length === 5) {
+      } else if (currentTable === "chinese4" && cells.length === 4) {
+        currentSection.skills.push({
+          name: cells[0],
+          description: cells[2],
+          triggers: cells[3],
+          section: currentSection.name,
+        });
+      } else if (currentTable === "chinese5" && cells.length === 5) {
         const status = cells[0].trim();
         currentSection.skills.push({
           name: cells[1],
@@ -63,9 +91,11 @@ function parseCatalog(mdPath: string): { frontmatter: Record<string, string>; se
           status: status === "✅" ? "enabled" : status === "⏸️" ? "disabled" : undefined,
         });
       }
+    } else if (line.trim() === "") {
+      currentTable = null;
     }
   }
-  if (currentSection) sections.push(currentSection);
+  pushCurrentSection();
 
   return { frontmatter, sections };
 }
@@ -410,7 +440,6 @@ function generateHtml(frontmatter: Record<string, string>, sections: Section[]):
       border-radius: 6px;
       cursor: pointer;
       transition: all 0.15s ease;
-      word-break: break-all;
     }
 
     .skill-name:hover {
@@ -428,7 +457,6 @@ function generateHtml(frontmatter: Record<string, string>, sections: Section[]):
       color: var(--text-tertiary);
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      white-space: nowrap;
     }
 
     .status-badge {

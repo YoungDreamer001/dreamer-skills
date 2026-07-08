@@ -1,573 +1,319 @@
 #!/usr/bin/env node
-// Generate Chinese user-facing catalog.md and update catalog.html
+// Regenerate the Chinese user-facing catalog and rebuild docs/catalog.html.
 
 const fs = require('fs');
+const path = require('path');
+const { execFileSync } = require('child_process');
 
-const CATALOG_MD = '/Users/kanehua/project/hk-skills/docs/catalog.md';
-const CATALOG_HTML = '/Users/kanehua/project/hk-skills/docs/catalog.html';
+const ROOT = path.resolve(__dirname, '..');
+const CATALOG_MD = path.join(ROOT, 'docs', 'catalog.md');
 
-// ====== Parse raw catalog.md ======
-function parseCatalog(content) {
-  const lines = content.split('\n');
-  const sections = [];
-  let currentSection = null;
-  let inTable = false;
-  let rows = [];
-  let buffer = [];
+const SCENARIO_SECTIONS = [
+  {
+    title: '🧠 想法澄清与压力测试（Idea & Challenge）',
+    intro: '想法还没定型时使用：发散、收敛、追问、压力测试、战略判断。',
+    names: ['ce-brainstorm', 'ce-ideate', 'ce-strategy', 'grill-me', 'idea-refine', 'grilling', 'grill-with-docs', 'loop-me', 'ce-doc-review'],
+  },
+  {
+    title: '🧭 规划、规格与任务拆解（Planning & Specs）',
+    intro: '目标基本明确后使用：PRD、规格、任务拆解、issue 地图、重构计划。',
+    names: ['ce-plan', 'planning-and-task-breakdown', 'spec-driven-development', 'to-prd', 'doc-coauthoring', 'wayfinder', 'decision-mapping', 'request-refactor-plan', 'to-issues', 'triage', 'setup-matt-pocock-skills'],
+  },
+  {
+    title: '🏗️ 架构、接口与领域模型（Architecture & Modeling）',
+    intro: '需要先把系统边界、接口、领域语言和架构取舍想清楚时使用。',
+    names: ['api-and-interface-design', 'design-an-interface', 'ce-agent-native-architecture', 'ce-agent-native-audit', 'domain-modeling', 'ubiquitous-language', 'codebase-design', 'documentation-and-adrs'],
+  },
+  {
+    title: '💻 编码实现与原型（Implementation & Prototyping）',
+    intro: '进入代码阶段使用：实现功能、TDD、增量交付、原型、语言/测试专项迁移。',
+    names: ['ce-work', 'ce-work-beta', 'lfg', 'incremental-implementation', 'ce-worktree', 'tdd', 'test-driven-development', 'source-driven-development', 'ce-dhh-rails-style', 'scaffold-exercises', 'implement', 'prototype', 'migrate-to-shoehorn'],
+  },
+  {
+    title: '🖥️ 前端、网页与浏览器体验（Frontend & Web）',
+    intro: '面向用户界面的设计、实现、打磨、浏览器验证与 UX 审查。',
+    names: ['frontend-ui-engineering', 'ce-frontend-design', 'frontend-design', 'web-design', 'web-design-engineer', 'web-artifacts-builder', 'ce-polish', 'web-design-guidelines', 'browser-testing-with-devtools', 'webapp-testing'],
+  },
+  {
+    title: '🔍 代码审查、调试与重构（Review & Debugging）',
+    intro: '代码已经存在或出现异常时使用：Review、定位根因、简化代码、处理审查反馈。',
+    names: ['ce-code-review', 'code-review-and-quality', 'code-review', 'ce-resolve-pr-feedback', 'ce-debug', 'debugging-and-error-recovery', 'code-simplification', 'ce-simplify-code', 'improve-codebase-architecture', 'diagnosing-bugs', 'review'],
+  },
+  {
+    title: '🧪 测试、性能、安全与质量信号（Quality Signals）',
+    intro: '需要证据化验证质量时使用：测试、性能、安全、QA、演示证据、产品反馈。',
+    names: ['ce-optimize', 'performance-optimization', 'security-and-hardening', 'ce-dogfood-beta', 'ce-test-browser', 'ce-test-xcode', 'qa', 'ce-report-bug', 'ce-demo-reel', 'ce-riffrec-feedback-analysis', 'ce-product-pulse'],
+  },
+  {
+    title: '🚢 Git、发布与工程自动化（Delivery & Automation）',
+    intro: '从本地改动走向协作和上线：commit、PR、CI/CD、发布、迁移、交接。',
+    names: ['ce-commit', 'ce-commit-push-pr', 'git-workflow-and-versioning', 'git-guardrails-claude-code', 'ce-clean-gone-branches', 'ci-cd-and-automation', 'deprecation-and-migration', 'setup-pre-commit', 'release-skills', 'shipping-and-launch', 'ce-promote', 'ce-release-notes', 'resolving-merge-conflicts', 'handoff', 'claude-handoff', 'wizard', 'ce-setup', 'ce-update'],
+  },
+  {
+    title: '✍️ 内容写作与转写（Writing & Editing）',
+    intro: '文章、论文、博客、影评、字幕转写、草稿合并与写作节奏处理。',
+    names: ['article-analyzer', 'concept-fable', 'douban-dice-review', 'edit-article', 'writing-shape', 'merge-drafts', 'subtext-article', 'blog-checker', 'writing-beats', 'writing-fragments'],
+  },
+  {
+    title: '📣 社交媒体、视频与发布素材（Social & Video）',
+    intro: '公众号、小红书、YouTube 字幕、视频剪辑和社媒发布素材。',
+    names: ['baoyu-post-to-wechat', 'baoyu-youtube-transcript', 'guizang-social-card-skill', 'jianying-editor'],
+  },
+  {
+    title: '🎨 视觉内容、图像与品牌 IP（Visual Assets）',
+    intro: '封面、配图、漫画、角色 IP、图像生成/编辑、图片压缩与品牌动画。',
+    names: ['baoyu-cover-image', 'baoyu-article-illustrator', 'baoyu-comic', 'baoyu-compress-image', 'comic-ip-onboarder', 'kane-q-cover-image', 'kane-q-infographic', 'canvas-design', 'ce-gemini-imagegen', 'gpt-image-2', 'pixel2motion'],
+  },
+  {
+    title: '📊 图表、信息图与设计稿（Diagrams & Design Artifacts）',
+    intro: '架构图、流程图、信息图、设计稿、动态手绘图与跨产物主题。',
+    names: ['architecture-diagram', 'baoyu-diagram', 'baoyu-infographic', 'baoyu-design', 'lanshu-animated-architecture-diagram', 'theme-factory'],
+  },
+  {
+    title: '📄 文件、格式转换与 Office（Files & Formats）',
+    intro: 'Markdown、翻译、URL 抓取、PDF、Word、Excel、PPT 和可分享文档。',
+    names: ['baoyu-format-markdown', 'baoyu-translate', 'baoyu-url-to-markdown', 'baoyu-markdown-to-html', 'pdf', 'docx', 'xlsx', 'pptx', 'ce-proof'],
+  },
+  {
+    title: '📚 知识库、研究与组织记忆（Knowledge & Research）',
+    intro: '高信度调研、知识库检索、Obsidian、微信读书、会话复盘和团队记忆。',
+    names: ['weread-skills', 'session-achieve', 'ima-skill', 'research', 'kb-retriever', 'obsidian-vault', 'serenity-skill', 'ce-sessions', 'ce-slack-research', 'ce-compound', 'ce-compound-refresh'],
+  },
+  {
+    title: '🤖 Agent、Skill 与工具集成（Agent & Skill Engineering）',
+    intro: '创建、安装、优化、测评 Skill，建设 MCP、上下文规则和 Agent 工具链。',
+    names: ['skill-creator', 'skill-installer', 'skill-optimizer', 'skill-evaluator', 'using-agent-skills', 'context-engineering', 'claude-api', 'mcp-builder', 'it-system-skill-distiller', 'HeavySkill', 'prompt-optimizer', 'ask-matt', 'writing-great-skills'],
+  },
+];
 
-  function flushBuffer() {
-    if (buffer.length === 0) return null;
-    const text = buffer.join(' ').replace(/\s+/g, ' ').trim();
-    buffer = [];
-    return text;
+const QUICK_PICKER = [
+  ['把模糊想法变清楚', 'ce-brainstorm', ['idea-refine', 'grill-me']],
+  ['写 PRD、规格或任务拆解', 'to-prd', ['ce-plan', 'planning-and-task-breakdown']],
+  ['设计接口、架构或领域模型', 'api-and-interface-design', ['design-an-interface', 'domain-modeling']],
+  ['实现功能或修代码', 'ce-work', ['incremental-implementation', 'tdd']],
+  ['做网页、UI 或浏览器验证', 'web-design', ['frontend-design', 'webapp-testing']],
+  ['Review、找 bug、处理反馈', 'ce-code-review', ['ce-debug', 'ce-resolve-pr-feedback']],
+  ['发布、提交、开 PR', 'ce-commit-push-pr', ['ce-commit', 'release-skills']],
+  ['写文章、转写或审稿', 'article-analyzer', ['subtext-article', 'blog-checker']],
+  ['生成封面、配图、漫画或信息图', 'baoyu-infographic', ['baoyu-cover-image', 'kane-q-infographic']],
+  ['处理 PDF、Word、Excel 或 PPT', 'pdf', ['docx', 'xlsx', 'pptx']],
+  ['做研究、知识库检索或会话复盘', 'research', ['kb-retriever', 'session-achieve']],
+  ['创建、安装或优化 Skill', 'skill-creator', ['skill-installer', 'skill-optimizer']],
+];
+
+function splitMarkdownRow(line) {
+  const trimmed = line.trim();
+  if (!trimmed.startsWith('|')) return [];
+
+  const body = trimmed.replace(/^\|/, '').replace(/\|$/, '');
+  const cells = [];
+  let current = '';
+  let escaped = false;
+
+  for (const char of body) {
+    if (escaped) {
+      current += char;
+      escaped = false;
+    } else if (char === '\\') {
+      current += char;
+      escaped = true;
+    } else if (char === '|') {
+      cells.push(current.trim());
+      current = '';
+    } else {
+      current += char;
+    }
   }
 
-  function parseRow(text) {
-    if (!text.startsWith('|')) return null;
-    const inner = text.substring(1).trimEnd();
-    const parts = [];
-    let current = '';
-    let count = 0;
-    for (let i = 0; i < inner.length; i++) {
-      if (inner[i] === '|' && count < 6) {
-        parts.push(current.trim());
-        current = '';
-        count++;
-      } else {
-        current += inner[i];
-      }
+  cells.push(current.trim());
+  return cells;
+}
+
+function tableFormatFromHeader(cells) {
+  const joined = cells.join('|');
+  if (!joined.includes('触发关键词')) return null;
+
+  if (cells.length === 4 && cells[0] === '技能名称') return 'scenario4';
+  if (cells.length === 5 && cells[0] === '名称') return 'raw5';
+  if (cells.length === 5 && cells[1] === '技能名称') return 'status5';
+  return null;
+}
+
+function normalizeSource(source, sectionTitle) {
+  if (source === '本地' || source === '远程') return source;
+  if (sectionTitle === 'Local' || source.includes('warehouse/local')) return '本地';
+  return '远程';
+}
+
+function parseCatalog(content) {
+  const skills = [];
+  let sectionTitle = '';
+  let currentTable = null;
+
+  for (const line of content.split('\n')) {
+    if (line.startsWith('## ')) {
+      sectionTitle = line.replace(/^## /, '').trim();
+      currentTable = null;
+      continue;
     }
-    parts.push(current.trim());
-    if (parts.length >= 5) {
-      return {
-        name: parts[0],
-        source: parts[1],
-        status: parts[2],
-        desc: parts[3],
-        triggers: parts[4],
+
+    if (!line.startsWith('|')) {
+      currentTable = null;
+      continue;
+    }
+
+    const cells = splitMarkdownRow(line);
+    const maybeFormat = tableFormatFromHeader(cells);
+    if (maybeFormat) {
+      currentTable = maybeFormat;
+      continue;
+    }
+
+    if (!currentTable || cells.every((cell) => /^-+$/.test(cell))) continue;
+
+    let skill = null;
+    if (currentTable === 'scenario4' && cells.length >= 4) {
+      skill = {
+        name: cells[0],
+        source: cells[1],
+        desc: cells[2],
+        triggers: cells[3],
+      };
+    } else if (currentTable === 'raw5' && cells.length >= 5) {
+      skill = {
+        name: cells[0],
+        source: normalizeSource(cells[1], sectionTitle),
+        desc: cells[3],
+        triggers: cells[4],
+      };
+    } else if (currentTable === 'status5' && cells.length >= 5) {
+      skill = {
+        name: cells[1],
+        source: normalizeSource(cells[2], sectionTitle),
+        desc: cells[3],
+        triggers: cells[4],
       };
     }
-    return null;
-  }
 
-  function finishRow() {
-    const text = flushBuffer();
-    if (text) {
-      const row = parseRow(text);
-      if (row) rows.push(row);
+    if (skill && skill.name && skill.name !== '技能名称' && skill.name !== '名称') {
+      skills.push(skill);
     }
   }
 
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
-    if (line.startsWith('## ')) {
-      finishRow();
-      if (currentSection && rows.length > 0) {
-        currentSection.rows = rows;
-        sections.push(currentSection);
+  return dedupeSkills(skills);
+}
+
+function dedupeSkills(skills) {
+  const byName = new Map();
+  for (const skill of skills) {
+    const name = skill.name.replace(/`/g, '').replace(/\s*⛔$/, '').trim();
+    if (!name || byName.has(name)) continue;
+    byName.set(name, { ...skill, name });
+  }
+  return [...byName.values()];
+}
+
+function categoryBySkillName() {
+  const map = new Map();
+  for (const section of SCENARIO_SECTIONS) {
+    for (const name of section.names) {
+      if (map.has(name)) {
+        throw new Error(`Skill is assigned to multiple categories: ${name}`);
       }
-      currentSection = { title: line.replace('## ', '').trim(), rows: [] };
-      inTable = false;
-      rows = [];
-    } else if (line.startsWith('| ---') || line.startsWith('|---')) {
-      inTable = true;
-      buffer = [];
-    } else if (inTable && line.startsWith('| ')) {
-      if (buffer.length > 0) finishRow();
-      buffer.push(line);
-    } else if (inTable && line.trim() !== '' && !line.startsWith('#')) {
-      buffer.push(line);
-    } else {
-      finishRow();
+      map.set(name, section.title);
     }
   }
-  finishRow();
-  if (currentSection && rows.length > 0) {
-    currentSection.rows = rows;
-    sections.push(currentSection);
-  }
-  return sections.flatMap(s => s.rows);
+  return map;
 }
 
-function isDeprecated(name) {
-  return ['baoyu-image-gen', 'baoyu-xhs-images'].includes(name);
+function escapeCell(value) {
+  const marker = '\u0000PIPE\u0000';
+  return String(value || '-')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .replace(/\\\|/g, marker)
+    .replace(/\|/g, '\\|')
+    .replaceAll(marker, '\\|');
 }
 
-// ====== Skill descriptions in Chinese (one sentence each) ======
-const DESCRIPTIONS = {
-  // Local
-  'article-analyzer': '文章/论文/报告深度分析，输出结构化理解与洞察',
-  'blog-checker': '中文技术博客文章质量审阅与评估',
-  'concept-fable': '提取高级领域概念，隐藏于三段式寓言后揭示映射',
-  'HeavySkill': 'Agentic Harness 中的深度思考内功心法',
-  'merge-drafts': '多份草稿合并为一篇高质量文章',
-  'prompt-optimizer': '将模糊需求编译为工业级结构化提示词',
-  'session-achieve': '复盘多轮对话，提取纠偏逻辑并沉淀黄金提示词',
-  'skill-installer': '第三方 Skill 批量导入与本地适配',
-  'skill-optimizer': 'Skill 审计评估、突变策略与自训练协议',
-  'subtext-article': '字幕/转写文本转为可发布长文章',
-
-  // Content creation
-  'baoyu-translate': '多语言翻译，支持快翻/标准/精翻与术语表',
-  'baoyu-youtube-transcript': 'YouTube 字幕/封面下载与翻译',
-  'baoyu-format-markdown': 'Markdown 自动排版与格式化',
-  'baoyu-url-to-markdown': '任意网页保存为 Markdown',
-  'baoyu-danger-x-to-markdown': 'X/Twitter 推文/文章转 Markdown',
-  'edit-article': '文章编辑与润色（结构调整与文笔优化）',
-  'internal-comms': '内部沟通文案（状态报告/领导力更新/FAQ/事故报告）',
-  'ljg-read': '伴读助手（翻译/结构批注/跨域洞察）',
-
-  // Social media
-  'baoyu-post-to-wechat': '微信公众号文章/贴图发布',
-  'baoyu-post-to-weibo': '微博发布（含头条文章）',
-  'baoyu-post-to-x': 'X/Twitter 发布（含长文）',
-  'guizang-social-card-skill': '小红书/公众号社交卡片生成',
-
-  // Image processing
-  'baoyu-article-illustrator': '文章配图智能生成（Type × Style × Palette）',
-  'baoyu-comic': '知识/教育漫画创作，支持多风格与分镜',
-  'baoyu-cover-image': '文章封面图生成（11 色板 × 7 渲染风格）',
-  'baoyu-compress-image': '图片压缩与格式转换（WebP/PNG）',
-  'baoyu-infographic': '专业信息图生成（21 布局 × 22 风格）',
-  'ian-xiaohei-illustrations': 'Ian 小黑风格中文正文配图',
-  'gpt-image-2': 'GPT Image 2 图像生成/编辑（18 大类 80+ 模板）',
-  'canvas-design': '视觉艺术设计（海报/艺术品，PNG/PDF 输出）',
-  'algorithmic-art': '算法艺术（p5.js 生成艺术、流场、粒子系统）',
-  'brand-guidelines': 'Anthropic 品牌配色与排版应用',
-  'ce-gemini-imagegen': 'Gemini API 图像生成/编辑/风格迁移',
-  'baoyu-danger-gemini-web': '通过逆向 Gemini Web API 生成图像与文本',
-
-  // Web design
-  'web-design': 'Web 视觉设计（PRD → DESIGN.md → 代码交付）',
-  'web-design-engineer': '浏览器可交互前端交付物（页面/仪表盘/原型/动画）',
-  'frontend-design': '高品质前端界面设计，避免通用 AI 审美',
-  'frontend-ui-engineering': '生产级 UI 构建（组件/布局/状态管理）',
-  'baoyu-design': 'UI 原型/线框图/落地页/仪表盘 HTML 设计',
-  'baoyu-markdown-to-html': 'Markdown 转微信兼容 HTML',
-  'web-artifacts-builder': '复杂多组件 Claude.ai HTML 工件',
-  'web-design-guidelines': 'Web 界面规范审查（可访问性/UX/最佳实践）',
-  'theme-factory': '主题样式工具包（10 套预设主题）',
-
-  // Vercel
-  'deploy-to-vercel': 'Vercel 应用部署（预览/生产）',
-  'vercel-cli-with-tokens': 'Vercel CLI Token 认证部署',
-  'vercel-composition-patterns': 'React 组合模式（Compound Components/Render Props/Context）',
-  'vercel-react-best-practices': 'React/Next.js 性能优化最佳实践',
-  'vercel-react-native-skills': 'React Native/Expo 移动应用最佳实践',
-  'vercel-react-view-transitions': 'React View Transition API 动画实现',
-
-  // Presentations
-  'baoyu-slide-deck': '专业幻灯片图片生成',
-  'guizang-ppt-skill': '横向翻页网页 PPT（杂志风/瑞士国际主义）',
-  'html-ppt': 'HTML PPT Studio（多风格模板/键盘导航）',
-  'ian-handdrawn-ppt': '手绘技术风 PPT 配图',
-  'visual-style-ppt': '风格驱动图片版 PPTX（提炼/保存/复用风格）',
-  'web-video-presentation': '文章/口播稿转点击驱动 16:9 网页演示（可选音频）',
-  'pptx': 'PPTX 文件创建、读取、编辑与拆分',
-
-  // Development assistance
-  'api-and-interface-design': 'API 与接口设计指南（REST/GraphQL/类型契约）',
-  'design-an-interface': '并行生成多种接口设计方案对比',
-  'planning-and-task-breakdown': '任务拆解与排期',
-  'incremental-implementation': '增量式代码交付（避免一次性大量改动）',
-  'scaffold-exercises': '创建带章节/题目/解答/讲解的练习目录结构',
-  'source-driven-development': '基于官方文档的权威实现',
-  'spec-driven-development': '编码前先写规格说明',
-  'idea-refine': '想法发散与收敛精炼',
-  'context-engineering': 'Agent 上下文优化配置',
-  'using-agent-skills': 'Agent Skill 发现与调用的元技能',
-  'mcp-builder': 'MCP（Model Context Protocol）服务器开发',
-  'claude-api': 'Claude API / Anthropic SDK 应用开发与优化',
-  'ce-agent-native-architecture': 'Agent-Native 应用架构设计（MCP/自修改系统）',
-  'ce-plan': '多步骤任务的结构化计划制定与深化',
-  'ce-brainstorm': '通过协作对话探索需求并产出需求文档',
-  'ce-ideate': '围绕主题生成并批判性评估落地想法',
-  'ce-frontend-design': '真正具备设计质量的 Web 界面构建',
-  'ce-dhh-rails-style': 'DHH/37signals 风格的 Ruby on Rails 开发',
-  'ce-optimize': '度量驱动的迭代优化循环（实验→评分→收敛）',
-
-  // Code quality
-  'code-review-and-quality': '多维度代码审查（合并前评估）',
-  'code-simplification': '代码简化与清晰度重构',
-  'debugging-and-error-recovery': '系统化根因调试方法论',
-  'diagnose': '顽固 Bug 诊断循环（复现→最小化→假设→验证→修复）',
-  'tdd': '测试驱动开发（红绿重构循环）',
-  'test-driven-development': '测试驱动开发（证明代码正确性）',
-  'security-and-hardening': '安全加固与漏洞防护',
-  'performance-optimization': '应用性能优化（Core Web Vitals、加载时间）',
-  'git-workflow-and-versioning': 'Git 工作流与版本管理',
-  'git-guardrails-claude-code': 'Claude Code Git 安全钩子（阻止危险操作）',
-  'setup-pre-commit': 'Husky + lint-staged pre-commit 钩子配置',
-  'browser-testing-with-devtools': 'Chrome DevTools MCP 浏览器测试',
-  'webapp-testing': 'Playwright 本地 Web 应用测试与调试',
-  'migrate-to-shoehorn': 'TypeScript 测试 `as` 断言迁移至 shoehorn',
-  'ce-code-review': '结构化代码审查（多级 persona/置信度门禁/自动修复）',
-  'ce-debug': '系统化根因定位与 Bug 修复',
-  'ce-simplify-code': '简化并精炼近期改动代码（清晰/复用/质量/效率）',
-  'ce-test-browser': '当前 PR 或分支影响页面的浏览器测试',
-  'ce-test-xcode': 'XcodeBuildMCP 模拟器构建与 iOS 测试',
-  'ce-clean-gone-branches': '清理远程已删除的本地分支及关联 worktree',
-  'ce-worktree': '创建隔离的 git worktree 进行并行开发',
-  'ce-work': '高效执行开发工作并保证质量完成功能',
-  'ce-work-beta': '[BETA] 带外部代理支持的 ce-work（实验性 Codex 委托）',
-  'ce-dogfood-beta': '[BETA] 以 QA 工程师身份端到端 dogfood 当前分支',
-
-  // Documentation & communication
-  'documentation-and-adrs': '架构决策记录（ADR）与项目文档维护',
-  'doc-coauthoring': '文档协作共创流程（技术规格/决策文档）',
-  'deprecation-and-migration': '废弃与迁移管理',
-  'ubiquitous-language': 'DDD 统一语言词典提取与术语规范化',
-  'grill-with-docs': '基于现有文档对计划进行压力测试',
-  'grill-me': '面试式拷问计划/设计直到达成共同理解',
-  'qa': '交互式 Bug 报告与 GitHub Issue 提交',
-  'caveman': '极简压缩通信模式（节省约 75% Token）',
-  'ce-doc-review': '并行 persona 审阅需求或计划文档',
-  'ce-proof': '通过 Proof 进行 Markdown 人工回环审阅',
-  'ce-release-notes': '汇总 compound-engineering 插件近期发布变更',
-  'ce-report-bug': 'compound-engineering 插件 Bug 报告',
-  'ce-resolve-pr-feedback': '并行评估并修复 PR 审查反馈',
-  'ce-promote': '为已发布功能撰写用户-facing 公告与营销文案',
-  'ce-demo-reel': '为 PR 描述捕获视觉演示素材（GIF/录屏/截图）',
-
-  // Knowledge management
-  'obsidian-vault': 'Obsidian 笔记库搜索、创建与管理',
-  'ima-skill': 'IMA 知识库与笔记管理（上传/搜索/创建/编辑）',
-  'weread-skills': '微信读书助手（搜索/书架/笔记/书评/统计/推荐）',
-  'kb-retriever': '本地知识库目录检索问答（PDF/Excel 渐进式检索）',
-  'ce-compound': '将刚解决的问题沉淀为团队知识或 CONCEPTS.md',
-  'ce-compound-refresh': '刷新 docs/solutions/ 下过时或漂移的学习文档',
-  'ce-sessions': '跨 Claude Code/Codex/Cursor 搜索并追问会话历史',
-  'ce-slack-research': '搜索 Slack 并产出组织上下文综合研究报告',
-  'ce-strategy': '创建或维护 STRATEGY.md（产品方向/用户/指标/工作线）',
-
-  // Diagrams & visualization
-  'architecture-diagram': '暗色主题架构图（HTML+SVG）',
-  'baoyu-diagram': '专业暗色主题 SVG 图表（流程图/时序图/思维导图等）',
-
-  // Release & operations
-  'release-skills': '通用发布工作流（Node/Python/Rust/GitHub Releases）',
-  'shipping-and-launch': '生产发布准备（预发布检查清单/监控/灰度/回滚）',
-  'ci-cd-and-automation': 'CI/CD 流水线自动化',
-  'to-issues': '计划/PRD 拆分为可执行 Issue（tracer-bullet 垂直切片）',
-  'to-prd': '对话上下文生成 PRD 并发布至 Issue 追踪器',
-  'ce-commit': '创建信息清晰、价值导向的 git commit',
-  'ce-commit-push-pr': '提交、推送并创建价值优先的 PR 描述',
-  'ce-product-pulse': '生成产品体验与质量信号的时间窗口脉动报告',
-
-  // Skill management
-  'skill-creator': 'Skill 创建、修改、性能评估与触发优化',
-  'write-a-skill': 'Agent Skill 规范创建（渐进式披露+捆绑资源）',
-  'skill-installer': '第三方 Skill 批量导入与本地适配',
-  'skill-optimizer': 'Skill 审计评估、突变策略与自训练协议',
-  'ce-setup': '诊断并配置 compound-engineering 环境',
-  'ce-update': '检查 compound-engineering 插件版本并推荐更新',
-
-  // Other tools
-  'improve-codebase-architecture': '代码库架构改进与重构机会发现',
-  'zoom-out': '全局视角与高阶上下文',
-  'docx': 'Word 文档（.docx）创建、编辑与格式处理',
-  'pdf': 'PDF 全面处理（阅读/合并/分割/OCR/表单/加密）',
-  'xlsx': '电子表格处理（.xlsx/.csv 读写、清洗、转换）',
-  'slack-gif-creator': 'Slack 优化 GIF 动画创建',
-  'ce-agent-native-audit': 'Agent-Native 架构综合评审与评分',
-  'ce-riffrec-feedback-analysis': 'Riffrec 产品反馈工作流（会话包分析）',
-  'ce-polish': '启动 dev server，在浏览器中协同迭代打磨功能',
-  'lfg': '端到端自主工程流水线（规划→开发→审查→测试→PR→CI）',
-};
-
-// Extract short trigger keywords (max 5) from trigger text
-function getTriggerKeywords(triggers) {
-  if (!triggers) return '';
-  const t = triggers.replace(/\s+/g, ' ').trim();
-  if (t.length <= 80) return t;
-  let cutoff = t.indexOf('.', 60);
-  if (cutoff === -1) cutoff = t.indexOf(',', 60);
-  if (cutoff === -1 || cutoff > 120) cutoff = 100;
-  return t.substring(0, cutoff) + '...';
+function code(name) {
+  return `\`${name}\``;
 }
 
-function getDescription(skill) {
-  const custom = DESCRIPTIONS[skill.name];
-  if (custom) return custom;
-  let d = skill.desc.replace(/\s+/g, ' ').trim();
-  if (d.length > 100) {
-    const end = d.indexOf('.', 80);
-    if (end > 0 && end < 140) d = d.substring(0, end + 1);
-    else d = d.substring(0, 100) + '...';
-  }
-  return d;
-}
-
-// ====== Categorization ======
-const CATEGORY_MAP = {
-  // 内容创作
-  'article-analyzer': '内容创作',
-  'blog-checker': '内容创作',
-  'concept-fable': '内容创作',
-  'merge-drafts': '内容创作',
-  'prompt-optimizer': '内容创作',
-  'session-achieve': '内容创作',
-  'subtext-article': '内容创作',
-  'baoyu-translate': '内容创作',
-  'baoyu-youtube-transcript': '内容创作',
-  'baoyu-format-markdown': '内容创作',
-  'baoyu-url-to-markdown': '内容创作',
-  'baoyu-danger-x-to-markdown': '内容创作',
-  'edit-article': '内容创作',
-  'internal-comms': '内容创作',
-  'ljg-read': '内容创作',
-
-  // 社交媒体
-  'baoyu-post-to-wechat': '社交媒体',
-  'baoyu-post-to-weibo': '社交媒体',
-  'baoyu-post-to-x': '社交媒体',
-  'guizang-social-card-skill': '社交媒体',
-
-  // 图像处理
-  'baoyu-article-illustrator': '图像处理',
-  'baoyu-comic': '图像处理',
-  'baoyu-cover-image': '图像处理',
-  'baoyu-compress-image': '图像处理',
-  'baoyu-infographic': '图像处理',
-  'ian-xiaohei-illustrations': '图像处理',
-  'gpt-image-2': '图像处理',
-  'canvas-design': '图像处理',
-  'algorithmic-art': '图像处理',
-  'brand-guidelines': '图像处理',
-  'ce-gemini-imagegen': '图像处理',
-  'baoyu-danger-gemini-web': '图像处理',
-
-  // 网页设计
-  'web-design': '网页设计',
-  'web-design-engineer': '网页设计',
-  'frontend-design': '网页设计',
-  'frontend-ui-engineering': '网页设计',
-  'baoyu-design': '网页设计',
-  'baoyu-markdown-to-html': '网页设计',
-  'web-artifacts-builder': '网页设计',
-  'web-design-guidelines': '网页设计',
-  'theme-factory': '网页设计',
-  'deploy-to-vercel': '网页设计',
-  'vercel-cli-with-tokens': '网页设计',
-  'vercel-composition-patterns': '网页设计',
-  'vercel-react-best-practices': '网页设计',
-  'vercel-react-native-skills': '网页设计',
-  'vercel-react-view-transitions': '网页设计',
-
-  // PPT / 演示
-  'baoyu-slide-deck': 'PPT / 演示',
-  'guizang-ppt-skill': 'PPT / 演示',
-  'html-ppt': 'PPT / 演示',
-  'ian-handdrawn-ppt': 'PPT / 演示',
-  'visual-style-ppt': 'PPT / 演示',
-  'web-video-presentation': 'PPT / 演示',
-  'pptx': 'PPT / 演示',
-
-  // 开发辅助
-  'api-and-interface-design': '开发辅助',
-  'design-an-interface': '开发辅助',
-  'planning-and-task-breakdown': '开发辅助',
-  'incremental-implementation': '开发辅助',
-  'source-driven-development': '开发辅助',
-  'spec-driven-development': '开发辅助',
-  'idea-refine': '开发辅助',
-  'context-engineering': '开发辅助',
-  'using-agent-skills': '开发辅助',
-  'mcp-builder': '开发辅助',
-  'claude-api': '开发辅助',
-  'ce-agent-native-architecture': '开发辅助',
-  'ce-plan': '开发辅助',
-  'ce-brainstorm': '开发辅助',
-  'ce-ideate': '开发辅助',
-  'ce-frontend-design': '开发辅助',
-  'ce-dhh-rails-style': '开发辅助',
-  'scaffold-exercises': '开发辅助',
-
-  // 代码质量
-  'code-review-and-quality': '代码质量',
-  'code-simplification': '代码质量',
-  'debugging-and-error-recovery': '代码质量',
-  'diagnose': '代码质量',
-  'tdd': '代码质量',
-  'test-driven-development': '代码质量',
-  'security-and-hardening': '代码质量',
-  'performance-optimization': '代码质量',
-  'git-workflow-and-versioning': '代码质量',
-  'git-guardrails-claude-code': '代码质量',
-  'setup-pre-commit': '代码质量',
-  'browser-testing-with-devtools': '代码质量',
-  'webapp-testing': '代码质量',
-  'migrate-to-shoehorn': '代码质量',
-  'ce-code-review': '代码质量',
-  'ce-debug': '代码质量',
-  'ce-simplify-code': '代码质量',
-  'ce-test-browser': '代码质量',
-  'ce-test-xcode': '代码质量',
-  'ce-clean-gone-branches': '代码质量',
-  'ce-worktree': '代码质量',
-  'ce-work': '代码质量',
-  'ce-work-beta': '代码质量',
-  'ce-dogfood-beta': '代码质量',
-  'ce-optimize': '代码质量',
-
-  // 文档沟通
-  'documentation-and-adrs': '文档沟通',
-  'doc-coauthoring': '文档沟通',
-  'deprecation-and-migration': '文档沟通',
-  'ubiquitous-language': '文档沟通',
-  'grill-with-docs': '文档沟通',
-  'grill-me': '文档沟通',
-  'qa': '文档沟通',
-  'caveman': '文档沟通',
-  'ce-doc-review': '文档沟通',
-  'ce-proof': '文档沟通',
-  'ce-release-notes': '文档沟通',
-  'ce-report-bug': '文档沟通',
-  'ce-resolve-pr-feedback': '文档沟通',
-  'ce-promote': '文档沟通',
-  'ce-demo-reel': '文档沟通',
-
-  // 知识管理
-  'obsidian-vault': '知识管理',
-  'ima-skill': '知识管理',
-  'weread-skills': '知识管理',
-  'kb-retriever': '知识管理',
-  'ce-compound': '知识管理',
-  'ce-compound-refresh': '知识管理',
-  'ce-sessions': '知识管理',
-  'ce-slack-research': '知识管理',
-  'ce-strategy': '知识管理',
-
-  // 图表与可视化
-  'architecture-diagram': '图表与可视化',
-  'baoyu-diagram': '图表与可视化',
-
-  // 发布与运维
-  'release-skills': '发布与运维',
-  'shipping-and-launch': '发布与运维',
-  'ci-cd-and-automation': '发布与运维',
-  'to-issues': '发布与运维',
-  'to-prd': '发布与运维',
-  'ce-commit': '发布与运维',
-  'ce-commit-push-pr': '发布与运维',
-  'ce-product-pulse': '发布与运维',
-
-  // Skill 管理与元技能
-  'skill-creator': 'Skill 管理与元技能',
-  'write-a-skill': 'Skill 管理与元技能',
-  'skill-installer': 'Skill 管理与元技能',
-  'skill-optimizer': 'Skill 管理与元技能',
-  'HeavySkill': 'Skill 管理与元技能',
-  'ce-setup': 'Skill 管理与元技能',
-  'ce-update': 'Skill 管理与元技能',
-
-  // 其他工具
-  'improve-codebase-architecture': '其他工具',
-  'zoom-out': '其他工具',
-  'docx': '其他工具',
-  'pdf': '其他工具',
-  'xlsx': '其他工具',
-  'slack-gif-creator': '其他工具',
-  'ce-agent-native-audit': '其他工具',
-  'ce-riffrec-feedback-analysis': '其他工具',
-  'ce-polish': '其他工具',
-  'lfg': '其他工具',
-};
-
-function getCategory(skill) {
-  return CATEGORY_MAP[skill.name] || '其他工具';
-}
-
-// ====== Generate catalog markdown ======
 function generateCatalogMarkdown(skills) {
-  const categories = {};
-  skills.forEach(s => {
-    const cat = getCategory(s);
-    if (!categories[cat]) categories[cat] = [];
-    categories[cat].push(s);
-  });
+  const byName = new Map(skills.map((skill) => [skill.name, skill]));
+  const categoryMap = categoryBySkillName();
+  const assignedNames = new Set(SCENARIO_SECTIONS.flatMap((section) => section.names));
+  const unknownSkills = skills
+    .filter((skill) => !assignedNames.has(skill.name))
+    .sort((a, b) => a.name.localeCompare(b.name));
 
-  const sectionOrder = [
-    '内容创作',
-    '社交媒体',
-    '图像处理',
-    '网页设计',
-    'PPT / 演示',
-    '开发辅助',
-    '代码质量',
-    '文档沟通',
-    '知识管理',
-    '图表与可视化',
-    '发布与运维',
-    'Skill 管理与元技能',
-    '其他工具'
-  ];
-
-  let md = `# Skill Catalog（技能目录）\n\n`;
-  md += `> 由 \`./bin/hk-skill catalog\` 自动生成并翻译整理。技能按**使用场景**分组，可点击技能名称查看详情与推荐组合。\n\n`;
+  let md = `---\n`;
+  md += `title: "HK-Skills 技能目录"\n`;
+  md += `description: "按使用意图、工作场景与全量索引整理的中文技能目录，保留英文触发关键词。"\n`;
   md += `---\n\n`;
+  md += `# HK-Skills 技能目录\n\n`;
+  md += `> 先按“我想做什么”定位入口；知道技能名时直接用页面搜索或查看底部全量索引。\n`;
+  md += `> 每个技能保留英文触发关键词，便于 Agent 匹配。\n\n`;
 
-  sectionOrder.forEach(cat => {
-    const catSkills = categories[cat];
-    if (!catSkills || catSkills.length === 0) return;
+  md += `## 🚀 快速选择（Quick Picker）\n\n`;
+  md += `| 我想做什么 | 首选技能 | 备选/搭配 |\n`;
+  md += `| --- | --- | --- |\n`;
+  for (const [intent, primary, alternatives] of QUICK_PICKER) {
+    md += `| ${intent} | ${code(primary)} | ${alternatives.map(code).join(', ')} |\n`;
+  }
+  md += `\n`;
 
-    catSkills.sort((a, b) => a.name.localeCompare(b.name));
+  md += `## 🗂️ 使用方式\n\n`;
+  md += `- 不知道技能名：先看快速选择，再进入对应场景分类。\n`;
+  md += `- 知道技能名：在 HTML 目录中搜索，或查看底部“全量技能索引”。\n`;
+  md += `- 选择困难：优先选更贴近当前产物的技能；开发任务按“规划 → 架构 → 实现 → 质量 → 发布”顺序推进。\n\n`;
 
-    const isWebDesign = cat === '网页设计';
-    const isSubsection = isWebDesign;
+  for (const section of SCENARIO_SECTIONS) {
+    const sectionSkills = section.names.map((name) => byName.get(name)).filter(Boolean);
+    if (sectionSkills.length === 0) continue;
 
-    if (isSubsection) {
-      md += `## ${cat}\n\n`;
-      md += `| 技能名称 | 源地址 | 状态 | 描述 | 触发关键词 |\n`;
-      md += `|---|---|---|---|---|\n`;
-      catSkills.filter(s => !s.name.startsWith('vercel-') && s.name !== 'deploy-to-vercel').forEach(s => {
-        const dep = isDeprecated(s.name) ? ' ⛔' : '';
-        md += `| ${s.name}${dep} | ${s.source} | ${s.status} | ${getDescription(s)} | ${getTriggerKeywords(s.triggers)} |\n`;
-      });
-      md += `\n### Vercel 生态\n\n`;
-      md += `| 技能名称 | 源地址 | 状态 | 描述 | 触发关键词 |\n`;
-      md += `|---|---|---|---|---|\n`;
-      catSkills.filter(s => s.name.startsWith('vercel-') || s.name === 'deploy-to-vercel').forEach(s => {
-        const dep = isDeprecated(s.name) ? ' ⛔' : '';
-        md += `| ${s.name}${dep} | ${s.source} | ${s.status} | ${getDescription(s)} | ${getTriggerKeywords(s.triggers)} |\n`;
-      });
-    } else {
-      md += `## ${cat}\n\n`;
-      md += `| 技能名称 | 源地址 | 状态 | 描述 | 触发关键词 |\n`;
-      md += `|---|---|---|---|---|\n`;
-      catSkills.forEach(s => {
-        const dep = isDeprecated(s.name) ? ' ⛔' : '';
-        md += `| ${s.name}${dep} | ${s.source} | ${s.status} | ${getDescription(s)} | ${getTriggerKeywords(s.triggers)} |\n`;
-      });
+    md += `## ${section.title}\n\n`;
+    md += `> ${section.intro}\n\n`;
+    md += `| 技能名称 | 来源 | 说明 | 触发关键词 |\n`;
+    md += `| --- | --- | --- | --- |\n`;
+    for (const skill of sectionSkills) {
+      md += `| ${escapeCell(skill.name)} | ${escapeCell(skill.source)} | ${escapeCell(skill.desc)} | ${escapeCell(skill.triggers)} |\n`;
     }
     md += `\n`;
-  });
+  }
+
+  if (unknownSkills.length > 0) {
+    md += `## 🧰 其他工具（Other Tools）\n\n`;
+    md += `> 尚未纳入固定场景规则的新技能；后续可根据实际用途归入上方分类。\n\n`;
+    md += `| 技能名称 | 来源 | 说明 | 触发关键词 |\n`;
+    md += `| --- | --- | --- | --- |\n`;
+    for (const skill of unknownSkills) {
+      md += `| ${escapeCell(skill.name)} | ${escapeCell(skill.source)} | ${escapeCell(skill.desc)} | ${escapeCell(skill.triggers)} |\n`;
+    }
+    md += `\n`;
+  }
+
+  md += `## 🔎 全量技能索引（Alphabetical Index）\n\n`;
+  md += `> 按技能名排序，用于快速定位所在分类；详细触发词以上方场景分类为准。\n\n`;
+  md += `| 名称 | 所在分类 | 一句话 |\n`;
+  md += `| --- | --- | --- |\n`;
+  for (const skill of [...skills].sort((a, b) => a.name.localeCompare(b.name))) {
+    const category = categoryMap.get(skill.name) || '🧰 其他工具（Other Tools）';
+    md += `| ${escapeCell(skill.name)} | ${escapeCell(category)} | ${escapeCell(skill.desc)} |\n`;
+  }
 
   return md;
 }
 
-// ====== Update catalog.html ======
-function updateCatalogHTML(markdown) {
-  let html = fs.readFileSync(CATALOG_HTML, 'utf8');
-  const startTag = '<script id="markdown-content" type="text/markdown">';
-  const endTag = '</script>';
-  const startIdx = html.indexOf(startTag);
-  const endIdx = html.indexOf(endTag, startIdx + startTag.length);
-  if (startIdx === -1 || endIdx === -1) {
-    throw new Error('Could not find markdown-content script in catalog.html');
-  }
-  const newHTML = html.substring(0, startIdx + startTag.length) + '\n' + markdown + '\n    ' + html.substring(endIdx);
-  fs.writeFileSync(CATALOG_HTML, newHTML);
-}
-
-// ====== Main ======
 const rawContent = fs.readFileSync(CATALOG_MD, 'utf8');
 const skills = parseCatalog(rawContent);
-console.log(`Parsed ${skills.length} skills`);
+if (skills.length === 0) {
+  throw new Error(`No skills parsed from ${CATALOG_MD}`);
+}
 
 const markdown = generateCatalogMarkdown(skills);
-fs.writeFileSync(CATALOG_MD, markdown);
-console.log('Updated docs/catalog.md');
+fs.writeFileSync(CATALOG_MD, markdown, 'utf8');
+console.log(`Updated docs/catalog.md (${skills.length} skills)`);
 
-updateCatalogHTML(markdown);
-console.log('Updated docs/catalog.html');
+execFileSync('bun', ['run', 'build:catalog'], { cwd: ROOT, stdio: 'inherit' });
