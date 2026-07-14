@@ -13,13 +13,6 @@
     "commit": "82fe5ae129e8c2a12e1155fcabed6703342749d6",
     "local_path": "warehouse/remote/github.com_op7418_guizang-ppt-skill@main"
   },
-  "github.com_lijigang_ljg-skills@main": {
-    "type": "remote",
-    "repo": "https://github.com/lijigang/ljg-skills",
-    "ref": "master",
-    "commit": "9681c304e9ad5c5539bad8a582f11fe9a05bf352",
-    "local_path": "warehouse/remote/github.com_lijigang_ljg-skills@main"
-  },
   "github.com_vercel-labs_agent-skills@main": {
     "type": "remote",
     "repo": "https://github.com/vercel-labs/agent-skills",
@@ -33,13 +26,6 @@
     "ref": "main",
     "commit": "fa2291c4d41f985987ccb48da7924b288f268538",
     "local_path": "warehouse/remote/github.com_KAOPU-XiaoPu_web-design@main"
-  },
-  "github.com_mattpocock_skills@main": {
-    "type": "remote",
-    "repo": "https://github.com/mattpocock/skills",
-    "ref": "main",
-    "commit": "8515a080a74dbcf5019a1a78efc24b5fcafb36b8",
-    "local_path": "warehouse/remote/github.com_mattpocock_skills@main"
   },
   "github.com_ConardLi_garden-skills@main": {
     "type": "remote",
@@ -154,5 +140,12 @@
   "local-kane-q-cover-image": {
     "type": "local",
     "local_path": "warehouse/local/kane-q-cover-image"
+  },
+  "github.com_mattpocock_skills@main": {
+    "type": "remote",
+    "repo": "https://github.com/mattpocock/skills.git",
+    "ref": "main",
+    "commit": "66898f60e8c744e269f8ce06c2b2b99ce7660d5f",
+    "local_path": "warehouse/remote/github.com_mattpocock_skills@main"
   }
 }
